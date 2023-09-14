@@ -8,7 +8,7 @@ data class ValidationErrorMessage(
     val violations: List<ValidationError>,
     val description: String
 ) {
-    class ValidationError(
+    data class ValidationError(
         val fieldName: String,
         val message: String
     )

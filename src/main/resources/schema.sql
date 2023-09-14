@@ -1,3 +1,5 @@
+drop database if exists fine_database;
+create database fine_database;
 use fine_database;
 create table Car
 (
@@ -27,11 +29,11 @@ create table Violation
 create table Fine
 (
     id        BIGINT AUTO_INCREMENT PRIMARY KEY,
-    longitude DOUBLE NOT NULL,
-    latitude  DOUBLE NOT NULL,
-    date_time  DATETIME      NOT NULL,
-    photo_url  VARCHAR(255)  NOT NULL,
-    car_id    BIGINT NOT NULL,
+    longitude DOUBLE       NOT NULL,
+    latitude  DOUBLE       NOT NULL,
+    date_time DATETIME     NOT NULL,
+    photo_url VARCHAR(255) NOT NULL,
+    car_id    BIGINT       NOT NULL,
     FOREIGN KEY (car_id) REFERENCES car (id),
     CONSTRAINT fk_fine_car FOREIGN KEY (car_id) REFERENCES car (id)
 );

@@ -69,6 +69,7 @@ class GlobalExceptionHandler {
         )
     }
 
+    // HttpMessageNotReadableException too general to use it for enum error message
     @ExceptionHandler(HttpMessageNotReadableException::class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     fun handleValidationEnumExceptions(request: WebRequest): ErrorMessage {
