@@ -18,11 +18,11 @@ class GlobalExceptionHandler {
         [CarPlateNotFoundException::class, CarIdNotFoundException::class, CarPlateDuplicateException::class]
     )
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    fun handleCarExceptions(exception: RuntimeException, request: WebRequest) =
+    fun handleCarExceptions(exception: CarException, request: WebRequest) =
         ErrorMessage(
             HttpStatus.NOT_FOUND.value(),
             LocalDateTime.now(),
-            exception.message ?: "",
+            exception.message,
             request.getDescription(false)
         )
 
