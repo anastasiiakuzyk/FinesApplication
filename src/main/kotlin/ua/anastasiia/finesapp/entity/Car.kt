@@ -10,10 +10,10 @@ data class Car(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
-    var plate: String,
-    var mark: String,
-    var model: String,
-    var color: CarColor
+    val plate: String,
+    val mark: String,
+    val model: String,
+    val color: String
 ) {
     enum class CarColor {
         WHITE,
