@@ -7,20 +7,28 @@ import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import ua.anastasiia.finesapp.annotation.NullableGenerate
 import ua.anastasiia.finesapp.dto.CarRequest
+import ua.anastasiia.finesapp.exception.NullableGenerateAnnotationNotApplicableException
 import java.lang.reflect.Method
 import kotlin.random.Random
-import kotlin.reflect.KClass
-import kotlin.reflect.full.hasAnnotation
-import kotlin.reflect.full.memberFunctions
 
 @Component
-class ValidationBeanPostProcessor : BeanPostProcessor {
-    val savedBeans = mutableMapOf<String, KClass<*>>()
+class NullableGenerateAnnotationBeanPostProcessor : BeanPostProcessor {
+    val savedBeans = mutableMapOf<String, Class<Any>>()
+    val beanMethodsToProcess = mutableMapOf<String, Set<String>>()
 
     override fun postProcessBeforeInitialization(bean: Any, beanName: String): Any {
-        val beanClass = bean::class
-        if (beanClass.java.isAnnotationPresent(Service::class.java)) {
-            savedBeans[beanName] = beanClass
+        val beanClass = bean.javaClass
+        if (beanClass.isAnnotationPresent(Service::class.java)) {
+            val methodsToProcess: Set<String> =
+                beanClass.methods
+                    .asSequence()
+                    .filter { isMethodToProcess(it) }
+                    .map { it.name }
+                    .toSet()
+            if (methodsToProcess.isNotEmpty()) {
+                savedBeans[beanName] = beanClass
+                beanMethodsToProcess[beanName] = methodsToProcess
+            }
         }
         return bean
     }
@@ -28,19 +36,20 @@ class ValidationBeanPostProcessor : BeanPostProcessor {
     override fun postProcessAfterInitialization(currentBean: Any, beanName: String): Any {
         return savedBeans[beanName]?.let { originalBean ->
             Proxy.newProxyInstance(
-                originalBean.java.classLoader,
-                originalBean.java.interfaces,
-                DynamicInvocationHandler(currentBean, originalBean)
+                originalBean.classLoader,
+                originalBean.interfaces,
+                DynamicInvocationHandler(currentBean, beanMethodsToProcess[beanName]!!)
             )
         } ?: currentBean
     }
 }
 
 @Suppress("SpreadOperator")
-class DynamicInvocationHandler(private val currentBean: Any, private val originalBean: KClass<*>) : InvocationHandler {
+class DynamicInvocationHandler(private val currentBean: Any, private val annotatedMethodNames: Set<String>) :
+    InvocationHandler {
 
     override operator fun invoke(proxy: Any?, method: Method, args: Array<out Any>): Any {
-        if (shouldInvokeDefaultMethod(args)) {
+        if (method.name !in annotatedMethodNames) {
             return method.invoke(currentBean, *args)
         }
         val carRequest = args[0] as CarRequest
@@ -57,15 +66,38 @@ class DynamicInvocationHandler(private val currentBean: Any, private val origina
         }
     }
 
-    private fun shouldInvokeDefaultMethod(args: Array<out Any>): Boolean {
-        return !originalBean.memberFunctions.any { beanMethod ->
-            beanMethod.hasAnnotation<NullableGenerate>()
-        } || args.isEmpty() || args.size > 2 || args[0] !is CarRequest || (hasOptionalId(args) && args[1] !is Long)
-    }
-
     private fun hasOptionalId(args: Array<out Any>): Boolean {
         return args.size == 2
     }
+}
+
+@Suppress("ReturnCount")
+fun isMethodToProcess(beanMethod: Method): Boolean {
+    val args = beanMethod.parameterTypes
+    // check annotation
+    if (!beanMethod.isAnnotationPresent(NullableGenerate::class.java)) {
+        return false
+    } else if (beanMethod.isAnnotationPresent(NullableGenerate::class.java) && !checkParams(args)) {
+        throw NullableGenerateAnnotationNotApplicableException()
+    }
+    return checkParams(args)
+}
+
+@Suppress("ReturnCount")
+private fun checkParams(args: Array<out Class<*>>): Boolean {
+    // check size
+    if (args.isEmpty() || args.size > 2) {
+        return false
+    }
+    // check save() variant
+    if (args[0] != CarRequest::class.java) {
+        return false
+    }
+    // check update() variant
+    if (args.size == 2) {
+        return args[1] == Long::class.java
+    }
+    return true
 }
 
 @Suppress("MagicNumber")
