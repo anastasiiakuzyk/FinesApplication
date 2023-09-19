@@ -5,7 +5,9 @@ import jakarta.validation.ConstraintValidatorContext
 import ua.anastasiia.finesapp.annotation.EnumValidator
 
 class EnumValidatorConstraint : ConstraintValidator<EnumValidator, CharSequence> {
+
     private val acceptedValues: MutableList<String> = mutableListOf()
+    
     override fun initialize(constraintAnnotation: EnumValidator) {
         super.initialize(constraintAnnotation)
         acceptedValues.addAll(
