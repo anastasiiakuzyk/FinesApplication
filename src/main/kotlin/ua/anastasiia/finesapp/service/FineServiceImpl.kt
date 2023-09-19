@@ -38,7 +38,7 @@ class FineServiceImpl(
 
     override fun addViolations(fineId: Long, violationIds: List<Long>): FineResponse {
         val fine = fineRepository.findById(fineId).orElseThrow { FineIdNotFoundException(fineId) }
-        fine.violations += (violationIds - fine.violations.map { it.id!! }.toSet())
+        fine.violations += (violationIds - fine.violations.map { it.id!! })
             .asSequence()
             .distinct()
             .map { violationId ->
