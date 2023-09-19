@@ -32,6 +32,7 @@ class FineServiceImpl(
     }
 
     override fun getAllFines(): List<FineResponse> = fineRepository.findAll().map { it.toResponse() }
+    
     override fun getFinesByPlate(plate: String): List<FineResponse> =
         fineRepository.findAllByCarPlate(plate).map { it.toResponse() }
             .ifEmpty { throw CarPlateNotFoundException(plate) }
