@@ -9,7 +9,6 @@ import ua.anastasiia.finesapp.entity.Fine
 import ua.anastasiia.finesapp.exception.CarIdNotFoundException
 import ua.anastasiia.finesapp.exception.CarPlateNotFoundException
 import ua.anastasiia.finesapp.exception.FineIdNotFoundException
-import ua.anastasiia.finesapp.exception.ViolationNotFoundException
 import ua.anastasiia.finesapp.repository.FineRepository
 import ua.anastasiia.finesapp.repository.ViolationRepository
 
@@ -32,17 +31,19 @@ class FineServiceImpl(
     }
 
     override fun getAllFines(): List<FineResponse> = fineRepository.findAll().map { it.toResponse() }
-    
+
     override fun getFinesByPlate(plate: String): List<FineResponse> =
         fineRepository.findAllByCarPlate(plate).map { it.toResponse() }
             .ifEmpty { throw CarPlateNotFoundException(plate) }
 
-    override fun addViolations(fineId: Long, violationIds: Array<Long>): FineResponse {
+    override fun addViolations(fineId: Long, violationIds: List<Long>): FineResponse {
         val fine = fineRepository.findById(fineId).orElseThrow { FineIdNotFoundException(fineId) }
-        violationIds.toSet().map { violationId ->
-            violationRepository.findById(violationId).orElseThrow { ViolationNotFoundException(violationId) }
-        }.filter { violation -> !fine.violations.contains(violation) }
-            .forEach { violation -> fine.violations.add(violation) }
+        fine.violations += (violationIds - fine.violations.map { it.id!! }.toSet())
+            .asSequence()
+            .distinct()
+            .map { violationId ->
+                violationRepository.findById(violationId).orElseThrow { FineIdNotFoundException(fineId) }
+            }.toList()
         fineRepository.save(fine)
         return fine.toResponse()
     }
