@@ -9,6 +9,7 @@ import ua.anastasiia.finesapp.entity.Fine
 import ua.anastasiia.finesapp.exception.CarIdNotFoundException
 import ua.anastasiia.finesapp.exception.CarPlateNotFoundException
 import ua.anastasiia.finesapp.exception.FineIdNotFoundException
+import ua.anastasiia.finesapp.exception.ViolationNotFoundException
 import ua.anastasiia.finesapp.repository.FineRepository
 import ua.anastasiia.finesapp.repository.ViolationRepository
 
@@ -42,7 +43,7 @@ class FineServiceImpl(
             .asSequence()
             .distinct()
             .map { violationId ->
-                violationRepository.findById(violationId).orElseThrow { FineIdNotFoundException(fineId) }
+                violationRepository.findById(violationId).orElseThrow { ViolationNotFoundException(violationId) }
             }.toList()
         fineRepository.save(fine)
         return fine.toResponse()

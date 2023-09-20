@@ -3,12 +3,33 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "3.1.3"
     id("io.spring.dependency-management") version "1.1.3"
-    id("io.gitlab.arturbosch.detekt") version ("1.23.1")
+    id("io.gitlab.arturbosch.detekt") version "1.23.1"
     kotlin("jvm") version "1.8.22"
     kotlin("plugin.spring") version "1.8.22"
     kotlin("plugin.jpa") version "1.8.22"
     kotlin("plugin.noarg") version "1.9.10"
 }
+
+configurations.detekt {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "org.jetbrains.kotlin") {
+            useVersion("1.9.0") // Add the version of Kotlin that detekt needs
+        }
+    }
+}
+
+var tasksBefore = mutableSetOf<Task>()
+project.tasks.forEach {
+    tasksBefore.add(it)
+}
+apply(plugin = "idea")
+var tasksAfter = mutableSetOf<Task>()
+project.tasks.forEach {
+    tasksAfter.add(it)
+}
+tasksAfter.removeAll(tasksBefore) // get the difference
+
+println("idea tasks: $tasksAfter")
 
 noArg {
     annotation("org.springframework.stereotype.Service")

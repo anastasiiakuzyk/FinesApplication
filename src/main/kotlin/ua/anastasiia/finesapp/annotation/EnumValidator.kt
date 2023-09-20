@@ -10,7 +10,7 @@ import kotlin.reflect.KClass
 @Target(AnnotationTarget.FIELD)
 annotation class EnumValidator(
     val enumClass: KClass<out Enum<*>>,
-    val message: String = "must be any of {enum}",
+    val message: String = "must be any of {enumClass}",
     val groups: Array<KClass<*>> = [],
     val payload: Array<KClass<out Payload>> = []
 )

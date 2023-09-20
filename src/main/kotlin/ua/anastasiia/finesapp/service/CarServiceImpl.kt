@@ -1,6 +1,7 @@
 package ua.anastasiia.finesapp.service
 
 import org.springframework.stereotype.Service
+import ua.anastasiia.finesapp.annotation.AutofillNullable
 import ua.anastasiia.finesapp.annotation.NullableGenerate
 import ua.anastasiia.finesapp.dto.CarRequest
 import ua.anastasiia.finesapp.dto.CarResponse
@@ -12,10 +13,14 @@ import ua.anastasiia.finesapp.exception.CarPlateDuplicateException
 import ua.anastasiia.finesapp.exception.CarPlateNotFoundException
 import ua.anastasiia.finesapp.repository.CarRepository
 
+@NullableGenerate
 @Service
 class CarServiceImpl(val carRepository: CarRepository) : CarService {
-    @NullableGenerate
-    override fun saveCar(carRequest: CarRequest): CarResponse {
+    //    @NullableGenerate
+    override fun saveCar(
+        @AutofillNullable(fieldToGenerate = "plate"/*, valueProvider = RandomPlateGenerator::class*/)
+        carRequest: CarRequest
+    ): CarResponse {
         return carRepository.findByPlate(carRequest.plate!!)?.let {
             throw CarPlateDuplicateException(carRequest.plate)
         } ?: carRepository.save(carRequest.toEntity()).toResponse()
@@ -31,8 +36,10 @@ class CarServiceImpl(val carRepository: CarRepository) : CarService {
 
     override fun getAllCars(): List<CarResponse> = carRepository.findAll().map { car: Car -> car.toResponse() }
 
-    @NullableGenerate
-    override fun updateCarById(carUpdated: CarRequest, id: Long): CarResponse {
+    override fun updateCarById(
+        @AutofillNullable(fieldToGenerate = "plate") carUpdated: CarRequest,
+        id: Long
+    ): CarResponse {
         getCarById(id).copy(
             id = id,
             plate = carUpdated.plate!!,
