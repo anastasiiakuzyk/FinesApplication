@@ -16,7 +16,6 @@ import ua.anastasiia.finesapp.repository.CarRepository
 @NullableGenerate
 @Service
 class CarServiceImpl(val carRepository: CarRepository) : CarService {
-    //    @NullableGenerate
     override fun saveCar(
         @AutofillNullable(fieldToGenerate = "plate"/*, valueProvider = RandomPlateGenerator::class*/)
         carRequest: CarRequest
