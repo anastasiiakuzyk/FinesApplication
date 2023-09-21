@@ -20,18 +20,18 @@ class AutofillNullableAnnotationBeanPostProcessor : BeanPostProcessor {
             val methodsToProcess: Set<Method> = beanClass.methods.asSequence()
                 .filter { method -> method.parameters.any { it.isAnnotationPresent(AutofillNullable::class.java) } }
                 .toSet()
+            val methodParams: MutableMap<String, Pair<Int, String>> = mutableMapOf()
 
             if (methodsToProcess.isNotEmpty()) {
                 methodsToProcess.forEach { method ->
                     method.parameters
                         .filter { it.isAnnotationPresent(AutofillNullable::class.java) }
                         .forEachIndexed { i, parameter ->
-                            val param = i to parameter.getAnnotation(AutofillNullable::class.java).fieldToGenerate
-                            val methodParams: MutableMap<String, Pair<Int, String>> = mutableMapOf()
-                            methodParams[method.name] = param
-                            beanMethodsToProcess[beanName] = methodParams
+                            methodParams[method.name] =
+                                i to parameter.getAnnotation(AutofillNullable::class.java).fieldToGenerate
                         }
                 }
+                beanMethodsToProcess[beanName] = methodParams
                 savedBeans[beanName] = beanClass
             }
         }
@@ -40,11 +40,13 @@ class AutofillNullableAnnotationBeanPostProcessor : BeanPostProcessor {
 
     override fun postProcessAfterInitialization(currentBean: Any, beanName: String): Any {
         return savedBeans[beanName]?.let { originalBean ->
-            Proxy.newProxyInstance(
-                originalBean.classLoader,
-                originalBean.interfaces,
-                InvocationHandler(currentBean, beanMethodsToProcess[beanName]!!)
-            )
+            beanMethodsToProcess[beanName]?.let { methodsWithAnnotatedParams ->
+                Proxy.newProxyInstance(
+                    originalBean.classLoader,
+                    originalBean.interfaces,
+                    InvocationHandler(currentBean, methodsWithAnnotatedParams)
+                )
+            }
         } ?: currentBean
     }
 }
@@ -52,23 +54,22 @@ class AutofillNullableAnnotationBeanPostProcessor : BeanPostProcessor {
 @Suppress("SpreadOperator")
 class InvocationHandler(
     private val currentBean: Any,
-    private val annotatedMethodNames: Map<String, Pair<Int, String>>
-) :
-    InvocationHandler {
+    private val methodsWithAnnotatedParams: Map<String, Pair<Int, String>>
+) : InvocationHandler {
 
     override operator fun invoke(proxy: Any?, method: Method, args: Array<out Any>): Any {
-        if (method.name !in annotatedMethodNames) {
-            return method.invoke(currentBean, *args)
-        }
-        val param = annotatedMethodNames[method.name]
-        val paramIndex = param!!.first
-        val fieldToGenerateName = param.second
+        methodsWithAnnotatedParams[method.name]?.let { param ->
+            val paramIndex = param.first
+            val fieldToGenerateName = param.second
+            println(fieldToGenerateName)
 
-        val anyArg = args[paramIndex]
-        val fieldToGenerate = anyArg.javaClass.getDeclaredField(fieldToGenerateName)
-        fieldToGenerate.setAccessible(true)
-        if (fieldToGenerate.get(anyArg) == null) {
-            ReflectionUtils.setField(fieldToGenerate, anyArg, generateCarPlate())
+            val methodParameterToUpdate = args[paramIndex]
+            methodParameterToUpdate.javaClass.getDeclaredField(fieldToGenerateName).apply {
+                isAccessible = true
+                if (get(methodParameterToUpdate) == null) {
+                    ReflectionUtils.setField(this, methodParameterToUpdate, generateCarPlate())
+                }
+            }
         }
         return method.invoke(currentBean, *args)
     }
