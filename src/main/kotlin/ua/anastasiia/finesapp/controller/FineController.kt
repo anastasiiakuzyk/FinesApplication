@@ -29,6 +29,6 @@ class FineController(val fineService: FineService) {
     fun getFinesByPlate(@PathVariable plate: String): List<FineResponse> = fineService.getFinesByPlate(plate)
 
     @PatchMapping("{fineId}/violations/{violationIds}")
-    fun addViolation(@PathVariable fineId: Long, @PathVariable violationIds: Array<Long>): FineResponse =
+    fun addViolation(@PathVariable fineId: Long, @PathVariable violationIds: List<Long>): FineResponse =
         fineService.addViolations(fineId, violationIds)
 }

@@ -7,7 +7,7 @@ data class CarResponse(
     val plate: String,
     val make: String,
     val model: String,
-    val color: Car.CarColor
+    val color: String
 )
 
 fun Car.toResponse() = CarResponse(
