@@ -5,7 +5,7 @@ create table Car
 (
     id    BIGINT AUTO_INCREMENT PRIMARY KEY,
     plate VARCHAR(8)  NOT NULL,
-    mark  VARCHAR(50) NOT NULL,
+    make  VARCHAR(50) NOT NULL,
     model VARCHAR(50) NOT NULL,
     color ENUM ('WHITE',
         'BLACK',
@@ -47,7 +47,7 @@ create table Fine_Violation
     PRIMARY KEY (fine_id, violation_id)
 );
 
-insert into car(plate, model, mark, color)
+insert into car(plate, make, model, color)
 values ('AA1234KA', 'Opel', 'Vectra', 'GREEN'),
        ('AA1235KK', 'Opel', 'Insignia', 'BLUE');
 

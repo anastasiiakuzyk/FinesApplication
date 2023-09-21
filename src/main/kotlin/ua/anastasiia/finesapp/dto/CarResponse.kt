@@ -5,7 +5,7 @@ import ua.anastasiia.finesapp.entity.Car
 data class CarResponse(
     val id: Long,
     val plate: String,
-    val mark: String,
+    val make: String,
     val model: String,
     val color: Car.CarColor
 )
@@ -13,7 +13,7 @@ data class CarResponse(
 fun Car.toResponse() = CarResponse(
     id = id!!,
     plate = plate,
-    mark = mark,
+    make = make,
     model = model,
     color = color
 )
@@ -21,7 +21,7 @@ fun Car.toResponse() = CarResponse(
 fun CarResponse.toEntity() = Car(
     id = id,
     plate = plate,
-    mark = mark,
+    make = make,
     model = model,
     color = color
 )
