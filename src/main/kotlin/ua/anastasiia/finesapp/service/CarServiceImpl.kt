@@ -3,6 +3,8 @@ package ua.anastasiia.finesapp.service
 import org.springframework.stereotype.Service
 import ua.anastasiia.finesapp.annotation.AutofillNullable
 import ua.anastasiia.finesapp.annotation.NullableGenerate
+import ua.anastasiia.finesapp.beanPostProcessor.RandomMakeGenerator
+import ua.anastasiia.finesapp.beanPostProcessor.RandomModelGenerator
 import ua.anastasiia.finesapp.dto.CarRequest
 import ua.anastasiia.finesapp.dto.CarResponse
 import ua.anastasiia.finesapp.dto.toEntity
@@ -17,9 +19,10 @@ import ua.anastasiia.finesapp.repository.CarRepository
 @Service
 class CarServiceImpl(val carRepository: CarRepository) : CarService {
     override fun saveCar(
-        @AutofillNullable(fieldToGenerate = "plate"/*, valueProvider = RandomPlateGenerator::class*/)
+        @AutofillNullable(fieldToGenerate = "make", valueProvider = RandomMakeGenerator::class)
         carRequest: CarRequest
     ): CarResponse {
+        println("saveCar1 carRequest=$carRequest")
         return carRepository.findByPlate(carRequest.plate!!)?.let {
             throw CarPlateDuplicateException(carRequest.plate)
         } ?: carRepository.save(carRequest.toEntity()).toResponse()
@@ -36,14 +39,17 @@ class CarServiceImpl(val carRepository: CarRepository) : CarService {
     override fun getAllCars(): List<CarResponse> = carRepository.findAll().map { car: Car -> car.toResponse() }
 
     override fun updateCarById(
-        @AutofillNullable(fieldToGenerate = "plate") carUpdated: CarRequest,
+        @AutofillNullable(
+            fieldToGenerate = "model",
+            valueProvider = RandomModelGenerator::class
+        ) carUpdated: CarRequest,
         id: Long
     ): CarResponse {
         getCarById(id).copy(
             id = id,
             plate = carUpdated.plate!!,
-            mark = carUpdated.mark,
-            model = carUpdated.model,
+            make = carUpdated.make!!,
+            model = carUpdated.model!!,
             color = carUpdated.color
         ).also {
             carRepository.save(it.toEntity())

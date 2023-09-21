@@ -4,15 +4,15 @@ import org.springframework.beans.factory.config.BeanPostProcessor
 import org.springframework.cglib.proxy.InvocationHandler
 import org.springframework.cglib.proxy.Proxy
 import org.springframework.stereotype.Component
-import org.springframework.util.ReflectionUtils
 import ua.anastasiia.finesapp.annotation.AutofillNullable
 import ua.anastasiia.finesapp.annotation.NullableGenerate
 import java.lang.reflect.Method
+import kotlin.reflect.KClass
 
 @Component
 class AutofillNullableAnnotationBeanPostProcessor : BeanPostProcessor {
     val savedBeans = mutableMapOf<String, Class<Any>>()
-    val beanMethodsToProcess = mutableMapOf<String, Map<String, Pair<Int, String>>>()
+    val beanMethodsToProcess = mutableMapOf<String, Map<String, Pair<Int, AutofillNullable>>>()
 
     override fun postProcessBeforeInitialization(bean: Any, beanName: String): Any {
         val beanClass = bean.javaClass
@@ -20,22 +20,26 @@ class AutofillNullableAnnotationBeanPostProcessor : BeanPostProcessor {
             val methodsToProcess: Set<Method> = beanClass.methods.asSequence()
                 .filter { method -> method.parameters.any { it.isAnnotationPresent(AutofillNullable::class.java) } }
                 .toSet()
-            val methodParams: MutableMap<String, Pair<Int, String>> = mutableMapOf()
 
             if (methodsToProcess.isNotEmpty()) {
-                methodsToProcess.forEach { method ->
-                    method.parameters
-                        .filter { it.isAnnotationPresent(AutofillNullable::class.java) }
-                        .forEachIndexed { i, parameter ->
-                            methodParams[method.name] =
-                                i to parameter.getAnnotation(AutofillNullable::class.java).fieldToGenerate
-                        }
-                }
-                beanMethodsToProcess[beanName] = methodParams
+                beanMethodsToProcess[beanName] = extractMethodParamsToProcess(methodsToProcess)
                 savedBeans[beanName] = beanClass
             }
         }
         return bean
+    }
+
+    private fun extractMethodParamsToProcess(methods: Set<Method>): Map<String, Pair<Int, AutofillNullable>> {
+        val methodParams = mutableMapOf<String, Pair<Int, AutofillNullable>>()
+        methods.forEach { method ->
+            method.parameters.forEachIndexed { index, parameter ->
+                if (parameter.isAnnotationPresent(AutofillNullable::class.java)) {
+                    val annotation = parameter.getAnnotation(AutofillNullable::class.java)
+                    methodParams[method.name] = index to annotation
+                }
+            }
+        }
+        return methodParams
     }
 
     override fun postProcessAfterInitialization(currentBean: Any, beanName: String): Any {
@@ -54,23 +58,38 @@ class AutofillNullableAnnotationBeanPostProcessor : BeanPostProcessor {
 @Suppress("SpreadOperator")
 class InvocationHandler(
     private val currentBean: Any,
-    private val methodsWithAnnotatedParams: Map<String, Pair<Int, String>>
+    private val methodsWithAnnotatedParams: Map<String, Pair<Int, AutofillNullable>>
 ) : InvocationHandler {
 
-    override operator fun invoke(proxy: Any?, method: Method, args: Array<out Any>): Any {
-        methodsWithAnnotatedParams[method.name]?.let { param ->
-            val paramIndex = param.first
-            val fieldToGenerateName = param.second
-            println(fieldToGenerateName)
+    override operator fun invoke(proxy: Any?, method: Method, args: Array<out Any>): Any? {
+        generateValueForAnnotatedParams(method, args)
 
-            val methodParameterToUpdate = args[paramIndex]
-            methodParameterToUpdate.javaClass.getDeclaredField(fieldToGenerateName).apply {
-                isAccessible = true
-                if (get(methodParameterToUpdate) == null) {
-                    ReflectionUtils.setField(this, methodParameterToUpdate, generateCarPlate())
-                }
+        return method.invoke(currentBean, *args)
+    }
+
+    private fun generateValueForAnnotatedParams(method: Method, args: Array<out Any>) {
+        methodsWithAnnotatedParams[method.name]?.let { (paramIndex, annotationDetails) ->
+            val fieldToGenerate = annotationDetails.fieldToGenerate
+            val valueProviderClass = annotationDetails.valueProvider
+            val targetMethodParameter = args[paramIndex]
+            updateFieldIfNull(targetMethodParameter, fieldToGenerate, valueProviderClass)
+        }
+    }
+
+    private fun updateFieldIfNull(
+        targetMethodParameter: Any,
+        fieldName: String,
+        valueProviderClass: KClass<out RandomFieldGenerator>
+    ) {
+        targetMethodParameter.javaClass.getDeclaredField(fieldName).apply {
+            isAccessible = true
+            if (get(targetMethodParameter) == null) {
+                set(targetMethodParameter, generateValue(valueProviderClass))
             }
         }
-        return method.invoke(currentBean, *args)
+    }
+
+    private fun generateValue(valueProviderClass: KClass<out RandomFieldGenerator>): Any {
+        return valueProviderClass.java.getDeclaredConstructor().newInstance().generate()
     }
 }
