@@ -1,6 +1,6 @@
-package ua.anastasiia.finesapp.beanPostProcessor
+package ua.anastasiia.finesapp.beanPostProcessor.fieldGeneration
 
-import ua.anastasiia.finesapp.shuffle
+import ua.anastasiia.finesapp.util.shuffle
 import kotlin.random.Random
 
 class RandomPlateGenerator : RandomFieldGenerator {

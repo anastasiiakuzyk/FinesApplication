@@ -1,6 +1,6 @@
-package ua.anastasiia.finesapp.beanPostProcessor
+package ua.anastasiia.finesapp.beanPostProcessor.fieldGeneration
 
-import ua.anastasiia.finesapp.capitalizeFirstLetter
+import ua.anastasiia.finesapp.util.capitalizeFirstLetter
 import ua.anastasiia.finesapp.web.CarMakeModel
 import ua.anastasiia.finesapp.web.getAllCarMakeModels
 import kotlin.random.Random

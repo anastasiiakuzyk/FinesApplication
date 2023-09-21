@@ -11,7 +11,7 @@ data class Car(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
     val plate: String,
-    val mark: String,
+    val make: String,
     val model: String,
     val color: String
 ) {

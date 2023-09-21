@@ -3,8 +3,8 @@ package ua.anastasiia.finesapp.service
 import org.springframework.stereotype.Service
 import ua.anastasiia.finesapp.annotation.AutofillNullable
 import ua.anastasiia.finesapp.annotation.NullableGenerate
-import ua.anastasiia.finesapp.beanPostProcessor.RandomMakeGenerator
-import ua.anastasiia.finesapp.beanPostProcessor.RandomModelGenerator
+import ua.anastasiia.finesapp.beanPostProcessor.fieldGeneration.RandomMakeGenerator
+import ua.anastasiia.finesapp.beanPostProcessor.fieldGeneration.RandomModelGenerator
 import ua.anastasiia.finesapp.dto.CarRequest
 import ua.anastasiia.finesapp.dto.CarResponse
 import ua.anastasiia.finesapp.dto.toEntity

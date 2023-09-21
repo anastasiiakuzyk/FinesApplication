@@ -2,8 +2,8 @@ package ua.anastasiia.finesapp.dto
 
 import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Size
-import ua.anastasiia.finesapp.entity.Car
 import ua.anastasiia.finesapp.annotation.EnumValidator
+import ua.anastasiia.finesapp.entity.Car
 
 data class CarRequest(
     @field:Pattern(regexp = "^(?=(.*[A-ZА-ЯІЇҐЄ]){2,})([A-ZА-ЯІЇҐЄ0-9]{3,8})\$")
@@ -18,7 +18,7 @@ data class CarRequest(
 
 fun CarRequest.toEntity() = Car(
     plate = plate!!,
-    mark = make!!,
+    make = make!!,
     model = model!!,
     color = color
 )

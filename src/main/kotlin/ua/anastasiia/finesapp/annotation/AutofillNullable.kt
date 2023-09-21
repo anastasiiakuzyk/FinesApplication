@@ -1,6 +1,6 @@
 package ua.anastasiia.finesapp.annotation
 
-import ua.anastasiia.finesapp.beanPostProcessor.RandomFieldGenerator
+import ua.anastasiia.finesapp.beanPostProcessor.fieldGeneration.RandomFieldGenerator
 import kotlin.reflect.KClass
 
 @Retention(AnnotationRetention.RUNTIME)

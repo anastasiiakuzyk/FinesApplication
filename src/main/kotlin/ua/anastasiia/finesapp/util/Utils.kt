@@ -1,4 +1,4 @@
-package ua.anastasiia.finesapp
+package ua.anastasiia.finesapp.util
 
 import kotlin.random.Random
 

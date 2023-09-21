@@ -6,6 +6,7 @@ import org.springframework.cglib.proxy.Proxy
 import org.springframework.stereotype.Component
 import ua.anastasiia.finesapp.annotation.AutofillNullable
 import ua.anastasiia.finesapp.annotation.NullableGenerate
+import ua.anastasiia.finesapp.beanPostProcessor.fieldGeneration.RandomFieldGenerator
 import java.lang.reflect.Method
 import kotlin.reflect.KClass
 
