@@ -35,7 +35,7 @@ class GlobalExceptionHandler {
         ErrorMessage(
             HttpStatus.NOT_FOUND.value(),
             LocalDateTime.now(),
-            exception.message ?: "",
+            exception.message,
             request.getDescription(false)
         )
 
@@ -53,7 +53,7 @@ class GlobalExceptionHandler {
         ErrorMessage(
             HttpStatus.NOT_FOUND.value(),
             LocalDateTime.now(),
-            exception.message ?: "",
+            exception.message,
             request.getDescription(false)
         )
 

@@ -3,7 +3,6 @@ package ua.anastasiia.finesapp.validator
 import jakarta.validation.ConstraintValidator
 import jakarta.validation.ConstraintValidatorContext
 import ua.anastasiia.finesapp.annotation.EnumValidator
-import java.util.*
 
 class EnumValidatorConstraint : ConstraintValidator<EnumValidator, CharSequence> {
 
