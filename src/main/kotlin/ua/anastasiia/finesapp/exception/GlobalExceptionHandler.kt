@@ -13,7 +13,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(
         value =
-        [CarPlateNotFoundException::class, CarIdNotFoundException::class, CarPlateDuplicateException::class]
+        [CarPlateNotFoundException::class, CarPlateDuplicateException::class, CarsNotFoundException::class]
     )
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     fun handleCarExceptions(exception: CarException, request: WebRequest) =
@@ -24,9 +24,14 @@ class GlobalExceptionHandler {
             request.getDescription(false)
         )
 
-    @ExceptionHandler(ViolationNotFoundException::class)
+    @ExceptionHandler(
+        value = [
+            TrafficTicketNotFoundException::class,
+            TrafficTicketWithViolationNotFoundException::class,
+        ]
+    )
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    fun handleViolationExceptions(exception: ViolationNotFoundException, request: WebRequest) =
+    fun handleTrafficTicketExceptions(exception: TrafficTicketException, request: WebRequest) =
         ErrorMessage(
             HttpStatus.NOT_FOUND.value(),
             LocalDateTime.now(),
@@ -34,9 +39,17 @@ class GlobalExceptionHandler {
             request.getDescription(false)
         )
 
-    @ExceptionHandler(FineIdNotFoundException::class)
+    @ExceptionHandler(
+        value =
+        [
+            FineIdNotFoundException::class,
+            FinesInLocationNotFound::class,
+            NoFinesFoundException::class,
+            NoFinesFoundByDateException::class
+        ]
+    )
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    fun handleViolationExceptions(exception: FineIdNotFoundException, request: WebRequest) =
+    fun handleViolationExceptions(exception: FineException, request: WebRequest) =
         ErrorMessage(
             HttpStatus.NOT_FOUND.value(),
             LocalDateTime.now(),
