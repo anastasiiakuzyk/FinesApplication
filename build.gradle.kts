@@ -36,8 +36,6 @@ repositories {
 dependencies {
     implementation("org.glassfish.jersey.core:jersey-client:3.1.3")
     implementation("org.glassfish.jersey.media:jersey-media-json-jackson:3.1.3")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("mysql:mysql-connector-java:8.0.33")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
