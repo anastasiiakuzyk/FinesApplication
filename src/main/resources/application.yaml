@@ -3,8 +3,14 @@ spring:
     mongodb:
       database: finesdb
       port: 27017
+      auto-index-creation: true
   main:
     banner-mode: 'off'
   jackson:
     mapper:
       accept-case-insensitive-enums: true
+
+
+logging:
+  level:
+    root: warn
