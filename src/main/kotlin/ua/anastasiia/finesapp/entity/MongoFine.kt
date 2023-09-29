@@ -3,8 +3,11 @@ package ua.anastasiia.finesapp.entity
 import org.bson.types.ObjectId
 import org.springframework.data.annotation.Id
 import org.springframework.data.annotation.TypeAlias
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexType
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed
+import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
-import org.springframework.data.mongodb.core.mapping.Field
 import ua.anastasiia.finesapp.entity.MongoFine.Companion.COLLECTION_NAME
 import java.time.LocalDateTime
 
@@ -16,25 +19,24 @@ data class MongoFine(
     val car: Car,
     val trafficTickets: List<TrafficTicket>
 ) {
+
     data class Car(
-        @Field("car.plate")
+        @Indexed(unique = true)
         val plate: String,
-        @Field("car.make")
         val make: String,
-        @Field("car.model")
         val model: String,
-        @Field("car.color")
         val color: String
     )
 
     data class TrafficTicket(
         val id: ObjectId = ObjectId(),
-        val longitude: Double,
-        val latitude: Double,
+        @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
+        val location: GeoJsonPoint,
         val dateTime: LocalDateTime,
         val photoUrl: String,
         val violations: List<Violation>
     ) {
+
         data class Violation(
             val description: String,
             val price: Double
