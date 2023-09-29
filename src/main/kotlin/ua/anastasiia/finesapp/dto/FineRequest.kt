@@ -4,6 +4,7 @@ import jakarta.validation.Valid
 import jakarta.validation.constraints.Pattern
 import jakarta.validation.constraints.Size
 import org.bson.types.ObjectId
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint
 import ua.anastasiia.finesapp.annotation.EnumValidator
 import ua.anastasiia.finesapp.annotation.IntListValidator
 import ua.anastasiia.finesapp.entity.MongoFine
@@ -11,9 +12,9 @@ import java.time.LocalDateTime
 
 data class FineRequest(
     @field:Valid
-    val carRequest: CarRequest,
+    val car: CarRequest,
     @field:Valid
-    val trafficTicketRequest: List<TrafficTicketRequest>
+    val trafficTickets: List<TrafficTicketRequest>
 )
 
 data class CarRequest(
@@ -71,20 +72,19 @@ enum class Violation(val price: Double) {
 
 fun FineRequest.toMongoFine() = MongoFine(
     car = MongoFine.Car(
-        plate = carRequest.plate,
-        make = carRequest.make,
-        model = carRequest.model!!,
-        color = carRequest.color.uppercase()
+        plate = car.plate,
+        make = car.make,
+        model = car.model!!,
+        color = car.color.uppercase()
     ),
-    trafficTickets = trafficTicketRequest.map { trafficTicketRequest ->
+    trafficTickets = trafficTickets.map { trafficTicketRequest ->
         trafficTicketRequest.toMongoTrafficTicket()
     }
 )
 
 fun TrafficTicketRequest.toMongoTrafficTicket() = MongoFine.TrafficTicket(
     id = id ?: ObjectId(),
-    longitude = longitude,
-    latitude = latitude,
+    location = GeoJsonPoint(longitude, latitude),
     dateTime = dateTime,
     photoUrl = photoUrl,
     violations = getViolationsByIndexes(violations)
