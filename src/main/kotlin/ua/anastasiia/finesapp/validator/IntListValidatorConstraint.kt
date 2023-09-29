@@ -23,10 +23,12 @@ class IntListValidatorConstraint : ConstraintValidator<IntListValidator, List<In
         val listOfInvalid = intList.filter { i: Int -> i !in min..max }.toList()
         if (listOfInvalid.isNotEmpty()) {
             val invalidValuesStr = listOfInvalid.joinToString()
-            context.disableDefaultConstraintViolation()
-            context.buildConstraintViolationWithTemplate(
-                messageTemplate.replace("{invalidValues}", invalidValuesStr)
-            ).addConstraintViolation()
+            with(context) {
+                disableDefaultConstraintViolation()
+                buildConstraintViolationWithTemplate(
+                    messageTemplate.replace("{invalidValues}", invalidValuesStr)
+                ).addConstraintViolation()
+            }
         }
         return listOfInvalid.isEmpty()
     }

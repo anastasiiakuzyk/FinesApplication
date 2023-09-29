@@ -23,13 +23,15 @@ class EnumValidatorConstraint : ConstraintValidator<EnumValidator, CharSequence>
         if (value == null) {
             return true
         }
-        val isValid = acceptedValues.contains(value.toString().uppercase())
+        val isValid = value.toString().uppercase() in acceptedValues
         if (!isValid) {
             val enumValuesStr = acceptedValues.joinToString()
-            context.disableDefaultConstraintViolation()
-            context.buildConstraintViolationWithTemplate(
-                messageTemplate.replace("{enumValues}", enumValuesStr)
-            ).addConstraintViolation()
+            with(context) {
+                disableDefaultConstraintViolation()
+                buildConstraintViolationWithTemplate(
+                    messageTemplate.replace("{enumValues}", enumValuesStr)
+                ).addConstraintViolation()
+            }
         }
         return isValid
     }
