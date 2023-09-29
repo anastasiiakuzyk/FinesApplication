@@ -10,10 +10,12 @@ import org.springframework.data.mongodb.core.aggregation.Aggregation.unwind
 import org.springframework.data.mongodb.core.find
 import org.springframework.data.mongodb.core.findAll
 import org.springframework.data.mongodb.core.findOne
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint
 import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.Update
 import org.springframework.stereotype.Repository
+import ua.anastasiia.finesapp.dto.CarResponse
 import ua.anastasiia.finesapp.dto.TotalFineSumResponse
 import ua.anastasiia.finesapp.entity.MongoFine
 import ua.anastasiia.finesapp.entity.MongoFine.Companion.COLLECTION_NAME
@@ -25,13 +27,14 @@ import java.time.LocalDate
 @Suppress("TooManyFunctions")
 class MongoFineRepository(val mongoTemplate: MongoTemplate) {
     fun getAllFines(): List<MongoFine> = mongoTemplate.findAll<MongoFine>()
-    fun getAllFinesInLocation(longitude: Double, latitude: Double): List<MongoFine> {
-        return mongoTemplate.find(
+    fun getAllFinesInLocation(longitude: Double, latitude: Double, radiusInMeters: Double): List<MongoFine> =
+        mongoTemplate.find(
             Query(
-                Criteria.where("trafficTickets.longitude").`is`(longitude).and("trafficTickets.latitude").`is`(latitude)
+                Criteria.where("trafficTickets.location").nearSphere(
+                    GeoJsonPoint(longitude, latitude)
+                ).maxDistance(radiusInMeters)
             )
         )
-    }
 
     fun getAllFinesByDate(localDate: LocalDate): List<MongoFine> {
         val start = localDate.atStartOfDay()
@@ -45,11 +48,9 @@ class MongoFineRepository(val mongoTemplate: MongoTemplate) {
     fun getFineByCarPlate(plate: String): MongoFine? =
         mongoTemplate.findOne<MongoFine>(Query.query(Criteria.where("car.plate").`is`(plate)))
 
-    fun saveFine(mongoFine: MongoFine): MongoFine =
-        mongoTemplate.save<MongoFine>(mongoFine)
+    fun saveFine(mongoFine: MongoFine): MongoFine = mongoTemplate.save<MongoFine>(mongoFine)
 
-    fun saveFines(mongoFines: List<MongoFine>): List<MongoFine> =
-        mongoTemplate.insertAll(mongoFines).toList()
+    fun saveFines(mongoFines: List<MongoFine>): List<MongoFine> = mongoTemplate.insertAll(mongoFines).toList()
 
     fun deleteFineById(fineId: ObjectId): MongoFine? =
         mongoTemplate.findAndRemove<MongoFine>(Query(Criteria.where("id").`is`(fineId)))
@@ -74,24 +75,25 @@ class MongoFineRepository(val mongoTemplate: MongoTemplate) {
         trafficTicketId: ObjectId,
         violations: List<MongoFine.TrafficTicket.Violation>
     ): MongoFine? = mongoTemplate.findAndModify<MongoFine>(
-        Query.query(Criteria.where("car.plate").`is`(plate).and("trafficTickets.id").`is`(trafficTicketId)),
+        Query.query(
+            Criteria.where("car.plate").`is`(plate).and("trafficTickets.id").`is`(trafficTicketId)
+        ),
         Update().apply {
             addToSet("trafficTickets.$.violations").each(violations)
         }
     )
 
-    fun removeViolationFromTicket(ticketId: ObjectId, violationDescription: String): MongoFine? =
+    fun removeViolationFromTicket(carPlate: String, ticketId: ObjectId, violationDescription: String): MongoFine? =
         mongoTemplate.findAndModify<MongoFine>(
-            Query(Criteria.where("trafficTickets.id").`is`(ticketId)),
+            Query(Criteria.where("trafficTickets.id").`is`(ticketId).and("car.plate").`is`(carPlate)),
             Update().pull("trafficTickets.$.violations", mapOf("description" to violationDescription))
         )
 
-    fun getSumOfFinesForCarPlate(plate: String): TotalFineSumResponse? {
-        val matchStage = match(Criteria.where("car.plate").`is`(plate))
+    fun getSumOfFinesForCarPlate(carPlate: String): TotalFineSumResponse? {
+        val matchStage = match(Criteria.where("car.plate").`is`(carPlate))
         val unwindTickets = unwind("trafficTickets")
         val unwindViolations = unwind("trafficTickets.violations")
-        val groupStage = group("car.plate")
-            .sum("trafficTickets.violations.price").`as`("totalSum")
+        val groupStage = group("car.plate").sum("trafficTickets.violations.price").`as`("totalSum")
 
         return mongoTemplate.aggregate<MongoFine, TotalFineSumResponse>(
             Aggregation.newAggregation(
@@ -105,22 +107,11 @@ class MongoFineRepository(val mongoTemplate: MongoTemplate) {
         }
     }
 
-    fun getAllCars(): List<MongoFine.Car> {
-        val query = Query().apply {
-            fields().include("car").exclude("_id")
-        }
-
-        return mongoTemplate.find(query, MongoFine.Car::class.java, COLLECTION_NAME)
-//            .mapNotNull { linkedHashMap ->
-//                (linkedHashMap["car"] as? LinkedHashMap<*, *>)?.let {
-//                    MongoFine.Car(
-//                        plate = it["plate"] as String,
-//                        make = it["make"] as String,
-//                        model = it["model"] as String,
-//                        color = it["color"] as String
-//                    )
-//                }
-//            }
+    fun getAllCars(): List<CarResponse> {
+        return mongoTemplate.find<CarResponse>(
+            Query().apply { fields().include("car").exclude("_id") },
+            COLLECTION_NAME
+        )
     }
 
     fun updateCarById(fineId: ObjectId, car: MongoFine.Car): MongoFine? =
