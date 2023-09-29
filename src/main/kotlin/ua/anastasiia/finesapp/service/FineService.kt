@@ -2,6 +2,7 @@ package ua.anastasiia.finesapp.service
 
 import org.bson.types.ObjectId
 import ua.anastasiia.finesapp.dto.CarRequest
+import ua.anastasiia.finesapp.dto.CarResponse
 import ua.anastasiia.finesapp.dto.FineRequest
 import ua.anastasiia.finesapp.dto.TotalFineSumResponse
 import ua.anastasiia.finesapp.dto.TrafficTicketRequest
@@ -9,15 +10,15 @@ import ua.anastasiia.finesapp.entity.MongoFine
 import java.time.LocalDate
 
 @Suppress("TooManyFunctions")
-interface MongoFineService {
+interface FineService {
 
     fun updateCarById(fineId: ObjectId, carRequest: CarRequest): MongoFine
 
-    fun getAllCars(): List<MongoFine.Car>
+    fun getAllCars(): List<CarResponse>
 
     fun getSumOfFinesForCarPlate(plate: String): TotalFineSumResponse
 
-    fun removeViolationFromTicket(ticketId: ObjectId, violationId: Int): MongoFine
+    fun removeViolationFromTicket(carPlate: String, ticketId: ObjectId, violationId: Int): MongoFine
 
     fun addViolationToTrafficTicket(plate: String, trafficTicketId: ObjectId, violationIds: List<Int>): MongoFine
 
@@ -39,7 +40,7 @@ interface MongoFineService {
 
     fun getAllFinesByDate(date: LocalDate): List<MongoFine>
 
-    fun getAllFinesInLocation(longitude: Double, latitude: Double): List<MongoFine>
+    fun getAllFinesInLocation(longitude: Double, latitude: Double, radiusInMeters: Double): List<MongoFine>
 
     fun getAllFines(): List<MongoFine>
 

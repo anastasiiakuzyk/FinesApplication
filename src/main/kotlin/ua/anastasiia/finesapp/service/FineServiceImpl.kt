@@ -31,12 +31,12 @@ import java.time.LocalDate
 @Service
 @NullableGenerate
 @Suppress("TooManyFunctions")
-class MongoFineServiceImpl(val mongoFineRepository: MongoFineRepository) : MongoFineService {
+class FineServiceImpl(val mongoFineRepository: MongoFineRepository) : FineService {
     override fun getAllFines(): List<MongoFine> =
         mongoFineRepository.getAllFines().ifEmpty { throw NoFinesFoundException() }
 
-    override fun getAllFinesInLocation(longitude: Double, latitude: Double): List<MongoFine> =
-        mongoFineRepository.getAllFinesInLocation(longitude, latitude)
+    override fun getAllFinesInLocation(longitude: Double, latitude: Double, radiusInMeters: Double): List<MongoFine> =
+        mongoFineRepository.getAllFinesInLocation(longitude, latitude, radiusInMeters)
             .ifEmpty { throw FinesInLocationNotFound(longitude, latitude) }
 
     override fun getAllFinesByDate(date: LocalDate): List<MongoFine> =
@@ -53,14 +53,14 @@ class MongoFineServiceImpl(val mongoFineRepository: MongoFineRepository) : Mongo
         runCatching {
             mongoFineRepository.saveFine(fineRequest.toMongoFine())
         }.getOrElse {
-            throw CarPlateDuplicateException(fineRequest.carRequest.plate)
+            throw CarPlateDuplicateException(fineRequest.car.plate)
         }
 
     override fun saveFines(mongoFines: List<FineRequest>): List<MongoFine> =
         runCatching {
             mongoFineRepository.saveFines(mongoFines.map { it.toMongoFine() })
         }.getOrElse {
-            throw CarPlateDuplicateException(mongoFines.joinToString { it.carRequest.plate })
+            throw CarPlateDuplicateException(mongoFines.joinToString { it.car.plate })
         }
 
     override fun deleteFineById(fineId: ObjectId): MongoFine =
@@ -99,8 +99,9 @@ class MongoFineServiceImpl(val mongoFineRepository: MongoFineRepository) : Mongo
         ) ?: throw TrafficTicketNotFoundException(plate, trafficTicketId)
     }
 
-    override fun removeViolationFromTicket(ticketId: ObjectId, violationId: Int): MongoFine =
+    override fun removeViolationFromTicket(carPlate: String, ticketId: ObjectId, violationId: Int): MongoFine =
         mongoFineRepository.removeViolationFromTicket(
+            carPlate,
             ticketId,
             Violation.entries[violationId].toMongoViolation().description
         ) ?: throw TrafficTicketWithViolationNotFoundException(ticketId, violationId)
