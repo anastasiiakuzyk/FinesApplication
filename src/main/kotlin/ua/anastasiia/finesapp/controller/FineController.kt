@@ -1,34 +1,50 @@
 package ua.anastasiia.finesapp.controller
 
+import jakarta.validation.Valid
+import org.bson.types.ObjectId
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import ua.anastasiia.finesapp.dto.FineRequest
-import ua.anastasiia.finesapp.dto.FineResponse
-import ua.anastasiia.finesapp.entity.Fine
+import ua.anastasiia.finesapp.entity.MongoFine
 import ua.anastasiia.finesapp.service.FineService
+import java.time.LocalDate
 
 @RestController
 @RequestMapping(value = ["/fines"])
 class FineController(val fineService: FineService) {
 
     @GetMapping
-    fun getAllFines(): List<FineResponse> = fineService.getAllFines()
+    fun getAllFines(): List<MongoFine> = fineService.getAllFines()
+
+    @GetMapping("location")
+    fun getAllFinesInLocation(
+        @RequestParam longitude: Double,
+        @RequestParam latitude: Double,
+        @RequestParam radius: Double
+    ): List<MongoFine> =
+        fineService.getAllFinesInLocation(longitude, latitude, radius)
+
+    @GetMapping("date/{date}")
+    fun getAllFinesByDate(@PathVariable date: LocalDate): List<MongoFine> =
+        fineService.getAllFinesByDate(date)
+
+    @GetMapping("fine/{fineId}")
+    fun getFineById(@PathVariable fineId: ObjectId): MongoFine =
+        fineService.getFineById(fineId)
 
     @PostMapping
-    fun newFine(@RequestBody fineRequest: FineRequest): Fine = fineService.createFine(fineRequest)
+    fun saveFine(@Valid @RequestBody fineRequest: FineRequest): MongoFine = fineService.saveFine(fineRequest)
 
-    @GetMapping("{id}")
-    fun getFine(@PathVariable id: Long): FineResponse = fineService.getFineById(id)
+    @PostMapping("many")
+    fun saveFines(@Valid @RequestBody mongoFines: List<FineRequest>): List<MongoFine> =
+        fineService.saveFines(mongoFines)
 
-    @GetMapping("{plate}")
-    fun getFinesByPlate(@PathVariable plate: String): List<FineResponse> = fineService.getFinesByPlate(plate)
-
-    @PatchMapping("{fineId}/violations/{violationIds}")
-    fun addViolation(@PathVariable fineId: Long, @PathVariable violationIds: List<Long>): FineResponse =
-        fineService.addViolations(fineId, violationIds)
+    @DeleteMapping("fine/{fineId}")
+    fun deleteFineById(@PathVariable fineId: ObjectId): MongoFine = fineService.deleteFineById(fineId)
 }

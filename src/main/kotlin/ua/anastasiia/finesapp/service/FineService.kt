@@ -1,18 +1,48 @@
 package ua.anastasiia.finesapp.service
 
+import org.bson.types.ObjectId
+import ua.anastasiia.finesapp.dto.CarRequest
+import ua.anastasiia.finesapp.dto.CarResponse
 import ua.anastasiia.finesapp.dto.FineRequest
-import ua.anastasiia.finesapp.dto.FineResponse
-import ua.anastasiia.finesapp.entity.Fine
+import ua.anastasiia.finesapp.dto.TotalFineSumResponse
+import ua.anastasiia.finesapp.dto.TrafficTicketRequest
+import ua.anastasiia.finesapp.entity.MongoFine
+import java.time.LocalDate
 
+@Suppress("TooManyFunctions")
 interface FineService {
 
-    fun createFine(fineRequest: FineRequest): Fine
+    fun updateCarById(fineId: ObjectId, carRequest: CarRequest): MongoFine
 
-    fun getAllFines(): List<FineResponse>
+    fun getAllCars(): List<CarResponse>
 
-    fun getFinesByPlate(plate: String): List<FineResponse>
+    fun getSumOfFinesForCarPlate(plate: String): TotalFineSumResponse
 
-    fun addViolations(fineId: Long, violationIds: List<Long>): FineResponse
+    fun removeViolationFromTicket(carPlate: String, ticketId: ObjectId, violationId: Int): MongoFine
 
-    fun getFineById(id: Long): FineResponse
+    fun addViolationToTrafficTicket(plate: String, trafficTicketId: ObjectId, violationIds: List<Int>): MongoFine
+
+    fun updateTrafficTicketByCarPlateAndId(
+        plate: String,
+        trafficTicketId: ObjectId,
+        updatedTicketRequest: TrafficTicketRequest
+    ): MongoFine
+
+    fun addTrafficTicketByCarPlate(plate: String, ticketRequest: TrafficTicketRequest): MongoFine
+
+    fun deleteFineById(fineId: ObjectId): MongoFine
+
+    fun saveFines(mongoFines: List<FineRequest>): List<MongoFine>
+
+    fun getFineByCarPlate(plate: String): MongoFine
+
+    fun getFineById(fineId: ObjectId): MongoFine
+
+    fun getAllFinesByDate(date: LocalDate): List<MongoFine>
+
+    fun getAllFinesInLocation(longitude: Double, latitude: Double, radiusInMeters: Double): List<MongoFine>
+
+    fun getAllFines(): List<MongoFine>
+
+    fun saveFine(fineRequest: FineRequest): MongoFine
 }

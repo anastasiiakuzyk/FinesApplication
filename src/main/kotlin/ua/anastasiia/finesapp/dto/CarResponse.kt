@@ -1,27 +1,14 @@
 package ua.anastasiia.finesapp.dto
 
-import ua.anastasiia.finesapp.entity.Car
+import org.springframework.data.mongodb.core.mapping.Field
 
 data class CarResponse(
-    val id: Long,
+    @Field("car.plate")
     val plate: String,
+    @Field("car.make")
     val make: String,
+    @Field("car.model")
     val model: String,
+    @Field("car.color")
     val color: String
-)
-
-fun Car.toResponse() = CarResponse(
-    id = id!!,
-    plate = plate,
-    make = make,
-    model = model,
-    color = color
-)
-
-fun CarResponse.toEntity() = Car(
-    id = id,
-    plate = plate,
-    make = make,
-    model = model,
-    color = color
 )
