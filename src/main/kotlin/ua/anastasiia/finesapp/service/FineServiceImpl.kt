@@ -1,5 +1,6 @@
 package ua.anastasiia.finesapp.service
 
+import com.mongodb.DuplicateKeyException
 import org.bson.types.ObjectId
 import org.springframework.stereotype.Service
 import ua.anastasiia.finesapp.annotation.AutofillNullable
@@ -48,12 +49,14 @@ class FineServiceImpl(val mongoFineRepository: MongoFineRepository) : FineServic
     override fun getFineByCarPlate(plate: String): MongoFine =
         mongoFineRepository.getFineByCarPlate(plate) ?: throw CarPlateNotFoundException(plate)
 
-    @Suppress("SwallowedException")
     override fun saveFine(fineRequest: FineRequest): MongoFine =
         runCatching {
             mongoFineRepository.saveFine(fineRequest.toMongoFine())
-        }.getOrElse {
-            throw CarPlateDuplicateException(fineRequest.car.plate)
+        }.getOrElse { exception ->
+            when (exception) {
+                is DuplicateKeyException -> throw CarPlateDuplicateException(fineRequest.car.plate)
+                else -> throw exception
+            }
         }
 
     override fun saveFines(mongoFines: List<FineRequest>): List<MongoFine> =
