@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  app:
+    build:
+      dockerfile: Dockerfile
+    container_name: app
+    depends_on:
+      mongo:
+        condition: service_healthy
+      nats:
+        condition: service_started
+    ports:
+      - "8080:8080"
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    environment:
+      - MONGO_INITDB_DATABASE=finesdb
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_ROOT_USERNAME=root
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
+    healthcheck:
+      test: [ "CMD", "mongosh", "--eval", "db.adminCommand('ping')" ]
+      interval: 10s
+      timeout: 1s
+      retries: 5
+
+  nats:
+    image: nats
+    container_name: nats
+    ports:
+      - "4222:4222"
+    healthcheck:
+      test: [ "CMD", "nats", "ping" ]
+      interval: 1s
+      timeout: 1s
+      retries: 5
+

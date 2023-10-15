@@ -1,16 +1,18 @@
 spring:
   data:
     mongodb:
-      database: finesdb
-      port: 27017
+      uri: mongodb://root:root@mongo:27017/finesdb?authSource=admin
       auto-index-creation: true
+
   main:
     banner-mode: 'off'
   jackson:
     mapper:
       accept-case-insensitive-enums: true
-
+nats:
+  url: "nats://nats:4222"
 
 logging:
   level:
     root: warn
+
