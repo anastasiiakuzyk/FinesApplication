@@ -1,4 +1,4 @@
-package ua.anastasiia.finesapp.dto
+package ua.anastasiia.finesapp.dto.response
 
 data class TotalFineSumResponse(
     val id: String,
