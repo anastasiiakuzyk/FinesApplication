@@ -1,0 +1,16 @@
+syntax = "proto3";
+import "ua/anastasiia/finesapp/commonmodels/violation/violation.proto";
+import "google/type/latlng.proto";
+import "google/protobuf/timestamp.proto";
+
+package ua.anastasiia.finesapp.commonmodels.trafficticket;
+option java_package = "ua.anastasiia.finesapp.commonmodels.trafficticket";
+option java_multiple_files = true;
+
+message TrafficTicket{
+  string id = 1;
+  google.type.LatLng location = 2;
+  google.protobuf.Timestamp date_time = 3;
+  string photo_url = 4;
+  repeated ua.anastasiia.finesapp.commonmodels.violation.Violation violations = 6;
+}

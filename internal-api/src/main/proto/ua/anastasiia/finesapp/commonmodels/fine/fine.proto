@@ -1,0 +1,13 @@
+syntax = "proto3";
+import "ua/anastasiia/finesapp/commonmodels/car/car.proto";
+import "ua/anastasiia/finesapp/commonmodels/trafficticket/traffic_ticket.proto";
+
+package ua.anastasiia.finesapp.commonmodels.fine;
+option java_package = "ua.anastasiia.finesapp.commonmodels.fine";
+option java_multiple_files = true;
+
+message Fine{
+  string id = 1;
+  ua.anastasiia.finesapp.commonmodels.car.Car car = 2;
+  repeated ua.anastasiia.finesapp.commonmodels.trafficticket.TrafficTicket trafficTickets = 3;
+}
