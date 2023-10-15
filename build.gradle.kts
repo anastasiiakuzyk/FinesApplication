@@ -26,7 +26,7 @@ subprojects {
     java {
         sourceCompatibility = JavaVersion.VERSION_17
     }
-    dependencies{
+    dependencies {
         implementation("com.google.api.grpc:proto-google-common-protos:2.26.0")
     }
 }
