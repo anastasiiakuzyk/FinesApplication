@@ -8,6 +8,9 @@ import org.springframework.data.mongodb.core.index.GeoSpatialIndexType
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed
 import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
+import ua.anastasiia.finesapp.commonmodels.car.Car
+import ua.anastasiia.finesapp.commonmodels.trafficticket.TrafficTicket
+import ua.anastasiia.finesapp.commonmodels.violation.Violation
 import ua.anastasiia.finesapp.entity.MongoFine.Companion.COLLECTION_NAME
 import java.time.LocalDateTime
 

@@ -1,4 +1,4 @@
-package ua.anastasiia.finesapp.controller
+package ua.anastasiia.finesapp.controller.rest
 
 import jakarta.validation.Valid
 import org.bson.types.ObjectId
@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import ua.anastasiia.finesapp.dto.CarRequest
-import ua.anastasiia.finesapp.dto.TotalFineSumResponse
+import ua.anastasiia.finesapp.dto.request.CarRequest
+import ua.anastasiia.finesapp.dto.response.FineResponse
+import ua.anastasiia.finesapp.dto.response.TotalFineSumResponse
 import ua.anastasiia.finesapp.entity.MongoFine
 import ua.anastasiia.finesapp.service.FineService
 
@@ -20,7 +21,7 @@ class CarController(val fineService: FineService) {
     fun getAllCars() = fineService.getAllCars()
 
     @GetMapping("plate/{carPlate}")
-    fun getFineByCarPlate(@PathVariable carPlate: String): MongoFine =
+    fun getFineByCarPlate(@PathVariable carPlate: String): FineResponse =
         fineService.getFineByCarPlate(carPlate)
 
     @GetMapping("sum/car/{carPlate}")
@@ -32,5 +33,5 @@ class CarController(val fineService: FineService) {
     fun updateCarById(
         @PathVariable fineId: ObjectId,
         @Valid @RequestBody carRequest: CarRequest
-    ): MongoFine = fineService.updateCarById(fineId, carRequest)
+    ): FineResponse = fineService.updateCarById(fineId, carRequest)
 }

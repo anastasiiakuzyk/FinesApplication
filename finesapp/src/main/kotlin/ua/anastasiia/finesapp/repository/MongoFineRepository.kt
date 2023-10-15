@@ -1,5 +1,6 @@
 package ua.anastasiia.finesapp.repository
 
+import com.mongodb.BasicDBObject
 import org.bson.types.ObjectId
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.aggregate
@@ -15,13 +16,14 @@ import org.springframework.data.mongodb.core.query.Criteria
 import org.springframework.data.mongodb.core.query.Query
 import org.springframework.data.mongodb.core.query.Update
 import org.springframework.stereotype.Repository
-import ua.anastasiia.finesapp.dto.CarResponse
-import ua.anastasiia.finesapp.dto.TotalFineSumResponse
+import ua.anastasiia.finesapp.dto.response.CarResponse
+import ua.anastasiia.finesapp.dto.response.TotalFineSumResponse
 import ua.anastasiia.finesapp.entity.MongoFine
 import ua.anastasiia.finesapp.entity.MongoFine.Companion.COLLECTION_NAME
 import ua.anastasiia.finesapp.util.findAndModify
 import ua.anastasiia.finesapp.util.findAndRemove
 import java.time.LocalDate
+
 
 @Repository
 @Suppress("TooManyFunctions")
@@ -89,6 +91,12 @@ class MongoFineRepository(val mongoTemplate: MongoTemplate) {
             Update().pull("trafficTickets.$.violations", mapOf("description" to violationDescription))
         )
 
+    fun removeTicketByCarPlateAndId(carPlate: String, ticketId: ObjectId): MongoFine? =
+        mongoTemplate.findAndModify<MongoFine>(
+            Query(Criteria.where("trafficTickets.id").`is`(ticketId).and("car.plate").`is`(carPlate)),
+            Update().pull("trafficTickets", BasicDBObject("id", ticketId))
+        )
+
     fun getSumOfFinesForCarPlate(carPlate: String): TotalFineSumResponse? {
         val matchStage = match(Criteria.where("car.plate").`is`(carPlate))
         val unwindTickets = unwind("trafficTickets")
@@ -109,7 +117,7 @@ class MongoFineRepository(val mongoTemplate: MongoTemplate) {
 
     fun getAllCars(): List<CarResponse> {
         return mongoTemplate.find<CarResponse>(
-            Query().apply { fields().include("car").exclude("_id") },
+            Query().apply { fields().include("car").include().exclude("_id") },
             COLLECTION_NAME
         )
     }
