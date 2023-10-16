@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component
 import ua.anastasiia.finesapp.annotation.AutofillNullable
 import ua.anastasiia.finesapp.annotation.NullableGenerate
 import ua.anastasiia.finesapp.beanPostProcessor.fieldGeneration.RandomFieldGenerator
+import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
 import kotlin.reflect.KClass
 
@@ -62,11 +63,10 @@ class InvocationHandler(
     private val methodsWithAnnotatedParams: Map<String, Pair<Int, AutofillNullable>>
 ) : InvocationHandler {
 
-    override operator fun invoke(proxy: Any?, method: Method, args: Array<out Any>): Any? {
+    override operator fun invoke(proxy: Any?, method: Method, args: Array<out Any>): Any? = runCatching {
         generateValueForAnnotatedParams(method, args)
-
-        return method.invoke(currentBean, *args)
-    }
+        method.invoke(currentBean, *args)
+    }.getOrElse { exception -> throw (exception as InvocationTargetException).targetException }
 
     private fun generateValueForAnnotatedParams(method: Method, args: Array<out Any>) {
         methodsWithAnnotatedParams[method.name]?.let { (paramIndex, annotationDetails) ->
