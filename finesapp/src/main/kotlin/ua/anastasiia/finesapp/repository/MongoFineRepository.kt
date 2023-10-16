@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.aggregate
 import org.springframework.data.mongodb.core.aggregation.Aggregation
 import org.springframework.data.mongodb.core.aggregation.Aggregation.group
 import org.springframework.data.mongodb.core.aggregation.Aggregation.match
+import org.springframework.data.mongodb.core.aggregation.Aggregation.project
 import org.springframework.data.mongodb.core.aggregation.Aggregation.unwind
 import org.springframework.data.mongodb.core.find
 import org.springframework.data.mongodb.core.findAll
@@ -23,7 +24,6 @@ import ua.anastasiia.finesapp.entity.MongoFine.Companion.COLLECTION_NAME
 import ua.anastasiia.finesapp.util.findAndModify
 import ua.anastasiia.finesapp.util.findAndRemove
 import java.time.LocalDate
-
 
 @Repository
 @Suppress("TooManyFunctions")
@@ -115,12 +115,13 @@ class MongoFineRepository(val mongoTemplate: MongoTemplate) {
         }
     }
 
-    fun getAllCars(): List<CarResponse> {
-        return mongoTemplate.find<CarResponse>(
-            Query().apply { fields().include("car").include().exclude("_id") },
-            COLLECTION_NAME
-        )
-    }
+    fun getAllCars(): List<CarResponse> = mongoTemplate.aggregate<CarResponse>(
+        Aggregation.newAggregation(
+            project("car.plate", "car.make", "car.model", "car.color")
+                .andExclude("_id")
+        ),
+        COLLECTION_NAME
+    ).mappedResults
 
     fun updateCarById(fineId: ObjectId, car: MongoFine.Car): MongoFine? =
         mongoTemplate.findAndModify<MongoFine>(Query(Criteria.where("id").`is`(fineId)), Update().set("car", car))
