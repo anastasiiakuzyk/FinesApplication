@@ -4,8 +4,10 @@ import io.nats.client.Dispatcher
 import io.nats.client.Message
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import ua.anastasiia.finesapp.dto.toProto
+import ua.anastasiia.finesapp.exception.CarPlateDuplicateException
 import ua.anastasiia.finesapp.input.reqreply.fine.CreateFineRequest
 import ua.anastasiia.finesapp.input.reqreply.fine.CreateFineResponse
 import ua.anastasiia.finesapp.output.pubsub.fine.FineCreatedEvent
@@ -17,10 +19,10 @@ import java.util.concurrent.atomic.AtomicInteger
 class CreateFineNatsControllerTest : NatsControllerTest() {
 
     @Test
-    fun testCreatedFine() {
-        val fineToCreate = getFineToSave().toProto()
+    fun `verify fine creation and corresponding event publication`() {
+        val fineToCreate = getFineToSaveGeneratedCarPlate().toProto()
 
-        val createdEvent = connection.subscribe(NatsSubject.Fine.getCreatedEventSubject(fineToCreate.car.plate))
+        val createdEvent = connection.subscribe(NatsSubject.Fine.eventSubject(fineToCreate.car.plate))
 
         val expectedResponse = CreateFineResponse
             .newBuilder()
@@ -40,8 +42,22 @@ class CreateFineNatsControllerTest : NatsControllerTest() {
     }
 
     @Test
-    fun testWithQueryGroup() {
-        val fineToCreate = getFineToSave().toProto()
+    fun `verify failure when creating fine with existing car plate`() {
+        val fine = getFineToSave()
+        val fineToCreate = fine.toProto()
+        fineRepository.saveFine(fine)
+        val request = CreateFineRequest.newBuilder().setFine(fineToCreate).build()
+        val response = createFineNatsController.handle(request)
+        assertTrue(response.hasFailure())
+        assertEquals(
+            CarPlateDuplicateException(fine.car.plate).message,
+            response.failure.carPlateDuplicateError.message
+        )
+    }
+
+    @Test
+    fun `ensure single dispatcher response in queue group`() {
+        val fineToCreate = getFineToSaveGeneratedCarPlate().toProto()
         val responseCounter = AtomicInteger(0)
         val numberOfDispatchersToCreate = 5
         val latch = CountDownLatch(1)
@@ -68,8 +84,8 @@ class CreateFineNatsControllerTest : NatsControllerTest() {
     }
 
     @Test
-    fun testWithoutQueryGroup() {
-        val fineToCreate = getFineToSave().toProto()
+    fun `ensure multiple dispatcher responses without queue group`() {
+        val fineToCreate = getFineToSaveGeneratedCarPlate().toProto()
         val responseCounter = AtomicInteger(0)
         val numberOfDispatchersToCreate = 5
         val latch = CountDownLatch(5)

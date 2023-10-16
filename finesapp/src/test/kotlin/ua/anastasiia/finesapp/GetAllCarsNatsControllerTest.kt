@@ -11,8 +11,8 @@ import ua.anastasiia.finesapp.input.reqreply.car.GetAllCarsResponse
 class GetAllCarsNatsControllerTest : NatsControllerTest() {
 
     @Test
-    fun testGetAll() {
-        fineRepository.saveFines(listOf(getFineToSave()))
+    fun `verify retrieval of all cars with existing entries`() {
+        fineRepository.saveFines(listOf(getFineToSaveGeneratedCarPlate()))
 
         val expectedResponse = GetAllCarsResponse
             .newBuilder()
@@ -28,11 +28,14 @@ class GetAllCarsNatsControllerTest : NatsControllerTest() {
     }
 
     @Test
-    fun testGetAllEmpty() {
-        clean()
+    fun `verify handling of no available cars scenario`() {
         val expectedResponse = GetAllCarsResponse
             .newBuilder()
-            .apply { failureBuilder.setMessage(CarsNotFoundException().message) }
+            .apply {
+                failureBuilder.apply {
+                    carsNotFoundErrorBuilder.setMessage(CarsNotFoundException().message)
+                }
+            }
             .build()
 
         val actualResponse = sendRequestAndParseResponse(

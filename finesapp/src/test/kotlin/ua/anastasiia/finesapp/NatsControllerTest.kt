@@ -40,8 +40,15 @@ abstract class NatsControllerTest {
         mongoTemplate.dropCollection<MongoFine>()
     }
 
-    protected fun getFineToSave() = MongoFine(
+    protected fun getFineToSaveGeneratedCarPlate() = MongoFine(
+        id = ObjectId(),
         car = MongoFine.Car(RandomPlateGenerator().generate(), "Test", "Test", "BLACK"),
+        trafficTickets = listOf()
+    )
+
+    protected fun getFineToSave() = MongoFine(
+        id = ObjectId(),
+        car = MongoFine.Car("TE1234ST", "Test", "Test", "BLACK"),
         trafficTickets = listOf()
     )
 
