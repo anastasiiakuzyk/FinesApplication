@@ -57,6 +57,9 @@ class FineServiceImpl(val mongoFineRepository: MongoFineRepository) : FineServic
 
     override fun saveFine(fineRequest: FineRequest): FineResponse =
         runCatching {
+            mongoFineRepository.getFineByCarPlate(fineRequest.car.plate)?.let {
+                throw CarPlateDuplicateException(fineRequest.car.plate)
+            }
             mongoFineRepository.saveFine(fineRequest.toFine()).toResponse()
         }.getOrElse { exception ->
             when (exception) {
