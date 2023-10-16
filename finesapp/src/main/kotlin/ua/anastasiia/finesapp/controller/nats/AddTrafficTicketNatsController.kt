@@ -40,7 +40,7 @@ class AddTrafficTicketNatsController(
 
     private fun publishEvent(protoFine: Fine, carPlate: String) {
         val eventMessage = TrafficTicketAddedEvent.newBuilder().setFine(protoFine).build()
-        val eventSubject = NatsSubject.TrafficTicket.getAddedEventSubject(carPlate)
+        val eventSubject = NatsSubject.TrafficTicket.eventSubject(carPlate)
         connection.publish(
             eventSubject,
             eventMessage.toByteArray()
@@ -54,8 +54,11 @@ class AddTrafficTicketNatsController(
 
     private fun buildFailureResponse(exception: Throwable): AddTrafficTicketResponse =
         AddTrafficTicketResponse.newBuilder().apply {
-            when (val cause = exception.cause?.cause) {
-                is CarPlateNotFoundException -> failureBuilder.setMessage(cause.message)
+            when (exception) {
+                is CarPlateNotFoundException -> failureBuilder.apply {
+                    carPlateNotFoundBuilder.setMessage(exception.message)
+                }
+
                 else -> failureBuilder.setMessage(exception.stackTraceToString())
             }
         }.build()

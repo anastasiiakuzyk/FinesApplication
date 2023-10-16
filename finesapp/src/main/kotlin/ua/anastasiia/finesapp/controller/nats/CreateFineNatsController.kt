@@ -39,7 +39,7 @@ class CreateFineNatsController(
 
     private fun publishEvent(protoFine: Fine, carPlate: String) {
         val eventMessage = FineCreatedEvent.newBuilder().setFine(protoFine).build()
-        val eventSubject = NatsSubject.Fine.getCreatedEventSubject(carPlate)
+        val eventSubject = NatsSubject.Fine.eventSubject(carPlate)
         connection.publish(
             eventSubject,
             eventMessage.toByteArray()
@@ -48,14 +48,16 @@ class CreateFineNatsController(
 
     private fun buildSuccessResponse(protoFine: Fine): CreateFineResponse =
         CreateFineResponse.newBuilder().apply {
-            println(protoFine)
             successBuilder.setFine(protoFine)
         }.build()
 
     private fun buildFailureResponse(exception: Throwable): CreateFineResponse =
         CreateFineResponse.newBuilder().apply {
-            when (val cause = exception.cause?.cause) {
-                is CarPlateDuplicateException -> failureBuilder.setMessage(cause.message)
+            when (exception) {
+                is CarPlateDuplicateException -> failureBuilder.apply {
+                    carPlateDuplicateErrorBuilder.setMessage(exception.message)
+                }
+
                 else -> failureBuilder.setMessage(exception.message)
             }
         }.build()

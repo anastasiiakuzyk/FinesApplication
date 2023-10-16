@@ -3,11 +3,11 @@ package ua.anastasiia.finesapp.controller.nats
 import com.google.protobuf.Parser
 import org.bson.types.ObjectId
 import org.springframework.stereotype.Component
-import ua.anastasiia.finesapp.NatsSubject.Fine.GET_BY_ID
+import ua.anastasiia.finesapp.NatsSubject
 import ua.anastasiia.finesapp.commonmodels.fine.Fine
 import ua.anastasiia.finesapp.dto.response.toFine
 import ua.anastasiia.finesapp.dto.toProto
-import ua.anastasiia.finesapp.exception.CarsNotFoundException
+import ua.anastasiia.finesapp.exception.FineIdNotFoundException
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByIdRequest
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByIdResponse
 import ua.anastasiia.finesapp.service.FineService
@@ -16,7 +16,7 @@ import ua.anastasiia.finesapp.service.FineService
 class GetFineByIdNatsController(
     private val fineService: FineService
 ) : NatsController<GetFineByIdRequest, GetFineByIdResponse> {
-    override val subject: String = GET_BY_ID
+    override val subject: String = NatsSubject.Fine.GET_BY_ID
 
     override val parser: Parser<GetFineByIdRequest> = GetFineByIdRequest.parser()
     override fun handle(request: GetFineByIdRequest): GetFineByIdResponse = runCatching {
@@ -34,8 +34,11 @@ class GetFineByIdNatsController(
 
     private fun failureResponse(exception: Throwable): GetFineByIdResponse =
         GetFineByIdResponse.newBuilder().apply {
-            when (val cause = exception.cause?.cause) {
-                is CarsNotFoundException -> failureBuilder.setMessage(cause.message)
+            when (exception) {
+                is FineIdNotFoundException -> failureBuilder.apply {
+                    fineIdNotFoundErrorBuilder.setMessage(exception.message)
+                }
+
                 else -> failureBuilder.setMessage(exception.message)
             }
         }.build()

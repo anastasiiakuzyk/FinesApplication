@@ -32,8 +32,11 @@ class GetFineByCarPlateNatsController(
 
     private fun buildFailureResponse(exception: Throwable): GetFineByCarPlateResponse =
         GetFineByCarPlateResponse.newBuilder().apply {
-            when (val cause = exception.cause?.cause) {
-                is CarPlateNotFoundException -> failureBuilder.setMessage(cause.message)
+            when (exception) {
+                is CarPlateNotFoundException -> failureBuilder.apply {
+                    carPlateNotFoundErrorBuilder.setMessage(exception.message)
+                }
+
                 else -> failureBuilder.setMessage(exception.message)
             }
         }.build()

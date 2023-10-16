@@ -40,7 +40,7 @@ class DeleteViolationNatsController(
 
     private fun publishEvent(protoFine: Fine, carPlate: String) {
         val eventMessage = ViolationDeletedEvent.newBuilder().setFine(protoFine).build()
-        val eventSubject = NatsSubject.Violation.getDeletedEventSubject(carPlate)
+        val eventSubject = NatsSubject.Violation.eventSubject(carPlate)
         connection.publish(
             eventSubject,
             eventMessage.toByteArray()
@@ -54,8 +54,11 @@ class DeleteViolationNatsController(
 
     private fun buildFailureResponse(exception: Throwable): DeleteViolationResponse =
         DeleteViolationResponse.newBuilder().apply {
-            when (val cause = exception.cause?.cause) {
-                is TrafficTicketWithViolationNotFoundException -> failureBuilder.setMessage(cause.message)
+            when (exception) {
+                is TrafficTicketWithViolationNotFoundException -> failureBuilder.apply {
+                    trafficTicketWithViolationNotFoundErrorBuilder.setMessage(exception.message)
+                }
+
                 else -> failureBuilder.setMessage(exception.stackTraceToString())
             }
         }.build()
