@@ -13,12 +13,11 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
-fun MongoFine.toProto(): Fine =
-    Fine.newBuilder()
-        .setId(id?.toHexString() ?: ObjectId().toHexString())
-        .setCar(car.toProto())
-        .addAllTrafficTickets(trafficTickets.map { it.toProto() })
-        .build()
+fun MongoFine.toProto(): Fine = Fine.newBuilder()
+    .setId(id?.toHexString())
+    .setCar(car.toProto())
+    .addAllTrafficTickets(trafficTickets.map { it.toProto() })
+    .build()
 
 fun Fine.toFine() = MongoFine(
     id = id?.let { ObjectId(id) },
