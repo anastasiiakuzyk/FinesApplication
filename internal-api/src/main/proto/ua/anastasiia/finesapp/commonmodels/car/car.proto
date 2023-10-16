@@ -3,7 +3,7 @@ package ua.anastasiia.finesapp.commonmodels.car;
 option java_package = "ua.anastasiia.finesapp.commonmodels.car";
 option java_multiple_files = true;
 
-message Car{
+message Car {
   string plate = 1;
   string make = 2;
   string model = 3;

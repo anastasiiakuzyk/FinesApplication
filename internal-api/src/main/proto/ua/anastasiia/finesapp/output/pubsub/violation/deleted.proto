@@ -4,6 +4,6 @@ package ua.anastasiia.finesapp.output.pubsub.violation;
 option java_multiple_files = true;
 option java_package = "ua.anastasiia.finesapp.output.pubsub.violation";
 
-message ViolationDeletedEvent{
-  ua.anastasiia.finesapp.commonmodels.fine.Fine fine = 1;
+message ViolationDeletedEvent {
+  commonmodels.fine.Fine fine = 1;
 }

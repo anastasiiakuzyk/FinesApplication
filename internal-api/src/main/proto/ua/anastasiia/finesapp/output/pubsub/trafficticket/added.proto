@@ -4,6 +4,6 @@ package ua.anastasiia.finesapp.output.pubsub.trafficticket;
 option java_multiple_files = true;
 option java_package = "ua.anastasiia.finesapp.output.pubsub.trafficticket";
 
-message TrafficTicketAddedEvent{
-  ua.anastasiia.finesapp.commonmodels.fine.Fine fine = 1;
+message TrafficTicketAddedEvent {
+  commonmodels.fine.Fine fine = 1;
 }
