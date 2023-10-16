@@ -1,24 +1,18 @@
 package ua.anastasiia.finesapp.beanPostProcessor.fieldGeneration
 
 class RandomPlateGenerator : RandomFieldGenerator {
+    private val uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    private val numbers = "0123456789"
+    private val numberOfLetters = 2
+
     @Suppress("MagicNumber")
+    private val numberOfNumbers = 4
+
     override fun generate(): String {
-        val uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        val numbers = "0123456789"
-        val plate = StringBuilder()
-
-        repeat(2) {
-            plate.append(uppercaseLetters.random())
-        }
-
-        repeat(4) {
-            plate.append(numbers.random())
-        }
-
-        repeat(2) {
-            plate.append(uppercaseLetters.random())
-        }
-
-        return plate.toString()
+        return StringBuilder().apply {
+            repeat(numberOfLetters) { append(uppercaseLetters.random()) }
+            repeat(numberOfNumbers) { append(numbers.random()) }
+            repeat(numberOfLetters) { append(uppercaseLetters.random()) }
+        }.toString()
     }
 }
