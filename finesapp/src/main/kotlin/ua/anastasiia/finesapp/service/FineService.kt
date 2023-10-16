@@ -2,11 +2,11 @@ package ua.anastasiia.finesapp.service
 
 import org.bson.types.ObjectId
 import ua.anastasiia.finesapp.dto.request.CarRequest
-import ua.anastasiia.finesapp.dto.response.CarResponse
 import ua.anastasiia.finesapp.dto.request.FineRequest
+import ua.anastasiia.finesapp.dto.request.TrafficTicketRequest
+import ua.anastasiia.finesapp.dto.response.CarResponse
 import ua.anastasiia.finesapp.dto.response.FineResponse
 import ua.anastasiia.finesapp.dto.response.TotalFineSumResponse
-import ua.anastasiia.finesapp.dto.request.TrafficTicketRequest
 import java.time.LocalDate
 
 @Suppress("TooManyFunctions")
@@ -19,6 +19,7 @@ interface FineService {
     fun getSumOfFinesForCarPlate(plate: String): TotalFineSumResponse
 
     fun removeViolationFromTicket(carPlate: String, ticketId: ObjectId, violationId: Int): FineResponse
+
     fun removeTicketByCarPlateAndId(carPlate: String, ticketId: ObjectId): FineResponse
 
     fun addViolationToTrafficTicket(plate: String, trafficTicketId: ObjectId, violationIds: List<Int>): FineResponse

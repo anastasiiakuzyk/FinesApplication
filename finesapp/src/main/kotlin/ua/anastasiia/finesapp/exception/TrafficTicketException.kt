@@ -8,5 +8,7 @@ open class TrafficTicketException(override val message: String) : RuntimeExcepti
 class TrafficTicketNotFoundException(plate: String, id: ObjectId) :
     TrafficTicketException("Traffic ticket for car $plate with id: $id doesn't exist.")
 
-class TrafficTicketWithViolationNotFoundException(fineId: ObjectId, violationId: Int) :
-    TrafficTicketException("Fine with id:$fineId and violation: ${ViolationType.entries[violationId]} not found.")
+class TrafficTicketWithViolationNotFoundException(tickedId: ObjectId, violationId: Int) :
+    TrafficTicketException(
+        "Traffic ticket with id:$tickedId and violation: ${ViolationType.entries[violationId]} not found."
+    )
