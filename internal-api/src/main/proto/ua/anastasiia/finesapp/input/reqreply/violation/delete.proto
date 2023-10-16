@@ -1,26 +1,30 @@
 syntax = "proto3";
 import "ua/anastasiia/finesapp/commonmodels/fine/fine.proto";
+import "ua/anastasiia/finesapp/input/reqreply/error.proto";
 package ua.anastasiia.finesapp.input.reqreply.violation;
 option java_package = "ua.anastasiia.finesapp.input.reqreply.violation";
 option java_multiple_files = true;
 
-message DeleteViolationRequest{
+message DeleteViolationRequest {
   string car_plate = 1;
   string ticket_id = 2;
   uint32 violation_id = 3;
 }
 
-message DeleteViolationResponse{
+message DeleteViolationResponse {
   oneof response {
     Success success = 1;
     Failure failure = 2;
   }
 
   message Success {
-    ua.anastasiia.finesapp.commonmodels.fine.Fine fine = 1;
+    commonmodels.fine.Fine fine = 1;
   }
 
   message Failure {
     string message = 100;
+    oneof error {
+      Error traffic_ticket_with_violation_not_found_error = 1;
+    }
   }
 }

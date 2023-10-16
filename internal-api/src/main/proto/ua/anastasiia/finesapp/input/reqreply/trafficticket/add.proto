@@ -1,13 +1,14 @@
 syntax = "proto3";
-import "ua/anastasiia/finesapp/commonmodels/trafficticket/traffic_ticket.proto";
 import "ua/anastasiia/finesapp/commonmodels/fine/fine.proto";
+import "ua/anastasiia/finesapp/commonmodels/trafficticket/traffic_ticket.proto";
+import "ua/anastasiia/finesapp/input/reqreply/error.proto";
 package ua.anastasiia.finesapp.input.reqreply.trafficticket;
 option java_package = "ua.anastasiia.finesapp.input.reqreply.trafficticket";
 option java_multiple_files = true;
 
 message AddTrafficTicketRequest {
   string car_plate = 1;
-  ua.anastasiia.finesapp.commonmodels.trafficticket.TrafficTicket traffic_ticket = 2;
+  commonmodels.trafficticket.TrafficTicket traffic_ticket = 2;
 }
 
 message AddTrafficTicketResponse {
@@ -17,10 +18,13 @@ message AddTrafficTicketResponse {
   }
 
   message Success {
-    ua.anastasiia.finesapp.commonmodels.fine.Fine fine = 1;
+    commonmodels.fine.Fine fine = 1;
   }
 
   message Failure {
     string message = 100;
+    oneof error {
+      Error car_plate_not_found = 1;
+    }
   }
 }

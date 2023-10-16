@@ -1,5 +1,6 @@
 syntax = "proto3";
 import "ua/anastasiia/finesapp/commonmodels/car/car.proto";
+import "ua/anastasiia/finesapp/input/reqreply/error.proto";
 package ua.anastasiia.finesapp.input.reqreply.car;
 option java_package = "ua.anastasiia.finesapp.input.reqreply.car";
 option java_multiple_files = true;
@@ -8,17 +9,19 @@ message GetAllCarsRequest{
 }
 
 message GetAllCarsResponse{
-
   oneof response {
     Success success = 1;
     Failure failure = 2;
   }
 
   message Success {
-    repeated ua.anastasiia.finesapp.commonmodels.car.Car cars = 1;
+    repeated commonmodels.car.Car cars = 1;
   }
 
   message Failure {
     string message = 100;
+    oneof error {
+      Error cars_not_found_error = 1;
+    }
   }
 }
