@@ -27,7 +27,7 @@ class DeleteViolationNatsControllerTest : NatsControllerTest() {
         val expectedFine = savedFine.copy(trafficTickets = listOf(expectedTrafficTicket)).toProto()
 
         val createdEvent = connection.subscribe(
-            NatsSubject.Violation.eventSubject(savedFine.car.plate)
+            NatsSubject.Violation.deletedSubject(savedFine.car.plate)
         )
 
         val expectedResponse = DeleteViolationResponse
@@ -75,7 +75,7 @@ class DeleteViolationNatsControllerTest : NatsControllerTest() {
             actualResponse.failure.trafficTicketWithViolationNotFoundError.message
         )
 
-        val createdEvent = connection.subscribe(NatsSubject.Violation.eventSubject(carPlate))
+        val createdEvent = connection.subscribe(NatsSubject.Violation.deletedSubject(carPlate))
         val event = createdEvent.nextMessage(Duration.ofSeconds(2))
         assertNull(event, "No event should be published for invalid violation deletion.")
     }

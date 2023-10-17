@@ -20,7 +20,7 @@ class AddTrafficTicketNatsControllerTest : NatsControllerTest() {
         val expectedFine = savedFine.copy(trafficTickets = listOf(trafficTicketToSave)).toProto()
 
         val createdEvent = connection.subscribe(
-            NatsSubject.TrafficTicket.eventSubject(expectedFine.car.plate)
+            NatsSubject.TrafficTicket.addedSubject(expectedFine.car.plate)
         )
 
         val expectedResponse = AddTrafficTicketResponse

@@ -22,7 +22,7 @@ class CreateFineNatsControllerTest : NatsControllerTest() {
     fun `verify fine creation and corresponding event publication`() {
         val fineToCreate = getFineToSaveGeneratedCarPlate().toProto()
 
-        val createdEvent = connection.subscribe(NatsSubject.Fine.eventSubject(fineToCreate.car.plate))
+        val createdEvent = connection.subscribe(NatsSubject.Fine.createdSubject(fineToCreate.car.plate))
 
         val expectedResponse = CreateFineResponse
             .newBuilder()
