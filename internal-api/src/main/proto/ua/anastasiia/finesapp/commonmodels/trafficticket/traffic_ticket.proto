@@ -7,7 +7,7 @@ option java_package = "ua.anastasiia.finesapp.commonmodels.trafficticket";
 option java_multiple_files = true;
 
 message TrafficTicket {
-  string id = 1 [deprecated = true];
+  string id = 1;
   google.type.LatLng location = 2;
   google.protobuf.Timestamp date_time = 3;
   string photo_url = 4;
