@@ -40,7 +40,7 @@ class DeleteViolationNatsController(
 
     private fun publishEvent(protoFine: Fine, carPlate: String) {
         val eventMessage = ViolationDeletedEvent.newBuilder().setFine(protoFine).build()
-        val eventSubject = NatsSubject.Violation.eventSubject(carPlate)
+        val eventSubject = NatsSubject.Violation.deletedSubject(carPlate)
         connection.publish(
             eventSubject,
             eventMessage.toByteArray()

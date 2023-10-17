@@ -40,7 +40,7 @@ class AddTrafficTicketNatsController(
 
     private fun publishEvent(protoFine: Fine, carPlate: String) {
         val eventMessage = TrafficTicketAddedEvent.newBuilder().setFine(protoFine).build()
-        val eventSubject = NatsSubject.TrafficTicket.eventSubject(carPlate)
+        val eventSubject = NatsSubject.TrafficTicket.addedSubject(carPlate)
         connection.publish(
             eventSubject,
             eventMessage.toByteArray()

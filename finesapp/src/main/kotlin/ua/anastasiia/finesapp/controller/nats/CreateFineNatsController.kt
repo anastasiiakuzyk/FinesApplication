@@ -39,7 +39,7 @@ class CreateFineNatsController(
 
     private fun publishEvent(protoFine: Fine, carPlate: String) {
         val eventMessage = FineCreatedEvent.newBuilder().setFine(protoFine).build()
-        val eventSubject = NatsSubject.Fine.eventSubject(carPlate)
+        val eventSubject = NatsSubject.Fine.createdSubject(carPlate)
         connection.publish(
             eventSubject,
             eventMessage.toByteArray()
