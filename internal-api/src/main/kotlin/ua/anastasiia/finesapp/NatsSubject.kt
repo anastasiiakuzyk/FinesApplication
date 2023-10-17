@@ -24,7 +24,7 @@ object NatsSubject {
     }
 
     object Fine : Subject("fine") {
-        private const val CREATED = ".created"
+        private const val CREATED = "created"
         val GET_BY_ID = inputReqReply("get_by_id")
         val GET_BY_CAR_PLATE = inputReqReply("get_by_car_plate")
         val CREATE = inputReqReply("create")
