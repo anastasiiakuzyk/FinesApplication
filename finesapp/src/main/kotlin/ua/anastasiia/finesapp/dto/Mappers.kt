@@ -13,14 +13,18 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
-fun MongoFine.toProto(): Fine = Fine.newBuilder()
-    .setId(id?.toHexString())
-    .setCar(car.toProto())
-    .addAllTrafficTickets(trafficTickets.map { it.toProto() })
-    .build()
+fun MongoFine.toProto(): Fine {
+    val builder = Fine.newBuilder()
+        .setCar(car.toProto())
+        .addAllTrafficTickets(trafficTickets.map { it.toProto() })
+    id?.let {
+        builder.setId(it.toHexString())
+    }
+    return builder.build()
+}
 
 fun Fine.toFine() = MongoFine(
-    id = id?.let { ObjectId(id) },
+    id = id.takeIf { this.hasId() }?.let { ObjectId(it) },
     car = car.toCar(),
     trafficTickets = trafficTicketsList.map { it.toTrafficTicket() }
 )
@@ -48,9 +52,7 @@ fun MongoFine.TrafficTicket.toProto(): TrafficTicket = TrafficTicket.newBuilder(
             .setLongitude(location.y)
             .build()
     )
-    .setDateTime(
-        Timestamps.fromMillis(dateTime.toInstant(ZoneOffset.UTC).toEpochMilli())
-    )
+    .setDateTime(Timestamps.fromMillis(dateTime.toInstant(ZoneOffset.UTC).toEpochMilli()))
     .setPhotoUrl(photoUrl)
     .addAllViolations(violations.map { violation -> violation.toProto() })
     .build()
