@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import ua.anastasiia.finesapp.dto.toProto
-import ua.anastasiia.finesapp.exception.CarPlateNotFoundException
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByCarPlateRequest
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByCarPlateResponse
 
@@ -33,9 +32,7 @@ class GetFineByCarPlateNatsControllerTest : NatsControllerTest() {
 
         val expectedResponse = GetFineByCarPlateResponse
             .newBuilder()
-            .apply {
-                failureBuilder.carPlateNotFoundErrorBuilder.setMessage(CarPlateNotFoundException(carPlate).message)
-            }
+            .apply { failureBuilder.carPlateNotFoundErrorBuilder }
             .build()
 
         val actualResponse = sendRequestAndParseResponse(

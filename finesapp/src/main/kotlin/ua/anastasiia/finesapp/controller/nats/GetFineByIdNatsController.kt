@@ -35,10 +35,7 @@ class GetFineByIdNatsController(
     private fun failureResponse(exception: Throwable): GetFineByIdResponse =
         GetFineByIdResponse.newBuilder().apply {
             when (exception) {
-                is FineIdNotFoundException -> failureBuilder.apply {
-                    fineIdNotFoundErrorBuilder.setMessage(exception.message)
-                }
-
+                is FineIdNotFoundException -> failureBuilder.fineIdNotFoundErrorBuilder
                 else -> failureBuilder.setMessage(exception.message)
             }
         }.build()

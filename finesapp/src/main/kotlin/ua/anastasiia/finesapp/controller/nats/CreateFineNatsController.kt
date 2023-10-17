@@ -54,10 +54,7 @@ class CreateFineNatsController(
     private fun buildFailureResponse(exception: Throwable): CreateFineResponse =
         CreateFineResponse.newBuilder().apply {
             when (exception) {
-                is CarPlateDuplicateException -> failureBuilder.apply {
-                    carPlateDuplicateErrorBuilder.setMessage(exception.message)
-                }
-
+                is CarPlateDuplicateException -> failureBuilder.carPlateDuplicateErrorBuilder
                 else -> failureBuilder.setMessage(exception.message)
             }
         }.build()

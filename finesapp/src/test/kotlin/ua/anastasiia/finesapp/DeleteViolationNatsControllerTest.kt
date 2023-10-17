@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test
 import ua.anastasiia.finesapp.dto.toProto
 import ua.anastasiia.finesapp.dto.toViolation
 import ua.anastasiia.finesapp.dto.toViolationType
-import ua.anastasiia.finesapp.exception.TrafficTicketWithViolationNotFoundException
 import ua.anastasiia.finesapp.input.reqreply.violation.DeleteViolationRequest
 import ua.anastasiia.finesapp.input.reqreply.violation.DeleteViolationResponse
 import ua.anastasiia.finesapp.output.pubsub.violation.ViolationDeletedEvent
@@ -64,16 +63,18 @@ class DeleteViolationNatsControllerTest : NatsControllerTest() {
             .setViolationId(invalidViolationId)
             .build()
 
+        val expectedResponse = DeleteViolationResponse
+            .newBuilder()
+            .apply { failureBuilder.trafficTicketWithViolationNotFoundErrorBuilder }
+            .build()
+
         val actualResponse = sendRequestAndParseResponse(
             subject = NatsSubject.Violation.DELETE,
             request = deleteViolationRequest,
             parser = DeleteViolationResponse::parseFrom
         )
         assertTrue(actualResponse.hasFailure())
-        assertEquals(
-            TrafficTicketWithViolationNotFoundException(objectId, invalidViolationId).message,
-            actualResponse.failure.trafficTicketWithViolationNotFoundError.message
-        )
+        assertEquals(expectedResponse, actualResponse)
 
         val createdEvent = connection.subscribe(NatsSubject.Violation.deletedSubject(carPlate))
         val event = createdEvent.nextMessage(Duration.ofSeconds(2))

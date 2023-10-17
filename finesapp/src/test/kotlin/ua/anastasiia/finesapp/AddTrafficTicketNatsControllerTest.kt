@@ -4,7 +4,6 @@ import org.bson.types.ObjectId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import ua.anastasiia.finesapp.dto.toProto
-import ua.anastasiia.finesapp.exception.CarPlateNotFoundException
 import ua.anastasiia.finesapp.input.reqreply.trafficticket.AddTrafficTicketRequest
 import ua.anastasiia.finesapp.input.reqreply.trafficticket.AddTrafficTicketResponse
 import ua.anastasiia.finesapp.output.pubsub.trafficticket.TrafficTicketAddedEvent
@@ -60,11 +59,7 @@ class AddTrafficTicketNatsControllerTest : NatsControllerTest() {
         )
 
         val expectedResponse = AddTrafficTicketResponse.newBuilder()
-            .apply {
-                failureBuilder.apply {
-                    carPlateNotFoundBuilder.setMessage(CarPlateNotFoundException(nonExistentFine.car.plate).message)
-                }
-            }
+            .apply { failureBuilder.carPlateNotFoundBuilder }
             .build()
         assertEquals(expectedResponse, actualResponse)
     }

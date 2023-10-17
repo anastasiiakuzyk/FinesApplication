@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import ua.anastasiia.finesapp.dto.toProto
-import ua.anastasiia.finesapp.exception.FineIdNotFoundException
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByIdRequest
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByIdResponse
 
@@ -34,11 +33,7 @@ class GetFineByIdNatsControllerTest : NatsControllerTest() {
 
         val expectedResponse = GetFineByIdResponse
             .newBuilder()
-            .apply {
-                failureBuilder.apply {
-                    fineIdNotFoundErrorBuilder.setMessage(FineIdNotFoundException(id).message)
-                }
-            }
+            .apply { failureBuilder.fineIdNotFoundErrorBuilder }
             .build()
 
         val actualResponse = sendRequestAndParseResponse(

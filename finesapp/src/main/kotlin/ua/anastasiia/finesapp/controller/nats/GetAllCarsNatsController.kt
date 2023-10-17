@@ -35,10 +35,7 @@ class GetAllCarsNatsController(
     private fun buildFailureResponse(exception: Throwable): GetAllCarsResponse =
         GetAllCarsResponse.newBuilder().apply {
             when (exception) {
-                is CarsNotFoundException -> failureBuilder.apply {
-                    carsNotFoundErrorBuilder.setMessage(exception.message)
-                }
-
+                is CarsNotFoundException -> failureBuilder.carsNotFoundErrorBuilder
                 else -> failureBuilder.setMessage(exception.stackTraceToString())
             }
         }.build()

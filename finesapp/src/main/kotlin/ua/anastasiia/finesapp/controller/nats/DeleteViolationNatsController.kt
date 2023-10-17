@@ -55,9 +55,8 @@ class DeleteViolationNatsController(
     private fun buildFailureResponse(exception: Throwable): DeleteViolationResponse =
         DeleteViolationResponse.newBuilder().apply {
             when (exception) {
-                is TrafficTicketWithViolationNotFoundException -> failureBuilder.apply {
-                    trafficTicketWithViolationNotFoundErrorBuilder.setMessage(exception.message)
-                }
+                is TrafficTicketWithViolationNotFoundException ->
+                    failureBuilder.trafficTicketWithViolationNotFoundErrorBuilder
 
                 else -> failureBuilder.setMessage(exception.stackTraceToString())
             }

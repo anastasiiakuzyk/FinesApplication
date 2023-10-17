@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import ua.anastasiia.finesapp.dto.response.toCar
 import ua.anastasiia.finesapp.dto.toProto
-import ua.anastasiia.finesapp.exception.CarsNotFoundException
 import ua.anastasiia.finesapp.input.reqreply.car.GetAllCarsRequest
 import ua.anastasiia.finesapp.input.reqreply.car.GetAllCarsResponse
 
@@ -31,11 +30,7 @@ class GetAllCarsNatsControllerTest : NatsControllerTest() {
     fun `verify handling of no available cars scenario`() {
         val expectedResponse = GetAllCarsResponse
             .newBuilder()
-            .apply {
-                failureBuilder.apply {
-                    carsNotFoundErrorBuilder.setMessage(CarsNotFoundException().message)
-                }
-            }
+            .apply { failureBuilder.carsNotFoundErrorBuilder }
             .build()
 
         val actualResponse = sendRequestAndParseResponse(

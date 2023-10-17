@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import ua.anastasiia.finesapp.dto.toProto
-import ua.anastasiia.finesapp.exception.CarPlateDuplicateException
 import ua.anastasiia.finesapp.input.reqreply.fine.CreateFineRequest
 import ua.anastasiia.finesapp.input.reqreply.fine.CreateFineResponse
 import ua.anastasiia.finesapp.output.pubsub.fine.FineCreatedEvent
@@ -47,11 +46,13 @@ class CreateFineNatsControllerTest : NatsControllerTest() {
         val fineToCreate = fine.toProto()
         fineRepository.saveFine(fine)
         val request = CreateFineRequest.newBuilder().setFine(fineToCreate).build()
-        val response = createFineNatsController.handle(request)
-        assertTrue(response.hasFailure())
+        val actualResponse = createFineNatsController.handle(request)
+        assertTrue(actualResponse.hasFailure())
+        val expectedResponse =
+            CreateFineResponse.newBuilder().apply { failureBuilder.carPlateDuplicateErrorBuilder }.build()
         assertEquals(
-            CarPlateDuplicateException(fine.car.plate).message,
-            response.failure.carPlateDuplicateError.message
+            expectedResponse,
+            actualResponse
         )
     }
 

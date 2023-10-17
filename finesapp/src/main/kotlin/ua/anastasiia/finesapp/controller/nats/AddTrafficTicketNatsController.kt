@@ -55,10 +55,7 @@ class AddTrafficTicketNatsController(
     private fun buildFailureResponse(exception: Throwable): AddTrafficTicketResponse =
         AddTrafficTicketResponse.newBuilder().apply {
             when (exception) {
-                is CarPlateNotFoundException -> failureBuilder.apply {
-                    carPlateNotFoundBuilder.setMessage(exception.message)
-                }
-
+                is CarPlateNotFoundException -> failureBuilder.carPlateNotFoundBuilder
                 else -> failureBuilder.setMessage(exception.stackTraceToString())
             }
         }.build()
