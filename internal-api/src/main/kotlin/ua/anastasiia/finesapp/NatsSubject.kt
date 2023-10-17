@@ -4,7 +4,7 @@ object NatsSubject {
 
     open class Subject(private val subdomain: String) {
         protected fun inputReqReply(action: String) = "input.reqreply.$subdomain.$action"
-        protected fun outputPubSub(entity: String, event: String) = "output.pubsub.$subdomain.$entity$event"
+        protected fun outputPubSub(entity: String, event: String) = "output.pubsub.$subdomain.$entity.$event"
     }
 
     object Car : Subject("car") {
@@ -12,15 +12,15 @@ object NatsSubject {
     }
 
     object TrafficTicket : Subject("trafficticket") {
-        private const val ADDED = ".added"
+        private const val ADDED = "added"
         val ADD = inputReqReply("add")
-        fun eventSubject(carPlate: String) = outputPubSub(carPlate, ADDED)
+        fun addedSubject(carPlate: String) = outputPubSub(carPlate, ADDED)
     }
 
     object Violation : Subject("violation") {
-        private const val DELETED = ".deleted"
+        private const val DELETED = "deleted"
         val DELETE = inputReqReply("delete")
-        fun eventSubject(carPlate: String) = outputPubSub(carPlate, DELETED)
+        fun deletedSubject(carPlate: String) = outputPubSub(carPlate, DELETED)
     }
 
     object Fine : Subject("fine") {
@@ -28,6 +28,6 @@ object NatsSubject {
         val GET_BY_ID = inputReqReply("get_by_id")
         val GET_BY_CAR_PLATE = inputReqReply("get_by_car_plate")
         val CREATE = inputReqReply("create")
-        fun eventSubject(carPlate: String) = outputPubSub(carPlate, CREATED)
+        fun createdSubject(carPlate: String) = outputPubSub(carPlate, CREATED)
     }
 }
