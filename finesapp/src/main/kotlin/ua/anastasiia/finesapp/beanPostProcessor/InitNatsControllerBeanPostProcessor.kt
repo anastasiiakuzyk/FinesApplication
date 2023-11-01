@@ -2,9 +2,9 @@ package ua.anastasiia.finesapp.beanPostProcessor
 
 import com.google.protobuf.GeneratedMessageV3
 import io.nats.client.Connection
-import io.nats.client.Message
 import org.springframework.beans.factory.config.BeanPostProcessor
 import org.springframework.stereotype.Component
+import reactor.core.scheduler.Schedulers
 import ua.anastasiia.finesapp.controller.nats.NatsController
 
 @Component
@@ -20,10 +20,12 @@ class InitNatsControllerBeanPostProcessor(val connection: Connection) : BeanPost
     private fun <RequestT : GeneratedMessageV3, ResponseT : GeneratedMessageV3> initNatsController(
         controller: NatsController<RequestT, ResponseT>
     ) {
-        connection.createDispatcher { message: Message ->
-            val request = controller.parser.parseFrom(message.data)
-            val response = controller.handle(request)
-            connection.publish(message.replyTo, response.toByteArray())
-        }.subscribe(controller.subject)
+        connection.createDispatcher { message ->
+            val parsedData = controller.parser.parseFrom(message.data)
+            controller.handle(parsedData)
+                .map { it.toByteArray() }
+                .subscribeOn(Schedulers.boundedElastic())
+                .subscribe { connection.publish(message.replyTo, it) }
+        }.apply { subscribe(controller.subject) }
     }
 }
