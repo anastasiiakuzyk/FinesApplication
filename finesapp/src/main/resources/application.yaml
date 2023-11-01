@@ -11,8 +11,3 @@ spring:
       accept-case-insensitive-enums: true
 nats:
   url: "nats://nats:4222"
-
-logging:
-  level:
-    root: warn
-
