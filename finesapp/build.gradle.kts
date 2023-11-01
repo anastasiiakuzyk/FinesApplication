@@ -11,9 +11,8 @@ plugins {
 dependencies {
     implementation("org.glassfish.jersey.core:jersey-client:3.1.3")
     implementation("org.glassfish.jersey.media:jersey-media-json-jackson:3.1.3")
-
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("com.google.protobuf:protobuf-java-util:3.24.3")
 
@@ -23,6 +22,8 @@ dependencies {
     implementation("io.nats:jnats:2.16.14")
     implementation("com.google.protobuf:protobuf-java:3.24.3")
     implementation(project(":internal-api"))
+
+    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
