@@ -1,0 +1,12 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://root:root@localhost:27017/finesdb?authSource=admin
+      auto-index-creation: true
+  main:
+    banner-mode: 'off'
+  jackson:
+    mapper:
+      accept-case-insensitive-enums: true
+nats:
+  url: "nats://localhost:4222"
