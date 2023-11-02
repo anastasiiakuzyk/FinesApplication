@@ -41,7 +41,7 @@ import java.time.LocalDate
 @Suppress("TooManyFunctions")
 class FineServiceImpl(val mongoFineRepository: MongoFineRepository) : FineService {
     override fun getAllFines(): Flux<FineResponse> =
-        mongoFineRepository.getAllFines().map { it.toResponse() }.switchIfEmpty(NoFinesFoundException().toMono())
+        mongoFineRepository.getAllFines().map { it.toResponse() }.switchIfEmpty(NoFinesFoundException.toMono())
 
     override fun getAllFinesInLocation(
         longitude: Double,
@@ -166,7 +166,7 @@ class FineServiceImpl(val mongoFineRepository: MongoFineRepository) : FineServic
 
     override fun getAllCars(): Flux<CarResponse> =
         mongoFineRepository.getAllCars()
-            .switchIfEmpty(CarsNotFoundException().toMono())
+            .switchIfEmpty(CarsNotFoundException.toMono())
 
     override fun updateCarById(
         fineId: ObjectId,

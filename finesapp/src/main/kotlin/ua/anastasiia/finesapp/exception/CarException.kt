@@ -6,4 +6,5 @@ class CarPlateNotFoundException(plate: String) : CarException("Car with plate $p
 
 class CarPlateDuplicateException(plate: String) : CarException("Car with plate $plate already exists")
 
-class CarsNotFoundException : CarException("No cars where found.")
+@Suppress("JavaIoSerializableObjectMustHaveReadResolve")
+object CarsNotFoundException : CarException("No cars where found.")
