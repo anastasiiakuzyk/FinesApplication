@@ -5,8 +5,9 @@ import org.springframework.dao.DuplicateKeyException
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.onErrorMap
 import reactor.kotlin.core.publisher.switchIfEmpty
-import reactor.kotlin.core.publisher.toFlux
+import reactor.kotlin.core.publisher.switchIfEmptyDeferred
 import reactor.kotlin.core.publisher.toMono
 import ua.anastasiia.finesapp.annotation.AutofillNullable
 import ua.anastasiia.finesapp.annotation.NullableGenerate
@@ -41,66 +42,55 @@ import java.time.LocalDate
 @Suppress("TooManyFunctions")
 class FineServiceImpl(val mongoFineRepository: MongoFineRepository) : FineService {
     override fun getAllFines(): Flux<FineResponse> =
-        mongoFineRepository.getAllFines().map { it.toResponse() }.switchIfEmpty(NoFinesFoundException.toMono())
+        mongoFineRepository.getAllFines()
+            .switchIfEmptyDeferred { NoFinesFoundException.toMono() }
+            .map { it.toResponse() }
 
     override fun getAllFinesInLocation(
         longitude: Double,
         latitude: Double,
         radiusInMeters: Double
     ): Flux<FineResponse> =
-        mongoFineRepository.getAllFinesInLocation(longitude, latitude, radiusInMeters).map { it.toResponse() }
-            .switchIfEmpty(FinesInLocationNotFound(longitude, latitude).toMono())
+        mongoFineRepository.getAllFinesInLocation(longitude, latitude, radiusInMeters)
+            .switchIfEmptyDeferred { FinesInLocationNotFound(longitude, latitude).toMono() }
+            .map { it.toResponse() }
 
     override fun getAllFinesByDate(date: LocalDate): Flux<FineResponse> =
         mongoFineRepository.getAllFinesByDate(date)
+            .switchIfEmptyDeferred { NoFinesFoundByDateException(date).toMono() }
             .map { it.toResponse() }
-            .switchIfEmpty(NoFinesFoundByDateException(date).toFlux<FineResponse>())
 
     override fun getFineById(fineId: ObjectId): Mono<FineResponse> {
         return mongoFineRepository.getFineById(fineId)
-            .flatMap { fine ->
-                fine.toResponse().toMono()
-            }
-            .switchIfEmpty(FineIdNotFoundException(fineId).toMono())
+            .switchIfEmpty { FineIdNotFoundException(fineId).toMono() }
+            .map { it.toResponse() }
     }
 
     override fun getFineByCarPlate(plate: String): Mono<FineResponse> =
         mongoFineRepository.getFineByCarPlate(plate)
+            .switchIfEmpty { CarPlateNotFoundException(plate).toMono() }
             .map { it.toResponse() }
-            .switchIfEmpty(CarPlateNotFoundException(plate).toMono())
 
     override fun saveFine(fineRequest: FineRequest): Mono<FineResponse> =
         mongoFineRepository.getFineByCarPlate(fineRequest.car.plate)
             .handle<MongoFine> { _, sink ->
                 sink.error(CarPlateDuplicateException(fineRequest.car.plate))
             }
-            .onErrorMap { exception ->
-                when (exception) {
-                    is DuplicateKeyException -> CarPlateDuplicateException(fineRequest.car.plate)
-                    else -> exception
-                }
-            }
-            .switchIfEmpty {
-                mongoFineRepository.saveFine(fineRequest.toFine())
-            }
+            .onErrorMap(DuplicateKeyException::class) { CarPlateDuplicateException(fineRequest.car.plate) }
+            .switchIfEmpty { mongoFineRepository.saveFine(fineRequest.toFine()) }
             .map { it.toResponse() }
 
     override fun saveFines(mongoFines: List<FineRequest>): Flux<FineResponse> =
         mongoFineRepository.saveFines(mongoFines.map { it.toFine() })
-            .onErrorMap { exception ->
-                when (exception) {
-                    is DuplicateKeyException ->
-                        throw CarPlateDuplicateException(mongoFines.joinToString { it.car.plate })
-
-                    else -> throw exception
-                }
+            .onErrorMap(DuplicateKeyException::class) {
+                CarPlateDuplicateException(mongoFines.joinToString { it.car.plate })
             }
             .map { it.toResponse() }
 
     override fun deleteFineById(fineId: ObjectId): Mono<FineResponse> =
         mongoFineRepository.deleteFineById(fineId)
+            .switchIfEmpty { FineIdNotFoundException(fineId).toMono() }
             .map { it.toResponse() }
-            .switchIfEmpty(FineIdNotFoundException(fineId).toMono())
 
     override fun addTrafficTicketByCarPlate(plate: String, ticketRequest: TrafficTicketRequest): Mono<FineResponse> =
         mongoFineRepository.getFineByCarPlate(plate)
@@ -108,7 +98,7 @@ class FineServiceImpl(val mongoFineRepository: MongoFineRepository) : FineServic
                 mongoFineRepository.addTrafficTicketByCarPlate(plate, ticketRequest.toTrafficTicket())
                     .map { it.toResponse() }
             }
-            .switchIfEmpty(CarPlateNotFoundException(plate).toMono())
+            .switchIfEmpty { CarPlateNotFoundException(plate).toMono() }
 
     override fun updateTrafficTicketByCarPlateAndId(
         plate: String,
@@ -122,10 +112,10 @@ class FineServiceImpl(val mongoFineRepository: MongoFineRepository) : FineServic
                     trafficTicketId,
                     updatedTicketRequest.copy(id = trafficTicketId).toTrafficTicket()
                 )
+                    .switchIfEmpty { TrafficTicketNotFoundException(plate, trafficTicketId).toMono() }
                     .map { it.toResponse() }
-                    .switchIfEmpty(TrafficTicketNotFoundException(plate, trafficTicketId).toMono())
             }
-            .switchIfEmpty(CarPlateNotFoundException(plate).toMono())
+            .switchIfEmpty { CarPlateNotFoundException(plate).toMono() }
 
     override fun addViolationToTrafficTicket(
         plate: String,
@@ -141,8 +131,8 @@ class FineServiceImpl(val mongoFineRepository: MongoFineRepository) : FineServic
                         violationId.toViolationType().toViolation()
                     }
                 )
+                    .switchIfEmpty { TrafficTicketNotFoundException(plate, trafficTicketId).toMono() }
                     .map { it.toResponse() }
-                    .switchIfEmpty(TrafficTicketNotFoundException(plate, trafficTicketId).toMono())
             }
             .switchIfEmpty { CarPlateNotFoundException(plate).toMono() }
 
@@ -152,13 +142,13 @@ class FineServiceImpl(val mongoFineRepository: MongoFineRepository) : FineServic
             ticketId,
             violationId.toViolationType().toViolation().description
         )
+            .switchIfEmpty { TrafficTicketWithViolationNotFoundException(ticketId, violationId).toMono() }
             .map { it.toResponse() }
-            .switchIfEmpty(TrafficTicketWithViolationNotFoundException(ticketId, violationId).toMono())
 
     override fun removeTicketByCarPlateAndId(carPlate: String, ticketId: ObjectId): Mono<FineResponse> =
         mongoFineRepository.removeTicketByCarPlateAndId(carPlate, ticketId)
+            .switchIfEmpty { TrafficTicketNotFoundException(carPlate, ticketId).toMono() }
             .map { it.toResponse() }
-            .switchIfEmpty(TrafficTicketNotFoundException(carPlate, ticketId).toMono())
 
     override fun getSumOfFinesForCarPlate(plate: String): Mono<TotalFineSumResponse> =
         mongoFineRepository.getSumOfFinesForCarPlate(plate)
@@ -166,7 +156,7 @@ class FineServiceImpl(val mongoFineRepository: MongoFineRepository) : FineServic
 
     override fun getAllCars(): Flux<CarResponse> =
         mongoFineRepository.getAllCars()
-            .switchIfEmpty(CarsNotFoundException.toMono())
+            .switchIfEmptyDeferred { CarsNotFoundException.toMono() }
 
     override fun updateCarById(
         fineId: ObjectId,
@@ -177,6 +167,6 @@ class FineServiceImpl(val mongoFineRepository: MongoFineRepository) : FineServic
         carRequest: CarRequest
     ): Mono<FineResponse> =
         mongoFineRepository.updateCarById(fineId, carRequest.toCar())
+            .switchIfEmpty { FineIdNotFoundException(fineId).toMono() }
             .map { it.toResponse() }
-            .switchIfEmpty(FineIdNotFoundException(fineId).toMono())
 }
