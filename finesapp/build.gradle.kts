@@ -25,6 +25,11 @@ dependencies {
 
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 
+    implementation("org.springframework.kafka:spring-kafka:3.0.12")
+    implementation("io.projectreactor.kafka:reactor-kafka:1.3.21")
+    implementation("io.confluent:kafka-schema-registry-maven-plugin:7.5.1")
+    implementation("io.confluent:kafka-protobuf-serializer:7.5.1")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
