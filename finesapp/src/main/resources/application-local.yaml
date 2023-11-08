@@ -8,5 +8,12 @@ spring:
   jackson:
     mapper:
       accept-case-insensitive-enums: true
+  kafka:
+    bootstrap-servers: http://localhost:9092
+    properties:
+      schema:
+        registry:
+          url: http://localhost:8081
+
 nats:
   url: "nats://localhost:4222"
