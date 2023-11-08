@@ -5,5 +5,6 @@ option java_multiple_files = true;
 option java_package = "ua.anastasiia.finesapp.output.pubsub.trafficticket";
 
 message TrafficTicketAddedEvent {
-  commonmodels.fine.Fine fine = 1;
+  string id = 1;
+  commonmodels.fine.Fine fine = 2;
 }
