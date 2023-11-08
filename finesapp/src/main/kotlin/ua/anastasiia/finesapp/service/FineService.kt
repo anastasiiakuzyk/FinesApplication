@@ -1,6 +1,8 @@
 package ua.anastasiia.finesapp.service
 
 import org.bson.types.ObjectId
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 import ua.anastasiia.finesapp.dto.request.CarRequest
 import ua.anastasiia.finesapp.dto.request.FineRequest
 import ua.anastasiia.finesapp.dto.request.TrafficTicketRequest
@@ -12,39 +14,43 @@ import java.time.LocalDate
 @Suppress("TooManyFunctions")
 interface FineService {
 
-    fun updateCarById(fineId: ObjectId, carRequest: CarRequest): FineResponse
+    fun updateCarById(fineId: ObjectId, carRequest: CarRequest): Mono<FineResponse>
 
-    fun getAllCars(): List<CarResponse>
+    fun getAllCars(): Flux<CarResponse>
 
-    fun getSumOfFinesForCarPlate(plate: String): TotalFineSumResponse
+    fun getSumOfFinesForCarPlate(plate: String): Mono<TotalFineSumResponse>
 
-    fun removeViolationFromTicket(carPlate: String, ticketId: ObjectId, violationId: Int): FineResponse
+    fun removeViolationFromTicket(carPlate: String, ticketId: ObjectId, violationId: Int): Mono<FineResponse>
 
-    fun removeTicketByCarPlateAndId(carPlate: String, ticketId: ObjectId): FineResponse
+    fun removeTicketByCarPlateAndId(carPlate: String, ticketId: ObjectId): Mono<FineResponse>
 
-    fun addViolationToTrafficTicket(plate: String, trafficTicketId: ObjectId, violationIds: List<Int>): FineResponse
+    fun addViolationToTrafficTicket(
+        plate: String,
+        trafficTicketId: ObjectId,
+        violationIds: List<Int>
+    ): Mono<FineResponse>
 
     fun updateTrafficTicketByCarPlateAndId(
         plate: String,
         trafficTicketId: ObjectId,
         updatedTicketRequest: TrafficTicketRequest
-    ): FineResponse
+    ): Mono<FineResponse>
 
-    fun addTrafficTicketByCarPlate(plate: String, ticketRequest: TrafficTicketRequest): FineResponse
+    fun addTrafficTicketByCarPlate(plate: String, ticketRequest: TrafficTicketRequest): Mono<FineResponse>
 
-    fun deleteFineById(fineId: ObjectId): FineResponse
+    fun deleteFineById(fineId: ObjectId): Mono<FineResponse>
 
-    fun saveFines(mongoFines: List<FineRequest>): List<FineResponse>
+    fun saveFines(mongoFines: List<FineRequest>): Flux<FineResponse>
 
-    fun getFineByCarPlate(plate: String): FineResponse
+    fun getFineByCarPlate(plate: String): Mono<FineResponse>
 
-    fun getFineById(fineId: ObjectId): FineResponse
+    fun getFineById(fineId: ObjectId): Mono<FineResponse>
 
-    fun getAllFinesByDate(date: LocalDate): List<FineResponse>
+    fun getAllFinesByDate(date: LocalDate): Flux<FineResponse>
 
-    fun getAllFinesInLocation(longitude: Double, latitude: Double, radiusInMeters: Double): List<FineResponse>
+    fun getAllFinesInLocation(longitude: Double, latitude: Double, radiusInMeters: Double): Flux<FineResponse>
 
-    fun getAllFines(): List<FineResponse>
+    fun getAllFines(): Flux<FineResponse>
 
-    fun saveFine(fineRequest: FineRequest): FineResponse
+    fun saveFine(fineRequest: FineRequest): Mono<FineResponse>
 }

@@ -1,46 +1,69 @@
 package ua.anastasiia.finesapp
 
+import io.nats.client.Connection
 import org.bson.types.ObjectId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
+import ua.anastasiia.finesapp.NatsTestUtils.getFineToSave
+import ua.anastasiia.finesapp.NatsTestUtils.sendRequestAndParseResponse
 import ua.anastasiia.finesapp.dto.toProto
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByIdRequest
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByIdResponse
+import ua.anastasiia.finesapp.repository.MongoFineRepository
 
-class GetFineByIdNatsControllerTest : NatsControllerTest() {
+@SpringBootTest
+@ActiveProfiles("test")
+class GetFineByIdNatsControllerTest {
+
+    @Autowired
+    lateinit var connection: Connection
+
+    @Autowired
+    lateinit var fineRepository: MongoFineRepository
 
     @Test
-    fun `verify fine retrieval by specific id`() {
-        val savedFine = fineRepository.saveFine(getFineToSaveGeneratedCarPlate())
-
+    fun `should retrieve fine by a specific id`() {
+        // GIVEN
+        val savedFine = fineRepository.saveFine(getFineToSave()).block()
         val expectedResponse = GetFineByIdResponse
             .newBuilder()
-            .apply { successBuilder.setFine(savedFine.toProto()) }
+            .apply { successBuilder.setFine(savedFine!!.toProto()) }
             .build()
 
+        // WHEN
         val actualResponse = sendRequestAndParseResponse(
+            connection = connection,
             subject = NatsSubject.Fine.GET_BY_ID,
-            request = GetFineByIdRequest.newBuilder().setId(savedFine.toProto().id).build(),
+            request = GetFineByIdRequest.newBuilder().setId(savedFine!!.toProto().id).build(),
             parser = GetFineByIdResponse::parseFrom
         )
+
+        // THEN
         assertEquals(expectedResponse, actualResponse)
     }
 
     @Test
-    fun `verify fine absent by specific id`() {
+    fun `should fail when fine is absent for a specific id`() {
+        // GIVEN
         val id = ObjectId()
-
         val expectedResponse = GetFineByIdResponse
             .newBuilder()
             .apply { failureBuilder.fineIdNotFoundErrorBuilder }
             .build()
 
+        // WHEN
         val actualResponse = sendRequestAndParseResponse(
+            connection = connection,
             subject = NatsSubject.Fine.GET_BY_ID,
             request = GetFineByIdRequest.newBuilder().setId(id.toHexString()).build(),
             parser = GetFineByIdResponse::parseFrom
         )
+
+        // THEN
         assertTrue(actualResponse.hasFailure())
         assertEquals(expectedResponse, actualResponse)
     }

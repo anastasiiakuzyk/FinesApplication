@@ -9,5 +9,7 @@ class FineIdNotFoundException(id: Any) : FineException("Fine with id $id not fou
 class FinesInLocationNotFound(longitude: Double, latitude: Double) :
     FineException("No fines in location ($longitude, $latitude)")
 
-class NoFinesFoundException : FineException("No fines where found")
+@Suppress("JavaIoSerializableObjectMustHaveReadResolve")
+object NoFinesFoundException : FineException("No fines where found")
+
 class NoFinesFoundByDateException(localDate: LocalDate) : FineException("No fines where found by date: $localDate")

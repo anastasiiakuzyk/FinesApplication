@@ -3,6 +3,12 @@ package ua.anastasiia.finesapp.service
 import org.bson.types.ObjectId
 import org.springframework.dao.DuplicateKeyException
 import org.springframework.stereotype.Service
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.onErrorMap
+import reactor.kotlin.core.publisher.switchIfEmpty
+import reactor.kotlin.core.publisher.switchIfEmptyDeferred
+import reactor.kotlin.core.publisher.toMono
 import ua.anastasiia.finesapp.annotation.AutofillNullable
 import ua.anastasiia.finesapp.annotation.NullableGenerate
 import ua.anastasiia.finesapp.beanPostProcessor.fieldGeneration.RandomModelGenerator
@@ -18,6 +24,7 @@ import ua.anastasiia.finesapp.dto.response.TotalFineSumResponse
 import ua.anastasiia.finesapp.dto.response.toResponse
 import ua.anastasiia.finesapp.dto.toViolation
 import ua.anastasiia.finesapp.dto.toViolationType
+import ua.anastasiia.finesapp.entity.MongoFine
 import ua.anastasiia.finesapp.exception.CarPlateDuplicateException
 import ua.anastasiia.finesapp.exception.CarPlateNotFoundException
 import ua.anastasiia.finesapp.exception.CarsNotFoundException
@@ -34,104 +41,122 @@ import java.time.LocalDate
 @NullableGenerate
 @Suppress("TooManyFunctions")
 class FineServiceImpl(val mongoFineRepository: MongoFineRepository) : FineService {
-    override fun getAllFines(): List<FineResponse> =
-        mongoFineRepository.getAllFines().map { it.toResponse() }.ifEmpty { throw NoFinesFoundException() }
+    override fun getAllFines(): Flux<FineResponse> =
+        mongoFineRepository.getAllFines()
+            .switchIfEmptyDeferred { NoFinesFoundException.toMono() }
+            .map { it.toResponse() }
 
     override fun getAllFinesInLocation(
         longitude: Double,
         latitude: Double,
         radiusInMeters: Double
-    ): List<FineResponse> =
-        mongoFineRepository.getAllFinesInLocation(longitude, latitude, radiusInMeters).map { it.toResponse() }
-            .ifEmpty { throw FinesInLocationNotFound(longitude, latitude) }
+    ): Flux<FineResponse> =
+        mongoFineRepository.getAllFinesInLocation(longitude, latitude, radiusInMeters)
+            .switchIfEmptyDeferred { FinesInLocationNotFound(longitude, latitude).toMono() }
+            .map { it.toResponse() }
 
-    override fun getAllFinesByDate(date: LocalDate): List<FineResponse> =
-        mongoFineRepository.getAllFinesByDate(date).map { it.toResponse() }
-            .ifEmpty { throw NoFinesFoundByDateException(date) }
+    override fun getAllFinesByDate(date: LocalDate): Flux<FineResponse> =
+        mongoFineRepository.getAllFinesByDate(date)
+            .switchIfEmptyDeferred { NoFinesFoundByDateException(date).toMono() }
+            .map { it.toResponse() }
 
-    override fun getFineById(fineId: ObjectId): FineResponse =
-        mongoFineRepository.getFineById(fineId)?.toResponse() ?: throw FineIdNotFoundException(fineId)
+    override fun getFineById(fineId: ObjectId): Mono<FineResponse> {
+        return mongoFineRepository.getFineById(fineId)
+            .switchIfEmpty { FineIdNotFoundException(fineId).toMono() }
+            .map { it.toResponse() }
+    }
 
-    override fun getFineByCarPlate(plate: String): FineResponse =
-        mongoFineRepository.getFineByCarPlate(plate)?.toResponse() ?: throw CarPlateNotFoundException(plate)
+    override fun getFineByCarPlate(plate: String): Mono<FineResponse> =
+        mongoFineRepository.getFineByCarPlate(plate)
+            .switchIfEmpty { CarPlateNotFoundException(plate).toMono() }
+            .map { it.toResponse() }
 
-    override fun saveFine(fineRequest: FineRequest): FineResponse =
-        runCatching {
-            mongoFineRepository.getFineByCarPlate(fineRequest.car.plate)?.let {
-                throw CarPlateDuplicateException(fineRequest.car.plate)
+    override fun saveFine(fineRequest: FineRequest): Mono<FineResponse> =
+        mongoFineRepository.getFineByCarPlate(fineRequest.car.plate)
+            .handle<MongoFine> { _, sink ->
+                sink.error(CarPlateDuplicateException(fineRequest.car.plate))
             }
-            mongoFineRepository.saveFine(fineRequest.toFine()).toResponse()
-        }.getOrElse { exception ->
-            when (exception) {
-                is DuplicateKeyException -> throw CarPlateDuplicateException(fineRequest.car.plate)
-                else -> throw exception
+            .onErrorMap(DuplicateKeyException::class) { CarPlateDuplicateException(fineRequest.car.plate) }
+            .switchIfEmpty { mongoFineRepository.saveFine(fineRequest.toFine()) }
+            .map { it.toResponse() }
+
+    override fun saveFines(mongoFines: List<FineRequest>): Flux<FineResponse> =
+        mongoFineRepository.saveFines(mongoFines.map { it.toFine() })
+            .onErrorMap(DuplicateKeyException::class) {
+                CarPlateDuplicateException(mongoFines.joinToString { it.car.plate })
             }
-        }
+            .map { it.toResponse() }
 
-    override fun saveFines(mongoFines: List<FineRequest>): List<FineResponse> =
-        runCatching {
-            mongoFineRepository.saveFines(mongoFines.map { it.toFine() }).map { it.toResponse() }
-        }.getOrElse { exception ->
-            when (exception) {
-                is DuplicateKeyException -> throw CarPlateDuplicateException(mongoFines.joinToString { it.car.plate })
-                else -> throw exception
+    override fun deleteFineById(fineId: ObjectId): Mono<FineResponse> =
+        mongoFineRepository.deleteFineById(fineId)
+            .switchIfEmpty { FineIdNotFoundException(fineId).toMono() }
+            .map { it.toResponse() }
+
+    override fun addTrafficTicketByCarPlate(plate: String, ticketRequest: TrafficTicketRequest): Mono<FineResponse> =
+        mongoFineRepository.getFineByCarPlate(plate)
+            .flatMap {
+                mongoFineRepository.addTrafficTicketByCarPlate(plate, ticketRequest.toTrafficTicket())
+                    .map { it.toResponse() }
             }
-        }
-
-    override fun deleteFineById(fineId: ObjectId): FineResponse =
-        mongoFineRepository.deleteFineById(fineId)?.toResponse() ?: throw FineIdNotFoundException(fineId)
-
-    override fun addTrafficTicketByCarPlate(plate: String, ticketRequest: TrafficTicketRequest): FineResponse =
-        mongoFineRepository.getFineByCarPlate(plate)?.let {
-            mongoFineRepository.addTrafficTicketByCarPlate(plate, ticketRequest.toTrafficTicket())?.toResponse()
-        } ?: throw CarPlateNotFoundException(plate)
+            .switchIfEmpty { CarPlateNotFoundException(plate).toMono() }
 
     override fun updateTrafficTicketByCarPlateAndId(
         plate: String,
         trafficTicketId: ObjectId,
         updatedTicketRequest: TrafficTicketRequest
-    ): FineResponse {
+    ): Mono<FineResponse> =
         mongoFineRepository.getFineByCarPlate(plate)
-            ?: throw CarPlateNotFoundException(plate)
-        return mongoFineRepository.updateTrafficTicketByCarPlateAndId(
-            plate,
-            trafficTicketId,
-            updatedTicketRequest.copy(id = trafficTicketId).toTrafficTicket()
-        )?.toResponse() ?: throw TrafficTicketNotFoundException(plate, trafficTicketId)
-    }
+            .flatMap {
+                mongoFineRepository.updateTrafficTicketByCarPlateAndId(
+                    plate,
+                    trafficTicketId,
+                    updatedTicketRequest.copy(id = trafficTicketId).toTrafficTicket()
+                )
+                    .switchIfEmpty { TrafficTicketNotFoundException(plate, trafficTicketId).toMono() }
+                    .map { it.toResponse() }
+            }
+            .switchIfEmpty { CarPlateNotFoundException(plate).toMono() }
 
     override fun addViolationToTrafficTicket(
         plate: String,
         trafficTicketId: ObjectId,
         violationIds: List<Int>
-    ): FineResponse {
+    ): Mono<FineResponse> =
         mongoFineRepository.getFineByCarPlate(plate)
-            ?: throw CarPlateNotFoundException(plate)
-        return mongoFineRepository.addViolationToTrafficTicket(
-            plate,
-            trafficTicketId,
-            violationIds.map { violationId ->
-                violationId.toViolationType().toViolation()
+            .flatMap {
+                mongoFineRepository.addViolationToTrafficTicket(
+                    plate,
+                    trafficTicketId,
+                    violationIds.map { violationId ->
+                        violationId.toViolationType().toViolation()
+                    }
+                )
+                    .switchIfEmpty { TrafficTicketNotFoundException(plate, trafficTicketId).toMono() }
+                    .map { it.toResponse() }
             }
-        )?.toResponse() ?: throw TrafficTicketNotFoundException(plate, trafficTicketId)
-    }
+            .switchIfEmpty { CarPlateNotFoundException(plate).toMono() }
 
-    override fun removeViolationFromTicket(carPlate: String, ticketId: ObjectId, violationId: Int): FineResponse =
+    override fun removeViolationFromTicket(carPlate: String, ticketId: ObjectId, violationId: Int): Mono<FineResponse> =
         mongoFineRepository.removeViolationFromTicket(
             carPlate,
             ticketId,
             violationId.toViolationType().toViolation().description
-        )?.toResponse() ?: throw TrafficTicketWithViolationNotFoundException(ticketId, violationId)
+        )
+            .switchIfEmpty { TrafficTicketWithViolationNotFoundException(ticketId, violationId).toMono() }
+            .map { it.toResponse() }
 
-    override fun removeTicketByCarPlateAndId(carPlate: String, ticketId: ObjectId): FineResponse =
-        mongoFineRepository.removeTicketByCarPlateAndId(carPlate, ticketId)?.toResponse()
-            ?: throw TrafficTicketNotFoundException(carPlate, ticketId)
+    override fun removeTicketByCarPlateAndId(carPlate: String, ticketId: ObjectId): Mono<FineResponse> =
+        mongoFineRepository.removeTicketByCarPlateAndId(carPlate, ticketId)
+            .switchIfEmpty { TrafficTicketNotFoundException(carPlate, ticketId).toMono() }
+            .map { it.toResponse() }
 
-    override fun getSumOfFinesForCarPlate(plate: String): TotalFineSumResponse =
-        mongoFineRepository.getSumOfFinesForCarPlate(plate) ?: TotalFineSumResponse(plate, 0.0)
+    override fun getSumOfFinesForCarPlate(plate: String): Mono<TotalFineSumResponse> =
+        mongoFineRepository.getSumOfFinesForCarPlate(plate)
+            .defaultIfEmpty(TotalFineSumResponse(plate, 0.0))
 
-    override fun getAllCars(): List<CarResponse> =
-        mongoFineRepository.getAllCars().ifEmpty { throw CarsNotFoundException() }
+    override fun getAllCars(): Flux<CarResponse> =
+        mongoFineRepository.getAllCars()
+            .switchIfEmptyDeferred { CarsNotFoundException.toMono() }
 
     override fun updateCarById(
         fineId: ObjectId,
@@ -140,7 +165,8 @@ class FineServiceImpl(val mongoFineRepository: MongoFineRepository) : FineServic
             valueProvider = RandomModelGenerator::class
         )
         carRequest: CarRequest
-    ): FineResponse =
-        mongoFineRepository.updateCarById(fineId, carRequest.toCar())?.toResponse()
-            ?: throw FineIdNotFoundException(fineId)
+    ): Mono<FineResponse> =
+        mongoFineRepository.updateCarById(fineId, carRequest.toCar())
+            .switchIfEmpty { FineIdNotFoundException(fineId).toMono() }
+            .map { it.toResponse() }
 }

@@ -5,7 +5,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
-import org.springframework.web.context.request.WebRequest
+import org.springframework.web.server.ServerWebExchange
 import java.time.LocalDateTime
 
 @RestControllerAdvice
@@ -16,12 +16,12 @@ class GlobalExceptionHandler {
         [CarPlateNotFoundException::class, CarPlateDuplicateException::class, CarsNotFoundException::class]
     )
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    fun handleCarExceptions(exception: CarException, request: WebRequest) =
+    fun handleCarExceptions(exception: CarException, exchange: ServerWebExchange) =
         ErrorMessage(
             HttpStatus.NOT_FOUND.value(),
             LocalDateTime.now(),
             exception.message,
-            request.getDescription(false)
+            exchange.request.uri.path
         )
 
     @ExceptionHandler(
@@ -31,12 +31,12 @@ class GlobalExceptionHandler {
         ]
     )
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    fun handleTrafficTicketExceptions(exception: TrafficTicketException, request: WebRequest) =
+    fun handleTrafficTicketExceptions(exception: TrafficTicketException, exchange: ServerWebExchange) =
         ErrorMessage(
             HttpStatus.NOT_FOUND.value(),
             LocalDateTime.now(),
             exception.message,
-            request.getDescription(false)
+            exchange.request.uri.path
         )
 
     @ExceptionHandler(
@@ -49,19 +49,19 @@ class GlobalExceptionHandler {
         ]
     )
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    fun handleViolationExceptions(exception: FineException, request: WebRequest) =
+    fun handleViolationExceptions(exception: FineException, exchange: ServerWebExchange) =
         ErrorMessage(
             HttpStatus.NOT_FOUND.value(),
             LocalDateTime.now(),
             exception.message,
-            request.getDescription(false)
+            exchange.request.uri.path
         )
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     fun handleValidationsExceptions(
         exception: MethodArgumentNotValidException,
-        request: WebRequest
+        exchange: ServerWebExchange
     ): ValidationErrorMessage {
         val errors: MutableList<ValidationErrorMessage.ValidationError> = mutableListOf()
         exception.bindingResult.fieldErrors.forEach { fieldError ->
@@ -76,7 +76,7 @@ class GlobalExceptionHandler {
             HttpStatus.BAD_REQUEST.value(),
             LocalDateTime.now(),
             errors,
-            request.getDescription(false)
+            exchange.request.uri.path
         )
     }
 }

@@ -3,6 +3,8 @@ package ua.anastasiia.finesapp.controller.nats
 import com.google.protobuf.Parser
 import io.nats.client.Connection
 import org.springframework.stereotype.Component
+import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toMono
 import ua.anastasiia.finesapp.NatsSubject
 import ua.anastasiia.finesapp.commonmodels.fine.Fine
 import ua.anastasiia.finesapp.dto.request.toRequest
@@ -24,17 +26,16 @@ class CreateFineNatsController(
     override val subject = NatsSubject.Fine.CREATE
     override val parser: Parser<CreateFineRequest> = CreateFineRequest.parser()
 
-    override fun handle(request: CreateFineRequest): CreateFineResponse = runCatching {
-        val protoFine = saveProtoFine(request)
-        publishEvent(protoFine, request.fine.car.plate)
-        buildSuccessResponse(protoFine)
-    }.getOrElse { exception ->
-        buildFailureResponse(exception)
-    }
+    override fun handle(request: CreateFineRequest): Mono<CreateFineResponse> =
+        saveProtoFine(request)
+            .doOnNext { protoFine -> publishEvent(protoFine, request.fine.car.plate) }
+            .map { buildSuccessResponse(it) }
+            .onErrorResume { buildFailureResponse(it).toMono() }
 
-    private fun saveProtoFine(request: CreateFineRequest): Fine {
+    private fun saveProtoFine(request: CreateFineRequest): Mono<Fine> {
         val fine = request.fine.toFine()
-        return fineService.saveFine(fine.toRequest()).toFine().toProto()
+        return fineService.saveFine(fine.toRequest())
+            .map { it.toFine().toProto() }
     }
 
     private fun publishEvent(protoFine: Fine, carPlate: String) {

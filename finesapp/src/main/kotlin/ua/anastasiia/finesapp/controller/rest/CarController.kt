@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import reactor.core.publisher.Mono
 import ua.anastasiia.finesapp.dto.request.CarRequest
 import ua.anastasiia.finesapp.dto.response.FineResponse
 import ua.anastasiia.finesapp.dto.response.TotalFineSumResponse
-import ua.anastasiia.finesapp.entity.MongoFine
 import ua.anastasiia.finesapp.service.FineService
 
 @RestController
@@ -21,17 +21,17 @@ class CarController(val fineService: FineService) {
     fun getAllCars() = fineService.getAllCars()
 
     @GetMapping("plate/{carPlate}")
-    fun getFineByCarPlate(@PathVariable carPlate: String): FineResponse =
+    fun getFineByCarPlate(@PathVariable carPlate: String): Mono<FineResponse> =
         fineService.getFineByCarPlate(carPlate)
 
     @GetMapping("sum/car/{carPlate}")
     fun getSumOfFinesForCarPlate(
         @PathVariable carPlate: String
-    ): TotalFineSumResponse = fineService.getSumOfFinesForCarPlate(carPlate)
+    ): Mono<TotalFineSumResponse> = fineService.getSumOfFinesForCarPlate(carPlate)
 
     @PutMapping("fine/{fineId}")
     fun updateCarById(
         @PathVariable fineId: ObjectId,
         @Valid @RequestBody carRequest: CarRequest
-    ): FineResponse = fineService.updateCarById(fineId, carRequest)
+    ): Mono<FineResponse> = fineService.updateCarById(fineId, carRequest)
 }

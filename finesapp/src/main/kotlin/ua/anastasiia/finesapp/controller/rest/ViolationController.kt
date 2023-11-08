@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import reactor.core.publisher.Mono
 import ua.anastasiia.finesapp.dto.response.FineResponse
-import ua.anastasiia.finesapp.entity.MongoFine
 import ua.anastasiia.finesapp.service.FineService
 
 @RestController
@@ -18,12 +18,12 @@ class ViolationController(val fineService: FineService) {
         @PathVariable carPlate: String,
         @PathVariable ticketId: ObjectId,
         @PathVariable violationIds: List<Int>
-    ): FineResponse = fineService.addViolationToTrafficTicket(carPlate, ticketId, violationIds)
+    ): Mono<FineResponse> = fineService.addViolationToTrafficTicket(carPlate, ticketId, violationIds)
 
     @DeleteMapping("car/{carPlate}/ticket/{ticketId}/violation/{violationId}")
     fun removeViolationFromTicket(
         @PathVariable carPlate: String,
         @PathVariable ticketId: ObjectId,
         @PathVariable violationId: Int
-    ): FineResponse = fineService.removeViolationFromTicket(carPlate, ticketId, violationId)
+    ): Mono<FineResponse> = fineService.removeViolationFromTicket(carPlate, ticketId, violationId)
 }

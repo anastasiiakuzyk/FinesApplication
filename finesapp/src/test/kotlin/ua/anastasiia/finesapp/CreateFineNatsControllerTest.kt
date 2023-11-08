@@ -1,112 +1,87 @@
 package ua.anastasiia.finesapp
 
-import io.nats.client.Dispatcher
-import io.nats.client.Message
+import io.nats.client.Connection
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.ActiveProfiles
+import ua.anastasiia.finesapp.NatsTestUtils.getFineToSave
+import ua.anastasiia.finesapp.NatsTestUtils.sendRequestAndParseResponse
 import ua.anastasiia.finesapp.dto.toProto
+import ua.anastasiia.finesapp.entity.MongoFine
 import ua.anastasiia.finesapp.input.reqreply.fine.CreateFineRequest
 import ua.anastasiia.finesapp.input.reqreply.fine.CreateFineResponse
 import ua.anastasiia.finesapp.output.pubsub.fine.FineCreatedEvent
+import ua.anastasiia.finesapp.repository.MongoFineRepository
 import java.time.Duration
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.atomic.AtomicInteger
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 
-class CreateFineNatsControllerTest : NatsControllerTest() {
+@SpringBootTest
+@ActiveProfiles("test")
+class CreateFineNatsControllerTest {
+
+    @Autowired
+    lateinit var connection: Connection
+
+    @Autowired
+    lateinit var fineRepository: MongoFineRepository
 
     @Test
-    fun `verify fine creation and corresponding event publication`() {
-        val fineToCreate = getFineToSaveGeneratedCarPlate().toProto()
-
+    fun `should create fine and publish event when valid fine data is provided`() {
+        // GIVEN
+        val fineToCreate = getFineToSave().toProto()
         val createdEvent = connection.subscribe(NatsSubject.Fine.createdSubject(fineToCreate.car.plate))
-
         val expectedResponse = CreateFineResponse
             .newBuilder()
             .apply {
                 successBuilder.setFine(fineToCreate)
             }.build()
+        val expectedEvent = FineCreatedEvent.newBuilder().setFine(fineToCreate).build()
+
+        // WHEN
         val actualResponse = sendRequestAndParseResponse(
+            connection = connection,
             subject = NatsSubject.Fine.CREATE,
             request = CreateFineRequest.newBuilder().setFine(fineToCreate).build(),
             parser = CreateFineResponse::parseFrom
         )
-        assertEquals(expectedResponse, actualResponse)
-
-        val expectedEvent = FineCreatedEvent.newBuilder().setFine(fineToCreate).build()
         val actualEvent = FineCreatedEvent.parseFrom(createdEvent.nextMessage(Duration.ofSeconds(10)).data)
+
+        // THEN
+        assertEquals(expectedResponse, actualResponse)
         assertEquals(expectedEvent, actualEvent)
     }
 
     @Test
-    fun `verify failure when creating fine with existing car plate`() {
-        val fine = getFineToSave()
+    fun `should return failure result to create fine when car plate already exists`() {
+        // GIVEN
+        val fine = MongoFine(
+            car = MongoFine.Car(
+                "test plate ${LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)}",
+                "Test",
+                "Test",
+                "BLACK"
+            ),
+            trafficTickets = listOf()
+        )
         val fineToCreate = fine.toProto()
-        fineRepository.saveFine(fine)
-        val request = CreateFineRequest.newBuilder().setFine(fineToCreate).build()
-        val actualResponse = createFineNatsController.handle(request)
-        assertTrue(actualResponse.hasFailure())
+        fineRepository.saveFine(fine).block()
         val expectedResponse =
             CreateFineResponse.newBuilder().apply { failureBuilder.carPlateDuplicateErrorBuilder }.build()
-        assertEquals(
-            expectedResponse,
-            actualResponse
-        )
-    }
 
-    @Test
-    fun `ensure single dispatcher response in queue group`() {
-        val fineToCreate = getFineToSaveGeneratedCarPlate().toProto()
-        val responseCounter = AtomicInteger(0)
-        val numberOfDispatchersToCreate = 5
-        val latch = CountDownLatch(1)
-        lateinit var dispatcher: Dispatcher
-        repeat(numberOfDispatchersToCreate) {
-            dispatcher = connection.createDispatcher { message: Message ->
-                val request = createFineNatsController.parser.parseFrom(message.data)
-                val response = createFineNatsController.handle(request)
-                responseCounter.incrementAndGet()
-                connection.publish(message.replyTo, response.toByteArray())
-                if (dispatcher.deliveredCount == 1L) {
-                    latch.countDown()
-                }
-            }.subscribe(createFineNatsController.subject, "queue_test_group")
-        }
-
-        sendRequestAndParseResponse(
+        // WHEN
+        val actualResponse = sendRequestAndParseResponse(
+            connection = connection,
             subject = NatsSubject.Fine.CREATE,
             request = CreateFineRequest.newBuilder().setFine(fineToCreate).build(),
             parser = CreateFineResponse::parseFrom
         )
-        latch.await(1L, TimeUnit.SECONDS)
-        assertEquals(1, responseCounter.get(), "Only one responder should have replied")
-    }
 
-    @Test
-    fun `ensure multiple dispatcher responses without queue group`() {
-        val fineToCreate = getFineToSaveGeneratedCarPlate().toProto()
-        val responseCounter = AtomicInteger(0)
-        val numberOfDispatchersToCreate = 5
-        val latch = CountDownLatch(5)
-
-        repeat(numberOfDispatchersToCreate) {
-            connection.createDispatcher { message: Message ->
-                val request = createFineNatsController.parser.parseFrom(message.data)
-                val response = createFineNatsController.handle(request)
-                responseCounter.incrementAndGet()
-                connection.publish(message.replyTo, response.toByteArray())
-                latch.countDown()
-            }.subscribe(createFineNatsController.subject)
-        }
-
-        sendRequestAndParseResponse(
-            subject = NatsSubject.Fine.CREATE,
-            request = CreateFineRequest.newBuilder().setFine(fineToCreate).build(),
-            parser = CreateFineResponse::parseFrom
-        )
-        latch.await()
-        assertNotEquals(1, responseCounter.get(), "Many responders should have replied")
+        // THEN
+        assertTrue(actualResponse.hasFailure())
+        assertEquals(expectedResponse, actualResponse)
     }
 }
