@@ -22,6 +22,7 @@ import ua.anastasiia.finesapp.dto.response.CarResponse
 import ua.anastasiia.finesapp.dto.response.FineResponse
 import ua.anastasiia.finesapp.dto.response.TotalFineSumResponse
 import ua.anastasiia.finesapp.dto.response.toResponse
+import ua.anastasiia.finesapp.dto.toProto
 import ua.anastasiia.finesapp.dto.toViolation
 import ua.anastasiia.finesapp.dto.toViolationType
 import ua.anastasiia.finesapp.entity.MongoFine
@@ -34,13 +35,17 @@ import ua.anastasiia.finesapp.exception.NoFinesFoundByDateException
 import ua.anastasiia.finesapp.exception.NoFinesFoundException
 import ua.anastasiia.finesapp.exception.TrafficTicketNotFoundException
 import ua.anastasiia.finesapp.exception.TrafficTicketWithViolationNotFoundException
+import ua.anastasiia.finesapp.kafka.FineKafkaProducer
 import ua.anastasiia.finesapp.repository.MongoFineRepository
 import java.time.LocalDate
 
 @Service
 @NullableGenerate
 @Suppress("TooManyFunctions")
-class FineServiceImpl(val mongoFineRepository: MongoFineRepository) : FineService {
+class FineServiceImpl(
+    val mongoFineRepository: MongoFineRepository,
+    val fineKafkaProducer: FineKafkaProducer
+) : FineService {
     override fun getAllFines(): Flux<FineResponse> =
         mongoFineRepository.getAllFines()
             .switchIfEmptyDeferred { NoFinesFoundException.toMono() }
@@ -96,6 +101,12 @@ class FineServiceImpl(val mongoFineRepository: MongoFineRepository) : FineServic
         mongoFineRepository.getFineByCarPlate(plate)
             .flatMap {
                 mongoFineRepository.addTrafficTicketByCarPlate(plate, ticketRequest.toTrafficTicket())
+                    .doOnNext {
+                        fineKafkaProducer.produceNotification(
+                            it.toProto(),
+                            ticketRequest.toTrafficTicket().toProto().id
+                        )
+                    }
                     .map { it.toResponse() }
             }
             .switchIfEmpty { CarPlateNotFoundException(plate).toMono() }
