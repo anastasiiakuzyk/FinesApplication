@@ -2,7 +2,6 @@ package ua.anastasiia.finesapp.kafka
 
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.springframework.stereotype.Component
-import reactor.core.publisher.Mono
 import reactor.kafka.sender.KafkaSender
 import reactor.kafka.sender.SenderRecord
 import reactor.kotlin.core.publisher.toMono
