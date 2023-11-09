@@ -30,6 +30,9 @@ dependencies {
     implementation("io.confluent:kafka-schema-registry-maven-plugin:7.5.1")
     implementation("io.confluent:kafka-protobuf-serializer:7.5.1")
 
+    implementation("net.devh:grpc-spring-boot-starter:2.15.0.RELEASE")
+    implementation("net.devh:grpc-server-spring-boot-starter:2.15.0.RELEASE")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
