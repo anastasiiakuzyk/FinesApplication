@@ -1,0 +1,28 @@
+syntax = "proto3";
+import "ua/anastasiia/finesapp/commonmodels/fine/fine.proto";
+import "ua/anastasiia/finesapp/input/reqreply/error.proto";
+package ua.anastasiia.finesapp.input.reqreply.fine;
+option java_package = "ua.anastasiia.finesapp.input.reqreply.fine";
+option java_multiple_files = true;
+
+message StreamByCarPlateRequest {
+  string car_plate = 1;
+}
+
+message StreamByCarPlateResponse {
+  oneof response {
+    Success success = 1;
+    Failure failure = 2;
+  }
+
+  message Success {
+    commonmodels.fine.Fine fine = 1;
+  }
+
+  message Failure {
+    string message = 100;
+    oneof error {
+      Error car_plate_not_found_error = 1;
+    }
+  }
+}

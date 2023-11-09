@@ -1,0 +1,17 @@
+package ua.anastasiia.finesapp;
+
+import "ua/anastasiia/finesapp/input/reqreply/car/get_all.proto";
+import "ua/anastasiia/finesapp/input/reqreply/fine/get_by_car_plate.proto";
+import "ua/anastasiia/finesapp/input/reqreply/fine/stream_by_car_plate.proto";
+
+service FinesService {
+
+  rpc getAllCars(input.reqreply.car.GetAllCarsRequest)
+      returns (input.reqreply.car.GetAllCarsResponse);
+
+  rpc getByCarPlate(input.reqreply.fine.GetFineByCarPlateRequest)
+      returns (input.reqreply.fine.GetFineByCarPlateResponse);
+
+  rpc streamByCarPlate(input.reqreply.fine.StreamByCarPlateRequest)
+      returns (stream input.reqreply.fine.StreamByCarPlateResponse);
+}
