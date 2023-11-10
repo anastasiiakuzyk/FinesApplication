@@ -11,11 +11,10 @@ import ua.anastasiia.finesapp.output.pubsub.trafficticket.TrafficTicketAddedEven
 class NatsEventSubscriber(private val connection: Connection) {
 
     fun subscribe(carPlate: String): Flux<TrafficTicketAddedEvent> {
-        Sinks.many().multicast().onBackpressureBuffer<TrafficTicketAddedEvent>().apply {
-            connection.createDispatcher { message ->
-                tryEmitNext(TrafficTicketAddedEvent.parseFrom(message.data))
-            }.subscribe(NatsSubject.TrafficTicket.addedSubject(carPlate))
-            return asFlux()
-        }
+        val sink = Sinks.many().multicast().onBackpressureBuffer<TrafficTicketAddedEvent>()
+        connection.createDispatcher { message ->
+            sink.tryEmitNext(TrafficTicketAddedEvent.parseFrom(message.data))
+        }.subscribe(NatsSubject.TrafficTicket.addedSubject(carPlate))
+        return sink.asFlux()
     }
 }

@@ -1,8 +1,11 @@
 syntax = "proto3";
+
+package ua.anastasiia.finesapp.input.reqreply.trafficticket;
+
 import "ua/anastasiia/finesapp/commonmodels/fine/fine.proto";
 import "ua/anastasiia/finesapp/commonmodels/trafficticket/traffic_ticket.proto";
 import "ua/anastasiia/finesapp/input/reqreply/error.proto";
-package ua.anastasiia.finesapp.input.reqreply.trafficticket;
+
 option java_package = "ua.anastasiia.finesapp.input.reqreply.trafficticket";
 option java_multiple_files = true;
 

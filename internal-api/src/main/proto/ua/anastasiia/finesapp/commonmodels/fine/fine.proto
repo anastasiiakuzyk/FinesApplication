@@ -1,7 +1,10 @@
 syntax = "proto3";
+
+package ua.anastasiia.finesapp.commonmodels.fine;
+
 import "ua/anastasiia/finesapp/commonmodels/car/car.proto";
 import "ua/anastasiia/finesapp/commonmodels/trafficticket/traffic_ticket.proto";
-package ua.anastasiia.finesapp.commonmodels.fine;
+
 option java_package = "ua.anastasiia.finesapp.commonmodels.fine";
 option java_multiple_files = true;
 
