@@ -11,7 +11,7 @@ message AddTrafficTicketRequest {
   commonmodels.trafficticket.TrafficTicket traffic_ticket = 2;
 }
 
-message AddTrafficTicketResponse{
+message AddTrafficTicketResponse {
   oneof response {
     Success success = 1;
     Failure failure = 2;
