@@ -5,10 +5,10 @@ package ua.anastasiia.finesapp.input.reqreply.car;
 option java_package = "ua.anastasiia.finesapp.input.reqreply.car";
 option java_multiple_files = true;
 
-message GetAllCarsRequest{
+message GetAllCarsRequest {
 }
 
-message GetAllCarsResponse{
+message GetAllCarsResponse {
   oneof response {
     Success success = 1;
     Failure failure = 2;

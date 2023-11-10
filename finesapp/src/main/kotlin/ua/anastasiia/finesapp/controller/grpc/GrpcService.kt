@@ -50,9 +50,7 @@ class GrpcService(
                     natsEventSubscriber.subscribe(streamByCarPlateRequest.carPlate)
                         .map { trafficTicketAddedEvent ->
                             buildStreamByCarPlateResponse(trafficTicketAddedEvent.fine.toFine().toResponse())
-                        }.startWith(
-                            buildStreamByCarPlateResponse(initFineState)
-                        )
+                        }.startWith(buildStreamByCarPlateResponse(initFineState))
                 }
                 .onErrorResume { exception -> handleCarPlateStreamException(exception) }
         }
