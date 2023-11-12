@@ -1,8 +1,11 @@
 syntax = "proto3";
-import "ua/anastasiia/finesapp/commonmodels/fine/fine.proto";
+
 package ua.anastasiia.finesapp.output.pubsub.fine;
-option java_multiple_files = true;
+
+import "ua/anastasiia/finesapp/commonmodels/fine/fine.proto";
+
 option java_package = "ua.anastasiia.finesapp.output.pubsub.fine";
+option java_multiple_files = true;
 
 message FineCreatedEvent {
   commonmodels.fine.Fine fine = 1;

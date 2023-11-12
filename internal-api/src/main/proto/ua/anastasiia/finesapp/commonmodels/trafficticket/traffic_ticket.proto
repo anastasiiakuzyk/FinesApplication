@@ -1,8 +1,11 @@
 syntax = "proto3";
+
+package ua.anastasiia.finesapp.commonmodels.trafficticket;
+
 import "google/protobuf/timestamp.proto";
 import "google/type/latlng.proto";
 import "ua/anastasiia/finesapp/commonmodels/violation/violation.proto";
-package ua.anastasiia.finesapp.commonmodels.trafficticket;
+
 option java_package = "ua.anastasiia.finesapp.commonmodels.trafficticket";
 option java_multiple_files = true;
 
