@@ -3,11 +3,16 @@ spring:
     mongodb:
       uri: mongodb://root:root@localhost:27017/finesdb?authSource=admin
       auto-index-creation: true
+    redis:
+      key:
+        prefix:
+          fine-
   main:
     banner-mode: 'off'
   jackson:
     mapper:
       accept-case-insensitive-enums: true
+
   kafka:
     bootstrap-servers: http://localhost:9092
     properties:
