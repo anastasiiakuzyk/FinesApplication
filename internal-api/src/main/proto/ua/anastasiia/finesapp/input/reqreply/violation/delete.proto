@@ -1,7 +1,10 @@
 syntax = "proto3";
+
+package ua.anastasiia.finesapp.input.reqreply.violation;
+
 import "ua/anastasiia/finesapp/commonmodels/fine/fine.proto";
 import "ua/anastasiia/finesapp/input/reqreply/error.proto";
-package ua.anastasiia.finesapp.input.reqreply.violation;
+
 option java_package = "ua.anastasiia.finesapp.input.reqreply.violation";
 option java_multiple_files = true;
 

@@ -40,6 +40,12 @@ services:
     ports:
       - "4222:4222"
 
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+
   schema-registry:
     image: confluentinc/cp-schema-registry:7.5.1
     depends_on:
