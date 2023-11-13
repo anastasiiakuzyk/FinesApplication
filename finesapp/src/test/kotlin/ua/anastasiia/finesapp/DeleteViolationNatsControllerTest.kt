@@ -12,6 +12,9 @@ import org.springframework.test.context.ActiveProfiles
 import ua.anastasiia.finesapp.NatsTestUtils.getFineToSave
 import ua.anastasiia.finesapp.NatsTestUtils.getTrafficTicketToSave
 import ua.anastasiia.finesapp.NatsTestUtils.sendRequestAndParseResponse
+import ua.anastasiia.finesapp.domain.toDomainFine
+import ua.anastasiia.finesapp.domain.toDomainTrafficTicket
+import ua.anastasiia.finesapp.domain.toMongoFine
 import ua.anastasiia.finesapp.dto.toProto
 import ua.anastasiia.finesapp.dto.toViolation
 import ua.anastasiia.finesapp.dto.toViolationType
@@ -36,10 +39,11 @@ class DeleteViolationNatsControllerTest {
         // GIVEN
         val trafficTicketToSave = getTrafficTicketToSave()
         val fineToSave = getFineToSave().copy(trafficTickets = listOf(trafficTicketToSave))
-        val savedFine = fineRepository.saveFine(fineToSave).block()
+        val savedFine = fineRepository.saveFine(fineToSave.toDomainFine()).block()
         val expectedTrafficTicket =
             trafficTicketToSave.copy(violations = listOf(1, 2).map { it.toViolationType().toViolation() })
-        val expectedFine = savedFine!!.copy(trafficTickets = listOf(expectedTrafficTicket)).toProto()
+        val expectedFine = savedFine!!.copy(trafficTickets = listOf(expectedTrafficTicket.toDomainTrafficTicket()))
+            .toMongoFine().toProto()
         val createdEvent = connection.subscribe(NatsSubject.Violation.deletedSubject(savedFine.car.plate))
         val expectedResponse =
             DeleteViolationResponse.newBuilder().apply { successBuilder.setFine(expectedFine) }.build()
@@ -51,7 +55,7 @@ class DeleteViolationNatsControllerTest {
             subject = NatsSubject.Violation.DELETE,
             request = DeleteViolationRequest.newBuilder()
                 .setCarPlate(fineToSave.car.plate)
-                .setTicketId(savedFine.trafficTickets[0].id.toHexString())
+                .setTicketId(savedFine.trafficTickets[0].id)
                 .setViolationId(3)
                 .build(),
             parser = DeleteViolationResponse::parseFrom

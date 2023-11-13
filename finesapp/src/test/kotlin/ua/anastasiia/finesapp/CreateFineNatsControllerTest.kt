@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import ua.anastasiia.finesapp.NatsTestUtils.getFineToSave
 import ua.anastasiia.finesapp.NatsTestUtils.sendRequestAndParseResponse
+import ua.anastasiia.finesapp.domain.toDomainFine
 import ua.anastasiia.finesapp.dto.toProto
 import ua.anastasiia.finesapp.entity.MongoFine
 import ua.anastasiia.finesapp.input.reqreply.fine.CreateFineRequest
@@ -68,7 +69,7 @@ class CreateFineNatsControllerTest {
             trafficTickets = listOf()
         )
         val fineToCreate = fine.toProto()
-        fineRepository.saveFine(fine).block()
+        fineRepository.saveFine(fine.toDomainFine()).block()
         val expectedResponse =
             CreateFineResponse.newBuilder().apply { failureBuilder.carPlateDuplicateErrorBuilder }.build()
 

@@ -10,6 +10,9 @@ import org.springframework.test.context.ActiveProfiles
 import ua.anastasiia.finesapp.NatsTestUtils.getFineToSave
 import ua.anastasiia.finesapp.NatsTestUtils.getTrafficTicketToSave
 import ua.anastasiia.finesapp.NatsTestUtils.sendRequestAndParseResponse
+import ua.anastasiia.finesapp.domain.toDomainFine
+import ua.anastasiia.finesapp.domain.toDomainTrafficTicket
+import ua.anastasiia.finesapp.domain.toMongoFine
 import ua.anastasiia.finesapp.dto.toProto
 import ua.anastasiia.finesapp.input.reqreply.trafficticket.AddTrafficTicketRequest
 import ua.anastasiia.finesapp.input.reqreply.trafficticket.AddTrafficTicketResponse
@@ -31,9 +34,11 @@ class AddTrafficTicketNatsControllerTest {
     fun `should add traffic ticket and publish event when valid request is given`() {
         // GIVEN
         val fineToSave = getFineToSave()
-        val savedFine = fineRepository.saveFine(fineToSave).block()
+        val savedFine = fineRepository.saveFine(fineToSave.toDomainFine()).block()
         val trafficTicketToSave = getTrafficTicketToSave()
-        val expectedFine = savedFine!!.copy(trafficTickets = listOf(trafficTicketToSave)).toProto()
+        val expectedFine = savedFine!!.copy(
+            trafficTickets = listOf(trafficTicketToSave.toDomainTrafficTicket())
+        ).toMongoFine().toProto()
         val createdEvent = connection.subscribe(
             NatsSubject.TrafficTicket.addedSubject(expectedFine.car.plate)
         )
