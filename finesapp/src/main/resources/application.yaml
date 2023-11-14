@@ -4,6 +4,7 @@ spring:
       uri: mongodb://root:root@mongo:27017/finesdb?authSource=admin
       auto-index-creation: true
     redis:
+      host: redis
       key:
         prefix:
           fine-
