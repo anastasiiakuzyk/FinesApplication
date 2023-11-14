@@ -15,7 +15,7 @@ import ua.anastasiia.finesapp.domain.toMongoFine
 import ua.anastasiia.finesapp.dto.toProto
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByIdRequest
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByIdResponse
-import ua.anastasiia.finesapp.repository.MongoFineRepository
+import ua.anastasiia.finesapp.repository.FineRepository
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -25,7 +25,7 @@ class GetFineByIdNatsControllerTest {
     lateinit var connection: Connection
 
     @Autowired
-    lateinit var fineRepository: MongoFineRepository
+    lateinit var fineRepository: FineRepository
 
     @Test
     fun `should retrieve fine by a specific id`() {

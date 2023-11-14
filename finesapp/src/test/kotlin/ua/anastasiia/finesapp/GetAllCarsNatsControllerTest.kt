@@ -16,7 +16,7 @@ import ua.anastasiia.finesapp.dto.toProto
 import ua.anastasiia.finesapp.entity.MongoFine
 import ua.anastasiia.finesapp.input.reqreply.car.GetAllCarsRequest
 import ua.anastasiia.finesapp.input.reqreply.car.GetAllCarsResponse
-import ua.anastasiia.finesapp.repository.MongoFineRepository
+import ua.anastasiia.finesapp.repository.FineRepository
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -26,7 +26,7 @@ class GetAllCarsNatsControllerTest {
     lateinit var connection: Connection
 
     @Autowired
-    lateinit var fineRepository: MongoFineRepository
+    lateinit var fineRepository: FineRepository
 
     @Autowired
     lateinit var reactiveMongoTemplate: ReactiveMongoTemplate

@@ -21,7 +21,7 @@ import ua.anastasiia.finesapp.dto.toViolationType
 import ua.anastasiia.finesapp.input.reqreply.violation.DeleteViolationRequest
 import ua.anastasiia.finesapp.input.reqreply.violation.DeleteViolationResponse
 import ua.anastasiia.finesapp.output.pubsub.violation.ViolationDeletedEvent
-import ua.anastasiia.finesapp.repository.MongoFineRepository
+import ua.anastasiia.finesapp.repository.FineRepository
 import java.time.Duration
 
 @SpringBootTest
@@ -32,7 +32,7 @@ class DeleteViolationNatsControllerTest {
     lateinit var connection: Connection
 
     @Autowired
-    lateinit var fineRepository: MongoFineRepository
+    lateinit var fineRepository: FineRepository
 
     @Test
     fun `should update fine and publish related event when violation is deleted`() {

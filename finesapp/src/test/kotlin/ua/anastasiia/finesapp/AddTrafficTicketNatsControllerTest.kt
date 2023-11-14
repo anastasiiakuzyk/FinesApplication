@@ -17,7 +17,7 @@ import ua.anastasiia.finesapp.dto.toProto
 import ua.anastasiia.finesapp.input.reqreply.trafficticket.AddTrafficTicketRequest
 import ua.anastasiia.finesapp.input.reqreply.trafficticket.AddTrafficTicketResponse
 import ua.anastasiia.finesapp.output.pubsub.trafficticket.TrafficTicketAddedEvent
-import ua.anastasiia.finesapp.repository.MongoFineRepository
+import ua.anastasiia.finesapp.repository.FineRepository
 import java.time.Duration
 
 @SpringBootTest
@@ -28,7 +28,7 @@ class AddTrafficTicketNatsControllerTest {
     lateinit var connection: Connection
 
     @Autowired
-    lateinit var fineRepository: MongoFineRepository
+    lateinit var fineRepository: FineRepository
 
     @Test
     fun `should add traffic ticket and publish event when valid request is given`() {

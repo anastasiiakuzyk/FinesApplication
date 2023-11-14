@@ -15,7 +15,7 @@ import ua.anastasiia.finesapp.domain.toMongoFine
 import ua.anastasiia.finesapp.dto.toProto
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByCarPlateRequest
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByCarPlateResponse
-import ua.anastasiia.finesapp.repository.MongoFineRepository
+import ua.anastasiia.finesapp.repository.FineRepository
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -25,7 +25,7 @@ class GetFineByCarPlateNatsControllerTest {
     lateinit var connection: Connection
 
     @Autowired
-    lateinit var fineRepository: MongoFineRepository
+    lateinit var fineRepository: FineRepository
 
     @Test
     fun `should return success fine by a specific car plate`() {
