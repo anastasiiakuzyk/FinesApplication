@@ -15,59 +15,47 @@ import ua.anastasiia.finesapp.domain.Fine
 @Primary
 @Suppress("TooManyFunctions")
 class CacheFineRepository(
-    @Qualifier("mongoFineRepository") private val mongoFineRepository: MongoFineRepository,
+    @Qualifier("mongoFineRepository") private val fineRepository: FineRepository,
     private val redisOperations: ReactiveRedisOperations<String, Fine>,
     @Value("\${spring.data.redis.key.prefix}") private val finePrefix: String
-) : FineRepository by mongoFineRepository {
+) : FineRepository by fineRepository {
 
     override fun getFineById(fineId: ObjectId): Mono<Fine> {
-        return redisOperations.opsForValue().get("$finePrefix$fineId").map { it }
+        return redisOperations.opsForValue().get("$finePrefix$fineId")
             .switchIfEmpty {
-                mongoFineRepository.getFineById(fineId)
-                    .flatMap { savedMessage ->
-                        redisOperations.opsForValue().set("$finePrefix$fineId", savedMessage)
-                            .thenReturn(savedMessage)
-                    }
+                fineRepository.getFineById(fineId)
+                    .flatMap { saveFineByIdToRedis(it) }
             }
     }
 
     override fun getFineByCarPlate(plate: String): Mono<Fine> {
-        return redisOperations.opsForValue().get("$finePrefix$plate").map { it }
+        return redisOperations.opsForValue().get("$finePrefix$plate")
             .switchIfEmpty {
-                mongoFineRepository.getFineByCarPlate(plate)
-                    .flatMap { savedMessage ->
-                        redisOperations.opsForValue().set("$finePrefix$plate", savedMessage)
-                            .thenReturn(savedMessage)
+                fineRepository.getFineByCarPlate(plate)
+                    .flatMap {
+                        redisOperations.opsForValue().set("$finePrefix$plate", it)
+                            .thenReturn(it)
                     }
             }
     }
 
-    override fun saveFine(mongoFine: Fine): Mono<Fine> {
-        return mongoFineRepository.saveFine(mongoFine)
-            .flatMap {
-                redisOperations.opsForValue().set("$finePrefix${it.id!!}", it)
-                    .thenReturn(it)
-            }
+    override fun saveFine(fine: Fine): Mono<Fine> {
+        return fineRepository.saveFine(fine)
+            .flatMap { saveFineByIdToRedis(it) }
     }
 
-    override fun saveFines(mongoFines: List<Fine>): Flux<Fine> {
-        return mongoFineRepository.saveFines(mongoFines)
-            .flatMap {
-                redisOperations.opsForValue().set("$finePrefix${it.id!!}", it)
-                    .thenReturn(it)
-            }
+    override fun saveFines(fines: List<Fine>): Flux<Fine> {
+        return fineRepository.saveFines(fines)
+            .flatMap { saveFineByIdToRedis(it) }
     }
 
     override fun deleteFineById(fineId: ObjectId): Mono<Fine> =
         redisOperations.opsForValue().delete("$finePrefix$fineId")
-            .then(mongoFineRepository.deleteFineById(fineId))
+            .then(fineRepository.deleteFineById(fineId))
 
     override fun addTrafficTicketByCarPlate(plate: String, newTicket: Fine.TrafficTicket): Mono<Fine> {
-        return mongoFineRepository.addTrafficTicketByCarPlate(plate, newTicket)
-            .flatMap {
-                redisOperations.opsForValue().set("$finePrefix${it.id!!}", it)
-                    .thenReturn(it)
-            }
+        return fineRepository.addTrafficTicketByCarPlate(plate, newTicket)
+            .flatMap { saveFineByIdToRedis(it) }
     }
 
     override fun updateTrafficTicketByCarPlateAndId(
@@ -75,11 +63,8 @@ class CacheFineRepository(
         trafficTicketId: ObjectId,
         updatedTicket: Fine.TrafficTicket
     ): Mono<Fine> {
-        return mongoFineRepository.updateTrafficTicketByCarPlateAndId(plate, trafficTicketId, updatedTicket)
-            .flatMap {
-                redisOperations.opsForValue().set("$finePrefix${it.id!!}", it)
-                    .thenReturn(it)
-            }
+        return fineRepository.updateTrafficTicketByCarPlateAndId(plate, trafficTicketId, updatedTicket)
+            .flatMap { saveFineByIdToRedis(it) }
     }
 
     override fun addViolationToTrafficTicket(
@@ -87,11 +72,8 @@ class CacheFineRepository(
         trafficTicketId: ObjectId,
         violations: List<Fine.TrafficTicket.Violation>
     ): Mono<Fine> {
-        return mongoFineRepository.addViolationToTrafficTicket(plate, trafficTicketId, violations)
-            .flatMap {
-                redisOperations.opsForValue().set("$finePrefix${it.id!!}", it)
-                    .thenReturn(it)
-            }
+        return fineRepository.addViolationToTrafficTicket(plate, trafficTicketId, violations)
+            .flatMap { saveFineByIdToRedis(it) }
     }
 
     override fun removeViolationFromTicket(
@@ -99,26 +81,22 @@ class CacheFineRepository(
         ticketId: ObjectId,
         violationDescription: String
     ): Mono<Fine> {
-        return mongoFineRepository.removeViolationFromTicket(carPlate, ticketId, violationDescription)
-            .flatMap {
-                redisOperations.opsForValue().set("$finePrefix${it.id!!}", it)
-                    .thenReturn(it)
-            }
+        return fineRepository.removeViolationFromTicket(carPlate, ticketId, violationDescription)
+            .flatMap { saveFineByIdToRedis(it) }
     }
 
     override fun removeTicketByCarPlateAndId(carPlate: String, ticketId: ObjectId): Mono<Fine> {
-        return mongoFineRepository.removeTicketByCarPlateAndId(carPlate, ticketId)
-            .flatMap {
-                redisOperations.opsForValue().set("$finePrefix${it.id!!}", it)
-                    .thenReturn(it)
-            }
+        return fineRepository.removeTicketByCarPlateAndId(carPlate, ticketId)
+            .flatMap { saveFineByIdToRedis(it) }
     }
 
     override fun updateCarById(fineId: ObjectId, car: Fine.Car): Mono<Fine> {
-        return mongoFineRepository.updateCarById(fineId, car)
-            .flatMap {
-                redisOperations.opsForValue().set("$finePrefix${it.id!!}", it)
-                    .thenReturn(it)
-            }
+        return fineRepository.updateCarById(fineId, car)
+            .flatMap { saveFineByIdToRedis(it) }
+    }
+
+    private fun saveFineByIdToRedis(fineToSave: Fine): Mono<Fine> {
+        return redisOperations.opsForValue().set("$finePrefix${fineToSave.id}", fineToSave)
+            .thenReturn(fineToSave)
     }
 }
