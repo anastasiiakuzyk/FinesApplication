@@ -10,8 +10,6 @@ services:
         condition: service_healthy
       nats:
         condition: service_started
-      kafka:
-        condition: service_started
       schema-registry:
         condition: service_started
       redis:
