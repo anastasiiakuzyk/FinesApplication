@@ -21,9 +21,9 @@ interface FineRepository {
 
     fun getFineByCarPlate(plate: String): Mono<Fine>
 
-    fun saveFine(mongoFine: Fine): Mono<Fine>
+    fun saveFine(fine: Fine): Mono<Fine>
 
-    fun saveFines(mongoFines: List<Fine>): Flux<Fine>
+    fun saveFines(fines: List<Fine>): Flux<Fine>
 
     fun deleteFineById(fineId: ObjectId): Mono<Fine>
 

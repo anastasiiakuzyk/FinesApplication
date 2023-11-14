@@ -63,11 +63,11 @@ class MongoFineRepository(private val reactiveMongoTemplate: ReactiveMongoTempla
         reactiveMongoTemplate.findOne<MongoFine>(Query.query(Criteria.where("car.plate").`is`(plate)))
             .map { it.toDomainFine() }
 
-    override fun saveFine(mongoFine: Fine): Mono<Fine> =
-        reactiveMongoTemplate.save<MongoFine>(mongoFine.toMongoFine()).map { it.toDomainFine() }
+    override fun saveFine(fine: Fine): Mono<Fine> =
+        reactiveMongoTemplate.save<MongoFine>(fine.toMongoFine()).map { it.toDomainFine() }
 
-    override fun saveFines(mongoFines: List<Fine>): Flux<Fine> =
-        reactiveMongoTemplate.insertAll<MongoFine>(mongoFines.map { it.toMongoFine() }).map { it.toDomainFine() }
+    override fun saveFines(fines: List<Fine>): Flux<Fine> =
+        reactiveMongoTemplate.insertAll<MongoFine>(fines.map { it.toMongoFine() }).map { it.toDomainFine() }
 
     override fun deleteFineById(fineId: ObjectId): Mono<Fine> =
         reactiveMongoTemplate.findAndRemove<MongoFine>(Query(Criteria.where("id").`is`(fineId)))
