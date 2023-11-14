@@ -10,10 +10,10 @@ services:
         condition: service_healthy
       nats:
         condition: service_started
-      kafka:
-        condition: service_started
       schema-registry:
         condition: service_started
+      redis:
+        condition: service_healthy
     ports:
       - "8080:8080"
 
@@ -45,6 +45,11 @@ services:
     container_name: redis
     ports:
       - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli","ping"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
 
   schema-registry:
     image: confluentinc/cp-schema-registry:7.5.1

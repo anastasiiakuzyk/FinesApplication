@@ -20,6 +20,14 @@ subprojects {
     apply(plugin = "kotlin")
     apply(plugin = "com.google.protobuf")
 
+    apply(plugin = "java")
+
+    tasks.test {
+        testLogging {
+            showStandardStreams = true
+        }
+    }
+
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs += "-Xjsr305=strict"

@@ -19,6 +19,11 @@ import org.springframework.data.mongodb.core.query.Update
 import org.springframework.stereotype.Repository
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import ua.anastasiia.finesapp.domain.Fine
+import ua.anastasiia.finesapp.domain.toDomainFine
+import ua.anastasiia.finesapp.domain.toMongoFine
+import ua.anastasiia.finesapp.domain.toMongoTrafficTicket
+import ua.anastasiia.finesapp.domain.toMongoViolation
 import ua.anastasiia.finesapp.dto.response.CarResponse
 import ua.anastasiia.finesapp.dto.response.TotalFineSumResponse
 import ua.anastasiia.finesapp.entity.MongoFine
@@ -29,83 +34,95 @@ import java.time.LocalDate
 
 @Repository
 @Suppress("TooManyFunctions")
-class MongoFineRepository(val reactiveMongoTemplate: ReactiveMongoTemplate) {
-    fun getAllFines(): Flux<MongoFine> = reactiveMongoTemplate.findAll<MongoFine>()
-    fun getAllFinesInLocation(longitude: Double, latitude: Double, radiusInMeters: Double): Flux<MongoFine> =
-        reactiveMongoTemplate.find(
+class MongoFineRepository(private val reactiveMongoTemplate: ReactiveMongoTemplate) : FineRepository {
+    override fun getAllFines(): Flux<Fine> = reactiveMongoTemplate.findAll<MongoFine>().map { it.toDomainFine() }
+    override fun getAllFinesInLocation(longitude: Double, latitude: Double, radiusInMeters: Double): Flux<Fine> =
+        reactiveMongoTemplate.find<MongoFine>(
             Query(
                 Criteria.where("trafficTickets.location").nearSphere(
                     GeoJsonPoint(longitude, latitude)
                 ).maxDistance(radiusInMeters)
             )
-        )
+        ).map { it.toDomainFine() }
 
-    fun getAllFinesByDate(localDate: LocalDate): Flux<MongoFine> {
+    override fun getAllFinesByDate(localDate: LocalDate): Flux<Fine> {
         val start = localDate.atStartOfDay()
         val end = localDate.plusDays(1).atStartOfDay()
         return reactiveMongoTemplate.find<MongoFine>(
             Query(Criteria.where("trafficTickets.dateTime").gte(start).lt(end))
-        )
+        ).map {
+            it.toDomainFine()
+        }
     }
 
-    fun getFineById(fineId: ObjectId): Mono<MongoFine> =
+    override fun getFineById(fineId: ObjectId): Mono<Fine> =
         reactiveMongoTemplate.findOne<MongoFine>(Query(Criteria.where("id").`is`(fineId)))
+            .map { it.toDomainFine() }
 
-    fun getFineByCarPlate(plate: String): Mono<MongoFine> =
+    override fun getFineByCarPlate(plate: String): Mono<Fine> =
         reactiveMongoTemplate.findOne<MongoFine>(Query.query(Criteria.where("car.plate").`is`(plate)))
+            .map { it.toDomainFine() }
 
-    fun saveFine(mongoFine: MongoFine): Mono<MongoFine> = reactiveMongoTemplate.save(mongoFine)
+    override fun saveFine(fine: Fine): Mono<Fine> =
+        reactiveMongoTemplate.save<MongoFine>(fine.toMongoFine()).map { it.toDomainFine() }
 
-    fun saveFines(mongoFines: List<MongoFine>): Flux<MongoFine> = reactiveMongoTemplate.insertAll(mongoFines)
+    override fun saveFines(fines: List<Fine>): Flux<Fine> =
+        reactiveMongoTemplate.insertAll<MongoFine>(fines.map { it.toMongoFine() }).map { it.toDomainFine() }
 
-    fun deleteFineById(fineId: ObjectId): Mono<MongoFine> =
+    override fun deleteFineById(fineId: ObjectId): Mono<Fine> =
         reactiveMongoTemplate.findAndRemove<MongoFine>(Query(Criteria.where("id").`is`(fineId)))
+            .map { it.toDomainFine() }
 
-    fun addTrafficTicketByCarPlate(plate: String, newTicket: MongoFine.TrafficTicket): Mono<MongoFine> =
+    override fun addTrafficTicketByCarPlate(plate: String, newTicket: Fine.TrafficTicket): Mono<Fine> =
         reactiveMongoTemplate.findAndModify<MongoFine>(
             Query.query(Criteria.where("car.plate").`is`(plate)),
-            Update().push("trafficTickets", newTicket)
-        )
+            Update().push("trafficTickets", newTicket.toMongoTrafficTicket())
+        ).map { it.toDomainFine() }
 
-    fun updateTrafficTicketByCarPlateAndId(
+    override fun updateTrafficTicketByCarPlateAndId(
         plate: String,
         trafficTicketId: ObjectId,
-        updatedTicket: MongoFine.TrafficTicket
-    ): Mono<MongoFine> = reactiveMongoTemplate.findAndModify<MongoFine>(
+        updatedTicket: Fine.TrafficTicket
+    ): Mono<Fine> = reactiveMongoTemplate.findAndModify<MongoFine>(
         Query.query(Criteria.where("car.plate").`is`(plate).and("trafficTickets.id").`is`(trafficTicketId)),
-        Update().set("trafficTickets.$", updatedTicket)
-    )
+        Update().set("trafficTickets.$", updatedTicket.toMongoTrafficTicket())
+    ).map { it.toDomainFine() }
 
-    fun addViolationToTrafficTicket(
+    override fun addViolationToTrafficTicket(
         plate: String,
         trafficTicketId: ObjectId,
-        violations: List<MongoFine.TrafficTicket.Violation>
-    ): Mono<MongoFine> = reactiveMongoTemplate.findAndModify<MongoFine>(
-        Query.query(
-            Criteria
-                .where("car.plate")
-                .`is`(plate)
-                .and("trafficTickets.id")
-                .`is`(trafficTicketId)
-        ),
-        Update().apply {
-            addToSet("trafficTickets.$.violations").each(violations)
-        }
-    )
+        violations: List<Fine.TrafficTicket.Violation>
+    ): Mono<Fine> =
+        reactiveMongoTemplate.findAndModify<MongoFine>(
+            Query.query(
+                Criteria
+                    .where("car.plate")
+                    .`is`(plate)
+                    .and("trafficTickets.id")
+                    .`is`(trafficTicketId)
+            ),
+            Update().apply {
+                addToSet("trafficTickets.$.violations").each(violations.map { it.toMongoViolation() })
+            }
+        ).map { it.toDomainFine() }
 
-    fun removeViolationFromTicket(carPlate: String, ticketId: ObjectId, violationDescription: String): Mono<MongoFine> =
+    override fun removeViolationFromTicket(
+        carPlate: String,
+        ticketId: ObjectId,
+        violationDescription: String
+    ): Mono<Fine> =
         reactiveMongoTemplate.findAndModify<MongoFine>(
             Query(Criteria.where("trafficTickets.id").`is`(ticketId).and("car.plate").`is`(carPlate)),
             Update().pull("trafficTickets.$.violations", mapOf("description" to violationDescription))
-        )
+        ).map { it.toDomainFine() }
 
-    fun removeTicketByCarPlateAndId(carPlate: String, ticketId: ObjectId): Mono<MongoFine> =
+    override fun removeTicketByCarPlateAndId(carPlate: String, ticketId: ObjectId): Mono<Fine> =
         reactiveMongoTemplate.findAndModify<MongoFine>(
             Query(Criteria.where("trafficTickets.id").`is`(ticketId).and("car.plate").`is`(carPlate)),
             Update().pull("trafficTickets", BasicDBObject("id", ticketId))
-        )
+        ).map { it.toDomainFine() }
 
-    fun getSumOfFinesForCarPlate(carPlate: String): Mono<TotalFineSumResponse> {
+    override fun getSumOfFinesForCarPlate(carPlate: String): Mono<TotalFineSumResponse> {
         val matchStage = match(Criteria.where("car.plate").`is`(carPlate))
         val unwindTickets = unwind("trafficTickets")
         val unwindViolations = unwind("trafficTickets.violations")
@@ -121,7 +138,7 @@ class MongoFineRepository(val reactiveMongoTemplate: ReactiveMongoTemplate) {
         ).next()
     }
 
-    fun getAllCars(): Flux<CarResponse> = reactiveMongoTemplate.aggregate<CarResponse>(
+    override fun getAllCars(): Flux<CarResponse> = reactiveMongoTemplate.aggregate<CarResponse>(
         Aggregation.newAggregation(
             project("car.plate", "car.make", "car.model", "car.color")
                 .andExclude("_id")
@@ -129,9 +146,9 @@ class MongoFineRepository(val reactiveMongoTemplate: ReactiveMongoTemplate) {
         COLLECTION_NAME
     )
 
-    fun updateCarById(fineId: ObjectId, car: MongoFine.Car): Mono<MongoFine> =
+    override fun updateCarById(fineId: ObjectId, car: Fine.Car): Mono<Fine> =
         reactiveMongoTemplate.findAndModify<MongoFine>(
             Query(Criteria.where("id").`is`(fineId)),
             Update().set("car", car)
-        )
+        ).map { it.toDomainFine() }
 }

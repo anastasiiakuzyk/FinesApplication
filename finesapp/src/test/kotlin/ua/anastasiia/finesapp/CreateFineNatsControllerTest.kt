@@ -9,12 +9,13 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import ua.anastasiia.finesapp.NatsTestUtils.getFineToSave
 import ua.anastasiia.finesapp.NatsTestUtils.sendRequestAndParseResponse
+import ua.anastasiia.finesapp.domain.toDomainFine
 import ua.anastasiia.finesapp.dto.toProto
 import ua.anastasiia.finesapp.entity.MongoFine
 import ua.anastasiia.finesapp.input.reqreply.fine.CreateFineRequest
 import ua.anastasiia.finesapp.input.reqreply.fine.CreateFineResponse
 import ua.anastasiia.finesapp.output.pubsub.fine.FineCreatedEvent
-import ua.anastasiia.finesapp.repository.MongoFineRepository
+import ua.anastasiia.finesapp.repository.FineRepository
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -27,7 +28,7 @@ class CreateFineNatsControllerTest {
     lateinit var connection: Connection
 
     @Autowired
-    lateinit var fineRepository: MongoFineRepository
+    lateinit var fineRepository: FineRepository
 
     @Test
     fun `should create fine and publish event when valid fine data is provided`() {
@@ -68,7 +69,7 @@ class CreateFineNatsControllerTest {
             trafficTickets = listOf()
         )
         val fineToCreate = fine.toProto()
-        fineRepository.saveFine(fine).block()
+        fineRepository.saveFine(fine.toDomainFine()).block()
         val expectedResponse =
             CreateFineResponse.newBuilder().apply { failureBuilder.carPlateDuplicateErrorBuilder }.build()
 

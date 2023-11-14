@@ -10,10 +10,12 @@ import org.springframework.test.context.ActiveProfiles
 import ua.anastasiia.finesapp.NatsTestUtils.getCarPlate
 import ua.anastasiia.finesapp.NatsTestUtils.getFineToSave
 import ua.anastasiia.finesapp.NatsTestUtils.sendRequestAndParseResponse
+import ua.anastasiia.finesapp.domain.toDomainFine
+import ua.anastasiia.finesapp.domain.toMongoFine
 import ua.anastasiia.finesapp.dto.toProto
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByCarPlateRequest
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByCarPlateResponse
-import ua.anastasiia.finesapp.repository.MongoFineRepository
+import ua.anastasiia.finesapp.repository.FineRepository
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -23,22 +25,23 @@ class GetFineByCarPlateNatsControllerTest {
     lateinit var connection: Connection
 
     @Autowired
-    lateinit var fineRepository: MongoFineRepository
+    lateinit var fineRepository: FineRepository
 
     @Test
     fun `should return success fine by a specific car plate`() {
         // GIVEN
-        val savedFine = fineRepository.saveFine(getFineToSave()).block()
+        val savedFine = fineRepository.saveFine(getFineToSave().toDomainFine()).block()
         val expectedResponse = GetFineByCarPlateResponse
             .newBuilder()
-            .apply { successBuilder.setFine(savedFine!!.toProto()) }
+            .apply { successBuilder.setFine(savedFine!!.toMongoFine().toProto()) }
             .build()
 
         // WHEN
         val actualResponse = sendRequestAndParseResponse(
             connection = connection,
             subject = NatsSubject.Fine.GET_BY_CAR_PLATE,
-            request = GetFineByCarPlateRequest.newBuilder().setCarPlate(savedFine!!.toProto().car.plate).build(),
+            request = GetFineByCarPlateRequest.newBuilder()
+                .setCarPlate(savedFine!!.toMongoFine().toProto().car.plate).build(),
             parser = GetFineByCarPlateResponse::parseFrom
         )
 
