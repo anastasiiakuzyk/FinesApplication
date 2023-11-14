@@ -2,11 +2,17 @@ spring:
   data:
     mongodb:
       uri: mongodb://root:root@localhost:27017/finesdb?authSource=admin
-      auto-index-creation: true
-  main:
-    banner-mode: 'off'
-  jackson:
-    mapper:
-      accept-case-insensitive-enums: true
+    redis:
+      host: localhost
+      key:
+        prefix:
+          fine-
+  kafka:
+    bootstrap-servers: http://localhost:9092
+    properties:
+      schema:
+        registry:
+          url: http://localhost:8081
+
 nats:
   url: "nats://localhost:4222"
