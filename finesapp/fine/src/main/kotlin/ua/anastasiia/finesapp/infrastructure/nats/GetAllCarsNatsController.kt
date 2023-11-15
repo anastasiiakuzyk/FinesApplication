@@ -1,4 +1,4 @@
-package ua.anastasiia.finesapp.infrastructure.adapters.nats
+package ua.anastasiia.finesapp.infrastructure.nats
 
 import com.google.protobuf.Parser
 import org.springframework.stereotype.Component
@@ -9,7 +9,6 @@ import ua.anastasiia.finesapp.NatsSubject
 import ua.anastasiia.finesapp.application.exception.CarsNotFoundException
 import ua.anastasiia.finesapp.application.port.input.FineServiceIn
 import ua.anastasiia.finesapp.commonmodels.car.Car
-import ua.anastasiia.finesapp.infrastructure.mapper.toCar
 import ua.anastasiia.finesapp.infrastructure.mapper.toProto
 import ua.anastasiia.finesapp.input.reqreply.car.GetAllCarsRequest
 import ua.anastasiia.finesapp.input.reqreply.car.GetAllCarsResponse
@@ -28,7 +27,7 @@ class GetAllCarsNatsController(
             .onErrorResume { buildFailureResponse(it).toMono() }
 
     private fun getAllProtoCars(): Flux<Car> = fineService.getAllCars()
-        .map { it.toCar().toProto() }
+        .map { it.toProto() }
 
     private fun buildSuccessResponse(protoCars: List<Car>): GetAllCarsResponse =
         GetAllCarsResponse.newBuilder().apply {

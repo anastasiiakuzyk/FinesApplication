@@ -5,7 +5,7 @@ import io.nats.client.Connection
 import org.springframework.beans.factory.config.BeanPostProcessor
 import org.springframework.stereotype.Component
 import reactor.core.scheduler.Schedulers
-import ua.anastasiia.finesapp.infrastructure.adapters.nats.NatsController
+import ua.anastasiia.finesapp.infrastructure.nats.NatsController
 
 @Component
 class InitNatsControllerBeanPostProcessor(val connection: Connection) : BeanPostProcessor {

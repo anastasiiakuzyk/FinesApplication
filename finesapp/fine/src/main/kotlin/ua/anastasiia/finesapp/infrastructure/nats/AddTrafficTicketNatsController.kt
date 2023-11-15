@@ -1,4 +1,4 @@
-package ua.anastasiia.finesapp.infrastructure.adapters.nats
+package ua.anastasiia.finesapp.infrastructure.nats
 
 import com.google.protobuf.Parser
 import io.nats.client.Connection
@@ -9,10 +9,9 @@ import ua.anastasiia.finesapp.NatsSubject
 import ua.anastasiia.finesapp.application.exception.CarPlateNotFoundException
 import ua.anastasiia.finesapp.application.port.input.FineServiceIn
 import ua.anastasiia.finesapp.commonmodels.fine.Fine
-import ua.anastasiia.finesapp.infrastructure.mapper.toFine
 import ua.anastasiia.finesapp.infrastructure.mapper.toProto
-import ua.anastasiia.finesapp.infrastructure.mapper.toRequest
 import ua.anastasiia.finesapp.infrastructure.mapper.toTrafficTicket
+import ua.anastasiia.finesapp.infrastructure.rest.mapper.toTrafficTicket
 import ua.anastasiia.finesapp.input.reqreply.trafficticket.AddTrafficTicketRequest
 import ua.anastasiia.finesapp.input.reqreply.trafficticket.AddTrafficTicketResponse
 import ua.anastasiia.finesapp.output.pubsub.trafficticket.TrafficTicketAddedEvent
@@ -35,8 +34,8 @@ class AddTrafficTicketNatsController(
     private fun addProtoTrafficTicketByCarPlate(request: AddTrafficTicketRequest): Mono<Fine> {
         val carPlate = request.carPlate
         val trafficTicket = request.trafficTicket.toTrafficTicket()
-        return fineService.addTrafficTicketByCarPlate(carPlate, trafficTicket.toRequest())
-            .map { it.toFine().toProto() }
+        return fineService.addTrafficTicketByCarPlate(carPlate, trafficTicket)
+            .map { it.toProto() }
     }
 
     private fun publishEvent(protoFine: Fine, carPlate: String) {

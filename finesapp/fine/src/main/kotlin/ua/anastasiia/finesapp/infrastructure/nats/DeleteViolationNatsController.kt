@@ -1,4 +1,4 @@
-package ua.anastasiia.finesapp.infrastructure.adapters.nats
+package ua.anastasiia.finesapp.infrastructure.nats
 
 import com.google.protobuf.Parser
 import io.nats.client.Connection
@@ -9,8 +9,10 @@ import ua.anastasiia.finesapp.NatsSubject
 import ua.anastasiia.finesapp.application.exception.TrafficTicketWithViolationNotFoundException
 import ua.anastasiia.finesapp.application.port.input.FineServiceIn
 import ua.anastasiia.finesapp.commonmodels.fine.Fine
-import ua.anastasiia.finesapp.infrastructure.mapper.toFine
 import ua.anastasiia.finesapp.infrastructure.mapper.toProto
+import ua.anastasiia.finesapp.infrastructure.mapper.toViolation
+import ua.anastasiia.finesapp.infrastructure.rest.mapper.toViolation
+import ua.anastasiia.finesapp.infrastructure.mapper.toViolationType
 import ua.anastasiia.finesapp.input.reqreply.violation.DeleteViolationRequest
 import ua.anastasiia.finesapp.input.reqreply.violation.DeleteViolationResponse
 import ua.anastasiia.finesapp.output.pubsub.violation.ViolationDeletedEvent
@@ -34,8 +36,12 @@ class DeleteViolationNatsController(
         val carPlate = request.carPlate
         val ticketId = request.ticketId
         val violationId = request.violationId
-        return fineService.removeViolationFromTicket(carPlate, ticketId, violationId)
-            .map { it.toFine().toProto() }
+        return fineService.removeViolationFromTicket(
+            carPlate,
+            ticketId,
+            violationId.toViolationType().toViolation().description
+        )
+            .map { it.toProto() }
     }
 
     private fun publishEvent(protoFine: Fine, carPlate: String) {

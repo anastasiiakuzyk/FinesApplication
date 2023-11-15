@@ -1,4 +1,4 @@
-package ua.anastasiia.finesapp.infrastructure.adapters.nats
+package ua.anastasiia.finesapp.infrastructure.nats
 
 import com.google.protobuf.Parser
 import io.nats.client.Connection
@@ -10,8 +10,8 @@ import ua.anastasiia.finesapp.application.exception.CarPlateDuplicateException
 import ua.anastasiia.finesapp.application.port.input.FineServiceIn
 import ua.anastasiia.finesapp.commonmodels.fine.Fine
 import ua.anastasiia.finesapp.infrastructure.mapper.toFine
+import ua.anastasiia.finesapp.infrastructure.rest.mapper.toFine
 import ua.anastasiia.finesapp.infrastructure.mapper.toProto
-import ua.anastasiia.finesapp.infrastructure.mapper.toRequest
 import ua.anastasiia.finesapp.input.reqreply.fine.CreateFineRequest
 import ua.anastasiia.finesapp.input.reqreply.fine.CreateFineResponse
 import ua.anastasiia.finesapp.output.pubsub.fine.FineCreatedEvent
@@ -33,8 +33,8 @@ class CreateFineNatsController(
 
     private fun saveProtoFine(request: CreateFineRequest): Mono<Fine> {
         val fine = request.fine.toFine()
-        return fineService.saveFine(fine.toRequest())
-            .map { it.toFine().toProto() }
+        return fineService.saveFine(fine)
+            .map { it.toProto() }
     }
 
     private fun publishEvent(protoFine: Fine, carPlate: String) {

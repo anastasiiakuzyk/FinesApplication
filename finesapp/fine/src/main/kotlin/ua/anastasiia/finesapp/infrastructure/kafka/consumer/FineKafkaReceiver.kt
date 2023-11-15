@@ -1,10 +1,10 @@
-package ua.anastasiia.finesapp.infrastructure.adapters.kafka
+package ua.anastasiia.finesapp.infrastructure.kafka.consumer
 
 import jakarta.annotation.PostConstruct
 import org.springframework.stereotype.Component
 import reactor.core.scheduler.Schedulers
 import reactor.kafka.receiver.KafkaReceiver
-import ua.anastasiia.finesapp.infrastructure.adapters.nats.event.NatsEventPublisher
+import ua.anastasiia.finesapp.infrastructure.nats.event.NatsEventPublisher
 import ua.anastasiia.finesapp.output.pubsub.trafficticket.TrafficTicketAddedEvent
 
 @Component

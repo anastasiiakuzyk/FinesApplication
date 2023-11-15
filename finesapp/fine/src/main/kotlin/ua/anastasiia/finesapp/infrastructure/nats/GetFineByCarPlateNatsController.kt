@@ -1,4 +1,4 @@
-package ua.anastasiia.finesapp.infrastructure.adapters.nats
+package ua.anastasiia.finesapp.infrastructure.nats
 
 import com.google.protobuf.Parser
 import org.springframework.stereotype.Component
@@ -8,7 +8,6 @@ import ua.anastasiia.finesapp.NatsSubject
 import ua.anastasiia.finesapp.application.exception.CarPlateNotFoundException
 import ua.anastasiia.finesapp.application.port.input.FineServiceIn
 import ua.anastasiia.finesapp.commonmodels.fine.Fine
-import ua.anastasiia.finesapp.infrastructure.mapper.toFine
 import ua.anastasiia.finesapp.infrastructure.mapper.toProto
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByCarPlateRequest
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByCarPlateResponse
@@ -27,7 +26,7 @@ class GetFineByCarPlateNatsController(
 
     private fun getProtoFineByCarPlate(request: GetFineByCarPlateRequest): Mono<Fine> =
         fineService.getFineByCarPlate(request.carPlate)
-            .map { it.toFine().toProto() }
+            .map { it.toProto() }
 
     private fun buildSuccessResponse(fine: Fine): GetFineByCarPlateResponse =
         GetFineByCarPlateResponse.newBuilder().apply { successBuilder.setFine(fine) }.build()

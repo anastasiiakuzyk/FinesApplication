@@ -1,4 +1,4 @@
-package ua.anastasiia.finesapp.infrastructure.adapters.kafka
+package ua.anastasiia.finesapp.infrastructure.kafka
 
 import com.google.protobuf.GeneratedMessageV3
 import io.confluent.kafka.serializers.protobuf.KafkaProtobufDeserializer

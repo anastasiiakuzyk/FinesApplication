@@ -1,4 +1,4 @@
-package ua.anastasiia.finesapp.infrastructure.adapters.nats
+package ua.anastasiia.finesapp.infrastructure.nats
 
 import com.google.protobuf.Parser
 import org.springframework.stereotype.Component
@@ -8,7 +8,6 @@ import ua.anastasiia.finesapp.NatsSubject
 import ua.anastasiia.finesapp.application.exception.FineIdNotFoundException
 import ua.anastasiia.finesapp.application.port.input.FineServiceIn
 import ua.anastasiia.finesapp.commonmodels.fine.Fine
-import ua.anastasiia.finesapp.infrastructure.mapper.toFine
 import ua.anastasiia.finesapp.infrastructure.mapper.toProto
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByIdRequest
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByIdResponse
@@ -27,7 +26,7 @@ class GetFineByIdNatsController(
 
     private fun getProtoFineById(request: GetFineByIdRequest): Mono<Fine> =
         fineService.getFineById(request.id)
-            .map { it.toFine().toProto() }
+            .map { it.toProto() }
 
     private fun buildSuccessResponse(fine: Fine): GetFineByIdResponse =
         GetFineByIdResponse.newBuilder().apply { successBuilder.setFine(fine) }.build()

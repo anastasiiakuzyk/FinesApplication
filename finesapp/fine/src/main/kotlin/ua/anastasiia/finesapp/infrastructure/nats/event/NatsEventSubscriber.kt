@@ -1,4 +1,4 @@
-package ua.anastasiia.finesapp.infrastructure.adapters.nats.event
+package ua.anastasiia.finesapp.infrastructure.nats.event
 
 import io.nats.client.Connection
 import org.springframework.stereotype.Component
