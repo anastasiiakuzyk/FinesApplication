@@ -1,7 +1,7 @@
-package ua.anastasiia.finesapp.infrastructure.config.bpp.fieldGeneration
+package ua.anastasiia.propertyautofill.bpp.fieldGeneration
 
-import ua.anastasiia.finesapp.infrastructure.config.bpp.fieldGeneration.web.CarMakeModel
-import ua.anastasiia.finesapp.infrastructure.config.bpp.fieldGeneration.web.getAllCarMakeModels
+import ua.anastasiia.propertyautofill.bpp.fieldGeneration.web.CarMakeModel
+import ua.anastasiia.propertyautofill.bpp.fieldGeneration.web.getAllCarMakeModels
 import kotlin.random.Random
 
 class RandomModelGenerator : RandomFieldGenerator {

@@ -1,12 +1,12 @@
-package ua.anastasiia.finesapp.infrastructure.config.bpp
+package ua.anastasiia.finesapp
 
 import org.springframework.beans.factory.config.BeanPostProcessor
 import org.springframework.cglib.proxy.InvocationHandler
 import org.springframework.cglib.proxy.Proxy
 import org.springframework.stereotype.Component
-import ua.anastasiia.finesapp.application.annotation.AutofillNullable
-import ua.anastasiia.finesapp.application.annotation.NullableGenerate
-import ua.anastasiia.finesapp.infrastructure.config.bpp.fieldGeneration.RandomFieldGenerator
+import ua.anastasiia.propertyautofill.annotation.AutofillNullable
+import ua.anastasiia.propertyautofill.annotation.NullableGenerate
+import ua.anastasiia.propertyautofill.bpp.fieldGeneration.RandomFieldGenerator
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
 import kotlin.reflect.KClass
@@ -73,20 +73,22 @@ class InvocationHandler(
             val fieldToGenerate = annotationDetails.fieldToGenerate
             val valueProviderClass = annotationDetails.valueProvider
             val targetMethodParameter = args[paramIndex]
-            updateFieldIfNull(targetMethodParameter, fieldToGenerate, valueProviderClass)
+            updateFieldIfBlank(targetMethodParameter, fieldToGenerate, valueProviderClass)
         }
     }
 
-    private fun updateFieldIfNull(
+    private fun updateFieldIfBlank(
         targetMethodParameter: Any,
         fieldName: String,
         valueProviderClass: KClass<out RandomFieldGenerator>
     ) {
         targetMethodParameter.javaClass.getDeclaredField(fieldName).apply {
             isAccessible = true
-            if (get(targetMethodParameter) == null) {
-                set(targetMethodParameter, generateValue(valueProviderClass))
-            }
+            (get(targetMethodParameter) as? String)
+                ?.takeIf { it.isBlank() }
+                ?.let {
+                    set(targetMethodParameter, generateValue(valueProviderClass))
+                }
         }
     }
 

@@ -1,4 +1,4 @@
-package ua.anastasiia.finesapp.infrastructure.config.bpp.fieldGeneration
+package ua.anastasiia.propertyautofill.bpp.fieldGeneration
 
 interface RandomFieldGenerator {
     fun generate(): String

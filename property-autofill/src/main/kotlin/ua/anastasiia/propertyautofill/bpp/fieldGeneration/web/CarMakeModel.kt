@@ -1,4 +1,4 @@
-package ua.anastasiia.finesapp.infrastructure.config.bpp.fieldGeneration.web
+package ua.anastasiia.propertyautofill.bpp.fieldGeneration.web
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
