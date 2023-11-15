@@ -1,4 +1,4 @@
-package ua.anastasiia.finesapp.infrastructure.adapters.repository
+package ua.anastasiia.finesapp.infrastructure.repository
 
 import com.mongodb.BasicDBObject
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
@@ -20,12 +20,10 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import ua.anastasiia.finesapp.application.port.output.FineRepositoryOut
 import ua.anastasiia.finesapp.domain.Fine
-import ua.anastasiia.finesapp.infrastructure.adapters.repository.entity.MongoFine
-import ua.anastasiia.finesapp.infrastructure.adapters.repository.entity.MongoFine.Companion.COLLECTION_NAME
-import ua.anastasiia.finesapp.infrastructure.adapters.repository.util.findAndModify
-import ua.anastasiia.finesapp.infrastructure.adapters.repository.util.findAndRemove
-import ua.anastasiia.finesapp.infrastructure.dto.response.CarResponse
-import ua.anastasiia.finesapp.infrastructure.dto.response.TotalFineSumResponse
+import ua.anastasiia.finesapp.infrastructure.repository.entity.MongoFine
+import ua.anastasiia.finesapp.infrastructure.repository.entity.MongoFine.Companion.COLLECTION_NAME
+import ua.anastasiia.finesapp.infrastructure.repository.util.findAndModify
+import ua.anastasiia.finesapp.infrastructure.repository.util.findAndRemove
 import ua.anastasiia.finesapp.infrastructure.mapper.toDomainFine
 import ua.anastasiia.finesapp.infrastructure.mapper.toMongoFine
 import ua.anastasiia.finesapp.infrastructure.mapper.toMongoTrafficTicket

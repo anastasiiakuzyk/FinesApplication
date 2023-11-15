@@ -3,7 +3,7 @@ package ua.anastasiia.finesapp.infrastructure.mapper
 import org.bson.types.ObjectId
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint
 import ua.anastasiia.finesapp.domain.Fine
-import ua.anastasiia.finesapp.infrastructure.adapters.repository.entity.MongoFine
+import ua.anastasiia.finesapp.infrastructure.repository.entity.MongoFine
 
 fun Fine.toMongoFine() = MongoFine(
     id = id?.let { ObjectId(it) },
