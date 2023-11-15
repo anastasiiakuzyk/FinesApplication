@@ -3,8 +3,6 @@ package ua.anastasiia.finesapp.application.port.output
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import ua.anastasiia.finesapp.domain.Fine
-import ua.anastasiia.finesapp.infrastructure.dto.response.CarResponse
-import ua.anastasiia.finesapp.infrastructure.dto.response.TotalFineSumResponse
 import java.time.LocalDate
 
 @Suppress("TooManyFunctions")
@@ -44,9 +42,9 @@ interface FineRepositoryOut {
 
     fun removeTicketByCarPlateAndId(carPlate: String, ticketId: String): Mono<Fine>
 
-    fun getSumOfFinesForCarPlate(carPlate: String): Mono<TotalFineSumResponse>
+    fun getSumOfFinesForCarPlate(carPlate: String): Mono<Double>
 
-    fun getAllCars(): Flux<CarResponse>
+    fun getAllCars(): Flux<Fine.Car>
 
     fun updateCarById(fineId: String, car: Fine.Car): Mono<Fine>
 }
