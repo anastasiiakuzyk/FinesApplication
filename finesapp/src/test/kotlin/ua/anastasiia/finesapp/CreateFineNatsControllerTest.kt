@@ -9,13 +9,12 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import ua.anastasiia.finesapp.NatsTestUtils.getFineToSave
 import ua.anastasiia.finesapp.NatsTestUtils.sendRequestAndParseResponse
-import ua.anastasiia.finesapp.domain.toDomainFine
-import ua.anastasiia.finesapp.dto.toProto
-import ua.anastasiia.finesapp.entity.MongoFine
+import ua.anastasiia.finesapp.infrastructure.mapper.toProto
 import ua.anastasiia.finesapp.input.reqreply.fine.CreateFineRequest
 import ua.anastasiia.finesapp.input.reqreply.fine.CreateFineResponse
 import ua.anastasiia.finesapp.output.pubsub.fine.FineCreatedEvent
-import ua.anastasiia.finesapp.repository.FineRepository
+import ua.anastasiia.finesapp.application.port.output.FineRepositoryOut
+import ua.anastasiia.finesapp.domain.Fine
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -28,7 +27,7 @@ class CreateFineNatsControllerTest {
     lateinit var connection: Connection
 
     @Autowired
-    lateinit var fineRepository: FineRepository
+    lateinit var fineRepository: FineRepositoryOut
 
     @Test
     fun `should create fine and publish event when valid fine data is provided`() {
@@ -59,8 +58,8 @@ class CreateFineNatsControllerTest {
     @Test
     fun `should return failure result to create fine when car plate already exists`() {
         // GIVEN
-        val fine = MongoFine(
-            car = MongoFine.Car(
+        val fine = Fine(
+            car = Fine.Car(
                 "test plate ${LocalDateTime.now().toEpochSecond(ZoneOffset.UTC)}",
                 "Test",
                 "Test",
@@ -69,7 +68,7 @@ class CreateFineNatsControllerTest {
             trafficTickets = listOf()
         )
         val fineToCreate = fine.toProto()
-        fineRepository.saveFine(fine.toDomainFine()).block()
+        fineRepository.saveFine(fine).block()
         val expectedResponse =
             CreateFineResponse.newBuilder().apply { failureBuilder.carPlateDuplicateErrorBuilder }.build()
 
