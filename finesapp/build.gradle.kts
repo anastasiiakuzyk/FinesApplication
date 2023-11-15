@@ -4,13 +4,10 @@ plugins {
     id("io.spring.dependency-management") version "1.1.3"
     id("io.gitlab.arturbosch.detekt") version "1.23.1"
     kotlin("plugin.spring") version "1.9.0"
-    kotlin("plugin.jpa") version "1.9.0"
     kotlin("plugin.noarg") version "1.9.0"
 }
 
 dependencies {
-    implementation("org.glassfish.jersey.core:jersey-client:3.1.3")
-    implementation("org.glassfish.jersey.media:jersey-media-json-jackson:3.1.3")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
     implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -55,8 +52,8 @@ subprojects {
 
         implementation(project(":"))
         implementation(project(":internal-api"))
+        implementation(project(":property-autofill"))
 
-        implementation("org.glassfish.jersey.core:jersey-client:3.1.3")
         implementation("org.glassfish.jersey.media:jersey-media-json-jackson:3.1.3")
         implementation("org.springframework.boot:spring-boot-starter-webflux")
         implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
