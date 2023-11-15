@@ -5,6 +5,7 @@ import io.nats.client.Connection
 import org.bson.types.ObjectId
 import ua.anastasiia.finesapp.domain.Fine
 import ua.anastasiia.finesapp.infrastructure.mapper.toViolation
+import ua.anastasiia.finesapp.infrastructure.rest.mapper.toViolation
 import ua.anastasiia.finesapp.infrastructure.mapper.toViolationType
 import java.time.Duration
 import java.time.LocalDateTime
