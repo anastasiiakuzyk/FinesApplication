@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
-import ua.anastasiia.finesapp.infrastructure.dto.response.FineResponse
 import ua.anastasiia.finesapp.application.port.input.FineServiceIn
+import ua.anastasiia.finesapp.infrastructure.dto.response.FineResponse
 
 @RestController
 @RequestMapping(value = ["/violations"])

@@ -12,21 +12,3 @@ data class TrafficTicketResponse(
     val photoUrl: String,
     val violations: List<ViolationResponse>
 )
-
-fun Fine.TrafficTicket.toResponse() = TrafficTicketResponse(
-    id = id,
-    longitude = locationLon,
-    latitude = locationLat,
-    dateTime = dateTime.toString(),
-    photoUrl = photoUrl,
-    violations = violations.map { it.toResponse() }
-)
-
-fun TrafficTicketResponse.toTrafficTicket() = Fine.TrafficTicket(
-    id = id,
-    locationLon = longitude,
-    locationLat = latitude,
-    dateTime = java.time.LocalDateTime.parse(dateTime),
-    photoUrl = photoUrl,
-    violations = violations.map { it.toViolation() }
-)

@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import ua.anastasiia.finesapp.application.port.input.FineServiceIn
 import ua.anastasiia.finesapp.infrastructure.dto.request.FineRequest
 import ua.anastasiia.finesapp.infrastructure.dto.response.FineResponse
-import ua.anastasiia.finesapp.application.port.input.FineServiceIn
 import java.time.LocalDate
 
 @RestController
