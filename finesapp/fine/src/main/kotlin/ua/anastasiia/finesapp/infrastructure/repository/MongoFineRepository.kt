@@ -122,13 +122,13 @@ class MongoFineRepository(private val reactiveMongoTemplate: ReactiveMongoTempla
             Update().pull("trafficTickets", BasicDBObject("id", ticketId))
         ).map { it.toDomainFine() }
 
-    override fun getSumOfFinesForCarPlate(carPlate: String): Mono<TotalFineSumResponse> {
+    override fun getSumOfFinesForCarPlate(carPlate: String): Mono<Double> {
         val matchStage = match(Criteria.where("car.plate").`is`(carPlate))
         val unwindTickets = unwind("trafficTickets")
         val unwindViolations = unwind("trafficTickets.violations")
         val groupStage = group("car.plate").sum("trafficTickets.violations.price").`as`("totalSum")
 
-        return reactiveMongoTemplate.aggregate<MongoFine, TotalFineSumResponse>(
+        return reactiveMongoTemplate.aggregate<MongoFine, Double>(
             Aggregation.newAggregation(
                 matchStage,
                 unwindTickets,
