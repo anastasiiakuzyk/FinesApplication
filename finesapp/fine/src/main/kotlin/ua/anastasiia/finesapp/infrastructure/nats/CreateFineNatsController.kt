@@ -10,7 +10,6 @@ import ua.anastasiia.finesapp.application.exception.CarPlateDuplicateException
 import ua.anastasiia.finesapp.application.port.input.FineServiceIn
 import ua.anastasiia.finesapp.commonmodels.fine.Fine
 import ua.anastasiia.finesapp.infrastructure.mapper.toFine
-import ua.anastasiia.finesapp.infrastructure.rest.mapper.toFine
 import ua.anastasiia.finesapp.infrastructure.mapper.toProto
 import ua.anastasiia.finesapp.input.reqreply.fine.CreateFineRequest
 import ua.anastasiia.finesapp.input.reqreply.fine.CreateFineResponse

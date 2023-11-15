@@ -20,14 +20,14 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import ua.anastasiia.finesapp.application.port.output.FineRepositoryOut
 import ua.anastasiia.finesapp.domain.Fine
-import ua.anastasiia.finesapp.infrastructure.repository.entity.MongoFine
-import ua.anastasiia.finesapp.infrastructure.repository.entity.MongoFine.Companion.COLLECTION_NAME
-import ua.anastasiia.finesapp.infrastructure.repository.util.findAndModify
-import ua.anastasiia.finesapp.infrastructure.repository.util.findAndRemove
 import ua.anastasiia.finesapp.infrastructure.mapper.toDomainFine
 import ua.anastasiia.finesapp.infrastructure.mapper.toMongoFine
 import ua.anastasiia.finesapp.infrastructure.mapper.toMongoTrafficTicket
 import ua.anastasiia.finesapp.infrastructure.mapper.toMongoViolation
+import ua.anastasiia.finesapp.infrastructure.repository.entity.MongoFine
+import ua.anastasiia.finesapp.infrastructure.repository.entity.MongoFine.Companion.COLLECTION_NAME
+import ua.anastasiia.finesapp.infrastructure.repository.util.findAndModify
+import ua.anastasiia.finesapp.infrastructure.repository.util.findAndRemove
 import java.time.LocalDate
 
 @Repository
@@ -136,7 +136,7 @@ class MongoFineRepository(private val reactiveMongoTemplate: ReactiveMongoTempla
         ).next()
     }
 
-    override fun getAllCars(): Flux<CarResponse> = reactiveMongoTemplate.aggregate<CarResponse>(
+    override fun getAllCars(): Flux<Fine.Car> = reactiveMongoTemplate.aggregate<Fine.Car>(
         Aggregation.newAggregation(
             project("car.plate", "car.make", "car.model", "car.color")
                 .andExclude("_id")

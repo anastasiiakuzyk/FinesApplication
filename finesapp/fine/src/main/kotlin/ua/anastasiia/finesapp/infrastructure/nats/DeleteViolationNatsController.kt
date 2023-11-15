@@ -11,7 +11,6 @@ import ua.anastasiia.finesapp.application.port.input.FineServiceIn
 import ua.anastasiia.finesapp.commonmodels.fine.Fine
 import ua.anastasiia.finesapp.infrastructure.mapper.toProto
 import ua.anastasiia.finesapp.infrastructure.mapper.toViolation
-import ua.anastasiia.finesapp.infrastructure.rest.mapper.toViolation
 import ua.anastasiia.finesapp.infrastructure.mapper.toViolationType
 import ua.anastasiia.finesapp.input.reqreply.violation.DeleteViolationRequest
 import ua.anastasiia.finesapp.input.reqreply.violation.DeleteViolationResponse

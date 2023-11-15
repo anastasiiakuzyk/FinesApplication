@@ -11,7 +11,6 @@ import ua.anastasiia.finesapp.application.port.input.FineServiceIn
 import ua.anastasiia.finesapp.commonmodels.fine.Fine
 import ua.anastasiia.finesapp.infrastructure.mapper.toProto
 import ua.anastasiia.finesapp.infrastructure.mapper.toTrafficTicket
-import ua.anastasiia.finesapp.infrastructure.rest.mapper.toTrafficTicket
 import ua.anastasiia.finesapp.input.reqreply.trafficticket.AddTrafficTicketRequest
 import ua.anastasiia.finesapp.input.reqreply.trafficticket.AddTrafficTicketResponse
 import ua.anastasiia.finesapp.output.pubsub.trafficticket.TrafficTicketAddedEvent

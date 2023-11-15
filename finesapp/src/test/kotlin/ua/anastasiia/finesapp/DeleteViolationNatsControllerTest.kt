@@ -15,7 +15,6 @@ import ua.anastasiia.finesapp.NatsTestUtils.sendRequestAndParseResponse
 import ua.anastasiia.finesapp.application.port.output.FineRepositoryOut
 import ua.anastasiia.finesapp.infrastructure.mapper.toProto
 import ua.anastasiia.finesapp.infrastructure.mapper.toViolation
-import ua.anastasiia.finesapp.infrastructure.rest.mapper.toViolation
 import ua.anastasiia.finesapp.infrastructure.mapper.toViolationType
 import ua.anastasiia.finesapp.input.reqreply.violation.DeleteViolationRequest
 import ua.anastasiia.finesapp.input.reqreply.violation.DeleteViolationResponse

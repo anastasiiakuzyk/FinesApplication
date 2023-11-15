@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
 import ua.anastasiia.finesapp.application.port.input.FineServiceIn
 import ua.anastasiia.finesapp.infrastructure.mapper.toViolation
+import ua.anastasiia.finesapp.infrastructure.mapper.toViolationType
 import ua.anastasiia.finesapp.infrastructure.rest.dto.response.FineResponse
 import ua.anastasiia.finesapp.infrastructure.rest.mapper.toResponse
-import ua.anastasiia.finesapp.infrastructure.mapper.toViolationType
 
 @RestController
 @RequestMapping(value = ["/violations"])
