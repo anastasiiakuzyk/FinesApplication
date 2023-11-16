@@ -17,9 +17,9 @@ import ua.anastasiia.finesapp.application.exception.NoFinesFoundByDateException
 import ua.anastasiia.finesapp.application.exception.NoFinesFoundException
 import ua.anastasiia.finesapp.application.exception.TrafficTicketNotFoundException
 import ua.anastasiia.finesapp.application.exception.TrafficTicketWithViolationNotFoundException
-import ua.anastasiia.finesapp.application.port.input.FineServiceIn
-import ua.anastasiia.finesapp.application.port.output.FineRepositoryOut
-import ua.anastasiia.finesapp.application.port.output.TrafficTicketAddedEventProducerOut
+import ua.anastasiia.finesapp.application.port.input.FineServiceInPort
+import ua.anastasiia.finesapp.application.port.output.FineRepositoryOutPort
+import ua.anastasiia.finesapp.application.port.output.TrafficTicketAddedEventProducerOutPort
 import ua.anastasiia.finesapp.domain.Fine
 import ua.anastasiia.propertyautofill.annotation.AutofillNullable
 import ua.anastasiia.propertyautofill.annotation.NullableGenerate
@@ -30,9 +30,9 @@ import java.time.LocalDate
 @NullableGenerate
 @Suppress("TooManyFunctions")
 class FineService(
-    val fineRepository: FineRepositoryOut,
-    val fineKafkaProducer: TrafficTicketAddedEventProducerOut
-) : FineServiceIn {
+    val fineRepository: FineRepositoryOutPort,
+    val fineKafkaProducer: TrafficTicketAddedEventProducerOutPort
+) : FineServiceInPort {
     override fun getAllFines(): Flux<Fine> =
         fineRepository.getAllFines()
             .switchIfEmptyDeferred { NoFinesFoundException.toMono() }

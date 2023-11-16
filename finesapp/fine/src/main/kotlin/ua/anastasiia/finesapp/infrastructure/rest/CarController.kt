@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import ua.anastasiia.finesapp.application.port.input.FineServiceIn
+import ua.anastasiia.finesapp.application.port.input.FineServiceInPort
 import ua.anastasiia.finesapp.domain.Fine
 import ua.anastasiia.finesapp.infrastructure.rest.dto.request.CarRequest
 import ua.anastasiia.finesapp.infrastructure.rest.dto.response.FineResponse
@@ -18,7 +18,7 @@ import ua.anastasiia.finesapp.infrastructure.rest.mapper.toResponse
 
 @RestController
 @RequestMapping(value = ["/cars"])
-class CarController(val fineService: FineServiceIn) {
+class CarController(val fineService: FineServiceInPort) {
     @GetMapping
     fun getAllCars(): Flux<Fine.Car> = fineService.getAllCars()
 

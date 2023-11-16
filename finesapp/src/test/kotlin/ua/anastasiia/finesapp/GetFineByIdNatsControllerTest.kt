@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import ua.anastasiia.finesapp.NatsTestUtils.getFineToSave
 import ua.anastasiia.finesapp.NatsTestUtils.sendRequestAndParseResponse
-import ua.anastasiia.finesapp.application.port.output.FineRepositoryOut
+import ua.anastasiia.finesapp.application.port.output.FineRepositoryOutPort
 import ua.anastasiia.finesapp.infrastructure.mapper.toProto
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByIdRequest
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByIdResponse
@@ -23,7 +23,7 @@ class GetFineByIdNatsControllerTest {
     lateinit var connection: Connection
 
     @Autowired
-    lateinit var fineRepository: FineRepositoryOut
+    lateinit var fineRepository: FineRepositoryOutPort
 
     @Test
     fun `should retrieve fine by a specific id`() {

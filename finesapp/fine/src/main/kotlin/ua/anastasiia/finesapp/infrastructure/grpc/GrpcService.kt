@@ -7,7 +7,7 @@ import reactor.kotlin.core.publisher.toMono
 import ua.anastasiia.finesapp.ReactorFinesServiceGrpc
 import ua.anastasiia.finesapp.application.exception.CarPlateNotFoundException
 import ua.anastasiia.finesapp.application.exception.CarsNotFoundException
-import ua.anastasiia.finesapp.application.port.input.FineServiceIn
+import ua.anastasiia.finesapp.application.port.input.FineServiceInPort
 import ua.anastasiia.finesapp.domain.Fine
 import ua.anastasiia.finesapp.infrastructure.mapper.toFine
 import ua.anastasiia.finesapp.infrastructure.mapper.toProto
@@ -24,7 +24,7 @@ import ua.anastasiia.finesapp.input.reqreply.fine.StreamByCarPlateResponse
 
 @GrpcService
 class GrpcService(
-    private val fineService: FineServiceIn,
+    private val fineService: FineServiceInPort,
     private val natsEventSubscriber: NatsEventSubscriber
 ) : ReactorFinesServiceGrpc.FinesServiceImplBase() {
 

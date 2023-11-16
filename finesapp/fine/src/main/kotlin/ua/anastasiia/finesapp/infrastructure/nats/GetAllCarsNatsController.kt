@@ -7,7 +7,7 @@ import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 import ua.anastasiia.finesapp.NatsSubject
 import ua.anastasiia.finesapp.application.exception.CarsNotFoundException
-import ua.anastasiia.finesapp.application.port.input.FineServiceIn
+import ua.anastasiia.finesapp.application.port.input.FineServiceInPort
 import ua.anastasiia.finesapp.commonmodels.car.Car
 import ua.anastasiia.finesapp.infrastructure.mapper.toProto
 import ua.anastasiia.finesapp.input.reqreply.car.GetAllCarsRequest
@@ -15,7 +15,7 @@ import ua.anastasiia.finesapp.input.reqreply.car.GetAllCarsResponse
 
 @Component
 class GetAllCarsNatsController(
-    private val fineService: FineServiceIn
+    private val fineService: FineServiceInPort
 ) : NatsController<GetAllCarsRequest, GetAllCarsResponse> {
 
     override val subject: String = NatsSubject.Car.GET_ALL

@@ -18,7 +18,7 @@ import org.springframework.data.mongodb.core.query.Update
 import org.springframework.stereotype.Repository
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import ua.anastasiia.finesapp.application.port.output.FineRepositoryOut
+import ua.anastasiia.finesapp.application.port.output.FineRepositoryOutPort
 import ua.anastasiia.finesapp.domain.Fine
 import ua.anastasiia.finesapp.infrastructure.mapper.toDomainFine
 import ua.anastasiia.finesapp.infrastructure.mapper.toMongoFine
@@ -32,7 +32,7 @@ import java.time.LocalDate
 
 @Repository
 @Suppress("TooManyFunctions")
-class MongoFineRepository(private val reactiveMongoTemplate: ReactiveMongoTemplate) : FineRepositoryOut {
+class MongoFineRepository(private val reactiveMongoTemplate: ReactiveMongoTemplate) : FineRepositoryOutPort {
     override fun getAllFines(): Flux<Fine> = reactiveMongoTemplate.findAll<MongoFine>().map { it.toDomainFine() }
     override fun getAllFinesInLocation(longitude: Double, latitude: Double, radiusInMeters: Double): Flux<Fine> =
         reactiveMongoTemplate.find<MongoFine>(

@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles
 import ua.anastasiia.finesapp.NatsTestUtils.getCarPlate
 import ua.anastasiia.finesapp.NatsTestUtils.getFineToSave
 import ua.anastasiia.finesapp.NatsTestUtils.sendRequestAndParseResponse
-import ua.anastasiia.finesapp.application.port.output.FineRepositoryOut
+import ua.anastasiia.finesapp.application.port.output.FineRepositoryOutPort
 import ua.anastasiia.finesapp.infrastructure.mapper.toProto
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByCarPlateRequest
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByCarPlateResponse
@@ -23,7 +23,7 @@ class GetFineByCarPlateNatsControllerTest {
     lateinit var connection: Connection
 
     @Autowired
-    lateinit var fineRepository: FineRepositoryOut
+    lateinit var fineRepository: FineRepositoryOutPort
 
     @Test
     fun `should return success fine by a specific car plate`() {

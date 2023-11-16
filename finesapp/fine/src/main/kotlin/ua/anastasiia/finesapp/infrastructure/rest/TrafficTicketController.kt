@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
-import ua.anastasiia.finesapp.application.port.input.FineServiceIn
+import ua.anastasiia.finesapp.application.port.input.FineServiceInPort
 import ua.anastasiia.finesapp.infrastructure.rest.dto.request.TrafficTicketRequest
 import ua.anastasiia.finesapp.infrastructure.rest.dto.response.FineResponse
 import ua.anastasiia.finesapp.infrastructure.rest.mapper.toResponse
@@ -17,7 +17,7 @@ import ua.anastasiia.finesapp.infrastructure.rest.mapper.toTrafficTicket
 
 @RestController
 @RequestMapping(value = ["/tickets"])
-class TrafficTicketController(val fineService: FineServiceIn) {
+class TrafficTicketController(val fineService: FineServiceInPort) {
     @PutMapping("car/{carPlate}")
     fun addTrafficTicketByCarPlate(
         @PathVariable carPlate: String,

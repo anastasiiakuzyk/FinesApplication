@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
-import ua.anastasiia.finesapp.application.port.input.FineServiceIn
+import ua.anastasiia.finesapp.application.port.input.FineServiceInPort
 import ua.anastasiia.finesapp.infrastructure.mapper.toViolation
 import ua.anastasiia.finesapp.infrastructure.mapper.toViolationType
 import ua.anastasiia.finesapp.infrastructure.rest.dto.response.FineResponse
@@ -14,7 +14,7 @@ import ua.anastasiia.finesapp.infrastructure.rest.mapper.toResponse
 
 @RestController
 @RequestMapping(value = ["/violations"])
-class ViolationController(val fineService: FineServiceIn) {
+class ViolationController(val fineService: FineServiceInPort) {
     @PatchMapping("car/{carPlate}/ticket/{ticketId}/violations/{violationIds}")
     fun addViolationToTrafficTicket(
         @PathVariable carPlate: String,

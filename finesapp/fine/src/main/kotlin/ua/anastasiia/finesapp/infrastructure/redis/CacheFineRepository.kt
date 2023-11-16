@@ -8,17 +8,17 @@ import org.springframework.stereotype.Repository
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.switchIfEmpty
-import ua.anastasiia.finesapp.application.port.output.FineRepositoryOut
+import ua.anastasiia.finesapp.application.port.output.FineRepositoryOutPort
 import ua.anastasiia.finesapp.domain.Fine
 
 @Repository
 @Primary
 @Suppress("TooManyFunctions")
 class CacheFineRepository(
-    @Qualifier("mongoFineRepository") private val fineRepository: FineRepositoryOut,
+    @Qualifier("mongoFineRepository") private val fineRepository: FineRepositoryOutPort,
     private val redisOperations: ReactiveRedisOperations<String, Fine>,
     @Value("\${spring.data.redis.key.prefix}") private val finePrefix: String
-) : FineRepositoryOut by fineRepository {
+) : FineRepositoryOutPort by fineRepository {
 
     override fun getFineById(fineId: String): Mono<Fine> {
         return redisOperations.opsForValue().get("$finePrefix$fineId")

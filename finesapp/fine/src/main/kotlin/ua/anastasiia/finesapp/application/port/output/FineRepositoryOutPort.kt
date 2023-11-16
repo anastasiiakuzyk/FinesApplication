@@ -6,7 +6,7 @@ import ua.anastasiia.finesapp.domain.Fine
 import java.time.LocalDate
 
 @Suppress("TooManyFunctions")
-interface FineRepositoryOut {
+interface FineRepositoryOutPort {
 
     fun getAllFines(): Flux<Fine>
 

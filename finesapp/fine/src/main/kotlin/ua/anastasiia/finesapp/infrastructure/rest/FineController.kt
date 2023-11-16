@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import ua.anastasiia.finesapp.application.port.input.FineServiceIn
+import ua.anastasiia.finesapp.application.port.input.FineServiceInPort
 import ua.anastasiia.finesapp.infrastructure.rest.dto.request.FineRequest
 import ua.anastasiia.finesapp.infrastructure.rest.dto.response.FineResponse
 import ua.anastasiia.finesapp.infrastructure.rest.mapper.toFine
@@ -21,7 +21,7 @@ import java.time.LocalDate
 
 @RestController
 @RequestMapping(value = ["/fines"])
-class FineController(val fineService: FineServiceIn) {
+class FineController(val fineService: FineServiceInPort) {
 
     @GetMapping(produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun getAllFines(): Flux<FineResponse> = fineService.getAllFines().map { it.toResponse() }

@@ -6,7 +6,7 @@ import reactor.kafka.sender.KafkaSender
 import reactor.kafka.sender.SenderRecord
 import reactor.kotlin.core.publisher.toMono
 import ua.anastasiia.finesapp.KafkaTopic
-import ua.anastasiia.finesapp.application.port.output.TrafficTicketAddedEventProducerOut
+import ua.anastasiia.finesapp.application.port.output.TrafficTicketAddedEventProducerOutPort
 import ua.anastasiia.finesapp.domain.Fine
 import ua.anastasiia.finesapp.infrastructure.mapper.toProto
 import ua.anastasiia.finesapp.output.pubsub.trafficticket.TrafficTicketAddedEvent
@@ -14,7 +14,7 @@ import ua.anastasiia.finesapp.output.pubsub.trafficticket.TrafficTicketAddedEven
 @Component
 class FineKafkaProducer(
     private val kafkaSender: KafkaSender<String, TrafficTicketAddedEvent>
-) : TrafficTicketAddedEventProducerOut {
+) : TrafficTicketAddedEventProducerOutPort {
     override fun sendEvent(fine: Fine, trafficTicketId: Fine.TrafficTicket) {
         val event = TrafficTicketAddedEvent.newBuilder()
             .setId(trafficTicketId.toProto().id)

@@ -7,7 +7,7 @@ import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
 import ua.anastasiia.finesapp.NatsSubject
 import ua.anastasiia.finesapp.application.exception.CarPlateDuplicateException
-import ua.anastasiia.finesapp.application.port.input.FineServiceIn
+import ua.anastasiia.finesapp.application.port.input.FineServiceInPort
 import ua.anastasiia.finesapp.commonmodels.fine.Fine
 import ua.anastasiia.finesapp.infrastructure.mapper.toFine
 import ua.anastasiia.finesapp.infrastructure.mapper.toProto
@@ -18,7 +18,7 @@ import ua.anastasiia.finesapp.output.pubsub.fine.FineCreatedEvent
 @Component
 class CreateFineNatsController(
     private val connection: Connection,
-    private val fineService: FineServiceIn
+    private val fineService: FineServiceInPort
 ) : NatsController<CreateFineRequest, CreateFineResponse> {
 
     override val subject = NatsSubject.Fine.CREATE

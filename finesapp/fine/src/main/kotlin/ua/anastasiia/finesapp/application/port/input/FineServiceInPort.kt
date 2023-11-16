@@ -6,7 +6,7 @@ import ua.anastasiia.finesapp.domain.Fine
 import java.time.LocalDate
 
 @Suppress("TooManyFunctions")
-interface FineServiceIn {
+interface FineServiceInPort {
 
     fun updateCarById(fineId: String, car: Fine.Car): Mono<Fine>
 
