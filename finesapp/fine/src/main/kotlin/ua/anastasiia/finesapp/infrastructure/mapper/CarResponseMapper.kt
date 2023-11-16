@@ -1,4 +1,4 @@
-package ua.anastasiia.finesapp.infrastructure.rest.mapper
+package ua.anastasiia.finesapp.infrastructure.mapper
 
 import ua.anastasiia.finesapp.domain.Fine
 import ua.anastasiia.finesapp.infrastructure.rest.dto.response.CarResponse

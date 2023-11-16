@@ -8,13 +8,10 @@ import ua.anastasiia.finesapp.ReactorFinesServiceGrpc
 import ua.anastasiia.finesapp.application.exception.CarPlateNotFoundException
 import ua.anastasiia.finesapp.application.exception.CarsNotFoundException
 import ua.anastasiia.finesapp.application.port.input.FineServiceInPort
+import ua.anastasiia.finesapp.application.port.output.TrafficTicketAddedEventSubscriberOutPort
 import ua.anastasiia.finesapp.domain.Fine
 import ua.anastasiia.finesapp.infrastructure.mapper.toFine
 import ua.anastasiia.finesapp.infrastructure.mapper.toProto
-import ua.anastasiia.finesapp.infrastructure.nats.event.NatsEventSubscriber
-import ua.anastasiia.finesapp.infrastructure.rest.dto.response.CarResponse
-import ua.anastasiia.finesapp.infrastructure.rest.mapper.toCar
-import ua.anastasiia.finesapp.infrastructure.rest.mapper.toResponse
 import ua.anastasiia.finesapp.input.reqreply.car.GetAllCarsRequest
 import ua.anastasiia.finesapp.input.reqreply.car.GetAllCarsResponse
 import ua.anastasiia.finesapp.input.reqreply.fine.GetFineByCarPlateRequest
@@ -25,13 +22,13 @@ import ua.anastasiia.finesapp.input.reqreply.fine.StreamByCarPlateResponse
 @GrpcService
 class GrpcService(
     private val fineService: FineServiceInPort,
-    private val natsEventSubscriber: NatsEventSubscriber
+    private val natsEventSubscriber: TrafficTicketAddedEventSubscriberOutPort
 ) : ReactorFinesServiceGrpc.FinesServiceImplBase() {
 
     override fun getAllCars(request: Mono<GetAllCarsRequest>): Mono<GetAllCarsResponse> {
         return request
             .flatMap { fineService.getAllCars().collectList() }
-            .map { cars -> buildAllCarsResponse(cars.map { it.toResponse() }) }
+            .map { cars -> buildAllCarsResponse(cars) }
             .onErrorResume { exception -> handleCarsException(exception) }
     }
 
@@ -55,9 +52,9 @@ class GrpcService(
         }
     }
 
-    private fun buildAllCarsResponse(cars: List<CarResponse>): GetAllCarsResponse {
+    private fun buildAllCarsResponse(cars: List<Fine.Car>): GetAllCarsResponse {
         return GetAllCarsResponse.newBuilder()
-            .apply { successBuilder.addAllCars(cars.map { it.toCar().toProto() }) }
+            .apply { successBuilder.addAllCars(cars.map { it.toProto() }) }
             .build()
     }
 

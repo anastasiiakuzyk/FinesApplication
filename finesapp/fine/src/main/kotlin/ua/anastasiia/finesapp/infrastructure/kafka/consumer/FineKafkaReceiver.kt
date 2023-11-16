@@ -4,13 +4,13 @@ import jakarta.annotation.PostConstruct
 import org.springframework.stereotype.Component
 import reactor.core.scheduler.Schedulers
 import reactor.kafka.receiver.KafkaReceiver
-import ua.anastasiia.finesapp.infrastructure.nats.event.NatsEventPublisher
+import ua.anastasiia.finesapp.application.port.output.TrafficTicketAddedEventConsumerOutPort
 import ua.anastasiia.finesapp.output.pubsub.trafficticket.TrafficTicketAddedEvent
 
 @Component
 class FineKafkaReceiver(
     private val kafkaConsumer: KafkaReceiver<String, TrafficTicketAddedEvent>,
-    private val natsEventPublisher: NatsEventPublisher
+    private val natsEventPublisher: TrafficTicketAddedEventConsumerOutPort
 ) {
 
     @PostConstruct
