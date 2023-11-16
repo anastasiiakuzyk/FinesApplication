@@ -10,14 +10,11 @@ import org.springframework.test.context.ActiveProfiles
 import ua.anastasiia.finesapp.NatsTestUtils.getFineToSave
 import ua.anastasiia.finesapp.NatsTestUtils.getTrafficTicketToSave
 import ua.anastasiia.finesapp.NatsTestUtils.sendRequestAndParseResponse
-import ua.anastasiia.finesapp.domain.toDomainFine
-import ua.anastasiia.finesapp.domain.toDomainTrafficTicket
-import ua.anastasiia.finesapp.domain.toMongoFine
-import ua.anastasiia.finesapp.dto.toProto
+import ua.anastasiia.finesapp.application.port.output.FineRepositoryOutPort
+import ua.anastasiia.finesapp.infrastructure.mapper.toProto
 import ua.anastasiia.finesapp.input.reqreply.trafficticket.AddTrafficTicketRequest
 import ua.anastasiia.finesapp.input.reqreply.trafficticket.AddTrafficTicketResponse
 import ua.anastasiia.finesapp.output.pubsub.trafficticket.TrafficTicketAddedEvent
-import ua.anastasiia.finesapp.repository.FineRepository
 import java.time.Duration
 
 @SpringBootTest
@@ -28,17 +25,17 @@ class AddTrafficTicketNatsControllerTest {
     lateinit var connection: Connection
 
     @Autowired
-    lateinit var fineRepository: FineRepository
+    lateinit var fineRepository: FineRepositoryOutPort
 
     @Test
     fun `should add traffic ticket and publish event when valid request is given`() {
         // GIVEN
         val fineToSave = getFineToSave()
-        val savedFine = fineRepository.saveFine(fineToSave.toDomainFine()).block()
+        val savedFine = fineRepository.saveFine(fineToSave).block()
         val trafficTicketToSave = getTrafficTicketToSave()
         val expectedFine = savedFine!!.copy(
-            trafficTickets = listOf(trafficTicketToSave.toDomainTrafficTicket())
-        ).toMongoFine().toProto()
+            trafficTickets = listOf(trafficTicketToSave)
+        ).toProto()
         val createdEvent = connection.subscribe(
             NatsSubject.TrafficTicket.addedSubject(expectedFine.car.plate)
         )
@@ -68,7 +65,7 @@ class AddTrafficTicketNatsControllerTest {
     @Test
     fun `should return failure result when adding invalid traffic ticket`() {
         // GIVEN
-        val nonExistentFine = getFineToSave().copy(id = ObjectId())
+        val nonExistentFine = getFineToSave().copy(id = ObjectId().toHexString())
         val invalidTrafficTicket = getTrafficTicketToSave()
         val request = AddTrafficTicketRequest.newBuilder()
             .setCarPlate(nonExistentFine.car.plate)

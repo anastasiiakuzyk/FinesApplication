@@ -12,16 +12,13 @@ import org.springframework.test.context.ActiveProfiles
 import ua.anastasiia.finesapp.NatsTestUtils.getFineToSave
 import ua.anastasiia.finesapp.NatsTestUtils.getTrafficTicketToSave
 import ua.anastasiia.finesapp.NatsTestUtils.sendRequestAndParseResponse
-import ua.anastasiia.finesapp.domain.toDomainFine
-import ua.anastasiia.finesapp.domain.toDomainTrafficTicket
-import ua.anastasiia.finesapp.domain.toMongoFine
-import ua.anastasiia.finesapp.dto.toProto
-import ua.anastasiia.finesapp.dto.toViolation
-import ua.anastasiia.finesapp.dto.toViolationType
+import ua.anastasiia.finesapp.application.port.output.FineRepositoryOutPort
+import ua.anastasiia.finesapp.infrastructure.mapper.toProto
+import ua.anastasiia.finesapp.infrastructure.mapper.toViolation
+import ua.anastasiia.finesapp.infrastructure.mapper.toViolationType
 import ua.anastasiia.finesapp.input.reqreply.violation.DeleteViolationRequest
 import ua.anastasiia.finesapp.input.reqreply.violation.DeleteViolationResponse
 import ua.anastasiia.finesapp.output.pubsub.violation.ViolationDeletedEvent
-import ua.anastasiia.finesapp.repository.FineRepository
 import java.time.Duration
 
 @SpringBootTest
@@ -32,18 +29,18 @@ class DeleteViolationNatsControllerTest {
     lateinit var connection: Connection
 
     @Autowired
-    lateinit var fineRepository: FineRepository
+    lateinit var fineRepository: FineRepositoryOutPort
 
     @Test
     fun `should update fine and publish related event when violation is deleted`() {
         // GIVEN
         val trafficTicketToSave = getTrafficTicketToSave()
         val fineToSave = getFineToSave().copy(trafficTickets = listOf(trafficTicketToSave))
-        val savedFine = fineRepository.saveFine(fineToSave.toDomainFine()).block()
+        val savedFine = fineRepository.saveFine(fineToSave).block()
         val expectedTrafficTicket =
             trafficTicketToSave.copy(violations = listOf(1, 2).map { it.toViolationType().toViolation() })
-        val expectedFine = savedFine!!.copy(trafficTickets = listOf(expectedTrafficTicket.toDomainTrafficTicket()))
-            .toMongoFine().toProto()
+        val expectedFine = savedFine!!.copy(trafficTickets = listOf(expectedTrafficTicket))
+            .toProto()
         val createdEvent = connection.subscribe(NatsSubject.Violation.deletedSubject(savedFine.car.plate))
         val expectedResponse =
             DeleteViolationResponse.newBuilder().apply { successBuilder.setFine(expectedFine) }.build()

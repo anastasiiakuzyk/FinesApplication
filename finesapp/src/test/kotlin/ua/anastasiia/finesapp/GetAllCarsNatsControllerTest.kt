@@ -10,13 +10,11 @@ import org.springframework.data.mongodb.core.dropCollection
 import org.springframework.test.context.ActiveProfiles
 import ua.anastasiia.finesapp.NatsTestUtils.getFineToSave
 import ua.anastasiia.finesapp.NatsTestUtils.sendRequestAndParseResponse
-import ua.anastasiia.finesapp.domain.toDomainFine
-import ua.anastasiia.finesapp.dto.response.toCar
-import ua.anastasiia.finesapp.dto.toProto
-import ua.anastasiia.finesapp.entity.MongoFine
+import ua.anastasiia.finesapp.application.port.output.FineRepositoryOutPort
+import ua.anastasiia.finesapp.infrastructure.mapper.toProto
+import ua.anastasiia.finesapp.infrastructure.repository.entity.MongoFine
 import ua.anastasiia.finesapp.input.reqreply.car.GetAllCarsRequest
 import ua.anastasiia.finesapp.input.reqreply.car.GetAllCarsResponse
-import ua.anastasiia.finesapp.repository.FineRepository
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -26,7 +24,7 @@ class GetAllCarsNatsControllerTest {
     lateinit var connection: Connection
 
     @Autowired
-    lateinit var fineRepository: FineRepository
+    lateinit var fineRepository: FineRepositoryOutPort
 
     @Autowired
     lateinit var reactiveMongoTemplate: ReactiveMongoTemplate
@@ -34,7 +32,7 @@ class GetAllCarsNatsControllerTest {
     @Test
     fun `should return success result`() {
         // GIVEN
-        fineRepository.saveFines(listOf(getFineToSave().toDomainFine())).collectList().block()
+        fineRepository.saveFines(listOf(getFineToSave())).collectList().block()
         val expectedResponse = GetAllCarsResponse
             .newBuilder()
             .apply {
@@ -42,7 +40,7 @@ class GetAllCarsNatsControllerTest {
                     fineRepository.getAllCars()
                         .collectList()
                         .block()!!
-                        .map { it.toCar().toProto() }
+                        .map { it.toProto() }
                 )
             }
             .build()

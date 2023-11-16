@@ -2,5 +2,7 @@ rootProject.name = "FinesApp"
 
 include(
     "internal-api",
-    "finesapp"
+    "finesapp:fine",
+    "finesapp",
+    "property-autofill",
 )
