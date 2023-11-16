@@ -10,13 +10,13 @@ import ua.anastasiia.finesapp.output.pubsub.trafficticket.TrafficTicketAddedEven
 @Component
 class FineKafkaReceiver(
     private val kafkaConsumer: KafkaReceiver<String, TrafficTicketAddedEvent>,
-    private val natsEventPublisher: TrafficTicketAddedEventConsumerOutPort
+    private val trafficTicketAddedEventConsumer: TrafficTicketAddedEventConsumerOutPort
 ) {
 
     @PostConstruct
     fun initialize() {
         kafkaConsumer.receiveAutoAck()
-            .flatMap { fluxRecord -> fluxRecord.map { natsEventPublisher.publish(it.value()) } }
+            .flatMap { fluxRecord -> fluxRecord.map { trafficTicketAddedEventConsumer.publish(it.value()) } }
             .subscribeOn(Schedulers.boundedElastic())
             .subscribe()
     }

@@ -22,7 +22,7 @@ import ua.anastasiia.finesapp.input.reqreply.fine.StreamByCarPlateResponse
 @GrpcService
 class GrpcService(
     private val fineService: FineServiceInPort,
-    private val natsEventSubscriber: TrafficTicketAddedEventSubscriberOutPort
+    private val trafficTicketAddedEventSubscriber: TrafficTicketAddedEventSubscriberOutPort
 ) : ReactorFinesServiceGrpc.FinesServiceImplBase() {
 
     override fun getAllCars(request: Mono<GetAllCarsRequest>): Mono<GetAllCarsResponse> {
@@ -43,7 +43,7 @@ class GrpcService(
         return request.flatMapMany { streamByCarPlateRequest ->
             fineService.getFineByCarPlate(streamByCarPlateRequest.carPlate)
                 .flatMapMany { initFineState ->
-                    natsEventSubscriber.subscribe(streamByCarPlateRequest.carPlate)
+                    trafficTicketAddedEventSubscriber.subscribe(streamByCarPlateRequest.carPlate)
                         .map { trafficTicketAddedEvent ->
                             buildStreamByCarPlateResponse(trafficTicketAddedEvent.fine.toFine())
                         }.startWith(buildStreamByCarPlateResponse(initFineState))
