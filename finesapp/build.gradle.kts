@@ -9,6 +9,7 @@ plugins {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("com.google.protobuf:protobuf-java-util:3.24.3")
@@ -32,7 +33,14 @@ dependencies {
     implementation("net.devh:grpc-spring-boot-starter:2.15.0.RELEASE")
     implementation("net.devh:grpc-server-spring-boot-starter:2.15.0.RELEASE")
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+        exclude(group = "org.mockito", module = "mockito-core")
+    }
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+    testImplementation("io.projectreactor:reactor-test:3.6.4")
+    testImplementation("com.ninja-squad:springmockk:4.0.2")
 
     implementation(project(":internal-api"))
     implementation(project(":finesapp:fine"))
@@ -78,8 +86,6 @@ subprojects {
 
         implementation("net.devh:grpc-spring-boot-starter:2.15.0.RELEASE")
         implementation("net.devh:grpc-server-spring-boot-starter:2.15.0.RELEASE")
-
-        testImplementation("org.springframework.boot:spring-boot-starter-test")
     }
 
     tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {

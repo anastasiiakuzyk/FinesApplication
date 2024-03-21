@@ -1,4 +1,4 @@
-package ua.anastasiia.finesapp
+package ua.anastasiia.finesapp.nats
 
 import com.google.protobuf.GeneratedMessageV3
 import io.nats.client.Connection
