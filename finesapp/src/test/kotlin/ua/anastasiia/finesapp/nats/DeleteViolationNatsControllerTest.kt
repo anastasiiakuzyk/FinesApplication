@@ -1,4 +1,4 @@
-package ua.anastasiia.finesapp
+package ua.anastasiia.finesapp.nats
 
 import io.nats.client.Connection
 import org.bson.types.ObjectId
@@ -9,15 +9,16 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
-import ua.anastasiia.finesapp.NatsTestUtils.getFineToSave
-import ua.anastasiia.finesapp.NatsTestUtils.getTrafficTicketToSave
-import ua.anastasiia.finesapp.NatsTestUtils.sendRequestAndParseResponse
+import ua.anastasiia.finesapp.NatsSubject
 import ua.anastasiia.finesapp.application.port.output.FineRepositoryOutPort
 import ua.anastasiia.finesapp.infrastructure.mapper.toProto
 import ua.anastasiia.finesapp.infrastructure.mapper.toViolation
 import ua.anastasiia.finesapp.infrastructure.mapper.toViolationType
 import ua.anastasiia.finesapp.input.reqreply.violation.DeleteViolationRequest
 import ua.anastasiia.finesapp.input.reqreply.violation.DeleteViolationResponse
+import ua.anastasiia.finesapp.nats.NatsTestUtils.getFineToSave
+import ua.anastasiia.finesapp.nats.NatsTestUtils.getTrafficTicketToSave
+import ua.anastasiia.finesapp.nats.NatsTestUtils.sendRequestAndParseResponse
 import ua.anastasiia.finesapp.output.pubsub.violation.ViolationDeletedEvent
 import java.time.Duration
 

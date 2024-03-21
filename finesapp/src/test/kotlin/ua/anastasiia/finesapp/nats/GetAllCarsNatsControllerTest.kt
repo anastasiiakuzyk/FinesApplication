@@ -1,4 +1,4 @@
-package ua.anastasiia.finesapp
+package ua.anastasiia.finesapp.nats
 
 import io.nats.client.Connection
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -8,13 +8,14 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.dropCollection
 import org.springframework.test.context.ActiveProfiles
-import ua.anastasiia.finesapp.NatsTestUtils.getFineToSave
-import ua.anastasiia.finesapp.NatsTestUtils.sendRequestAndParseResponse
+import ua.anastasiia.finesapp.NatsSubject
 import ua.anastasiia.finesapp.application.port.output.FineRepositoryOutPort
 import ua.anastasiia.finesapp.infrastructure.mapper.toProto
 import ua.anastasiia.finesapp.infrastructure.repository.entity.MongoFine
 import ua.anastasiia.finesapp.input.reqreply.car.GetAllCarsRequest
 import ua.anastasiia.finesapp.input.reqreply.car.GetAllCarsResponse
+import ua.anastasiia.finesapp.nats.NatsTestUtils.getFineToSave
+import ua.anastasiia.finesapp.nats.NatsTestUtils.sendRequestAndParseResponse
 
 @SpringBootTest
 @ActiveProfiles("test")
