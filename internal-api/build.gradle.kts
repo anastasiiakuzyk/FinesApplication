@@ -1,4 +1,7 @@
 import com.google.protobuf.gradle.id
+plugins {
+    `maven-publish`
+}
 
 dependencies {
     implementation("com.google.protobuf:protobuf-java:3.24.3")
@@ -25,5 +28,18 @@ protobuf {
                 create("reactor-grpc")
             }
         }
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenKotlin") {
+            from(components["kotlin"])
+            artifact(tasks["kotlinSourcesJar"])
+        }
+    }
+
+    repositories {
+        mavenLocal()
     }
 }
