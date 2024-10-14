@@ -23,7 +23,8 @@ fun Fine.TrafficTicket.toMongoTrafficTicket() = MongoFine.TrafficTicket(
     location = GeoJsonPoint(locationLon, locationLat),
     dateTime = dateTime,
     photoUrl = photoUrl,
-    violations = violations.map { it.toMongoViolation() }
+    violations = violations.map { it.toMongoViolation() },
+    valid = valid
 )
 
 fun Fine.TrafficTicket.Violation.toMongoViolation() = MongoFine.TrafficTicket.Violation(
@@ -50,7 +51,8 @@ fun MongoFine.TrafficTicket.toDomainTrafficTicket() = Fine.TrafficTicket(
     locationLon = location.x,
     dateTime = dateTime,
     photoUrl = photoUrl,
-    violations = violations.map { it.toDomainViolation() }
+    violations = violations.map { it.toDomainViolation() },
+    valid = valid
 )
 
 fun MongoFine.TrafficTicket.Violation.toDomainViolation() = Fine.TrafficTicket.Violation(

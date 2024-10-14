@@ -6,5 +6,6 @@ data class TrafficTicketResponse(
     val latitude: Double,
     val dateTime: String,
     val photoUrl: String,
-    val violations: List<ViolationResponse>
+    val violations: List<ViolationResponse>,
+    val valid: Boolean = true
 )

@@ -34,7 +34,8 @@ data class MongoFine(
         val location: GeoJsonPoint,
         val dateTime: LocalDateTime,
         val photoUrl: String,
-        val violations: List<Violation>
+        val violations: List<Violation>,
+        val valid: Boolean = true
     ) {
 
         data class Violation(

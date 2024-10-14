@@ -11,5 +11,6 @@ data class TrafficTicketRequest(
     val photoUrl: String,
     @Suppress("MagicNumber")
     @field:IntListValidator(0, 9)
-    val violationIds: List<Int>
+    val violationIds: List<Int>,
+    val valid: Boolean = true
 )

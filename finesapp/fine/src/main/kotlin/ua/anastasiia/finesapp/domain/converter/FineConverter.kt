@@ -24,7 +24,8 @@ fun GeneratedFine.toFine() =
                         description = violation.description,
                         price = violation.price
                     )
-                }
+                },
+                valid = true
             )
         }
     )

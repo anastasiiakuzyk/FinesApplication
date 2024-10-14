@@ -9,7 +9,8 @@ fun Fine.TrafficTicket.toResponse() = TrafficTicketResponse(
     latitude = locationLat,
     dateTime = dateTime.toString(),
     photoUrl = photoUrl,
-    violations = violations.map { it.toResponse() }
+    violations = violations.map { it.toResponse() },
+    valid = valid
 )
 
 fun TrafficTicketResponse.toTrafficTicket() = Fine.TrafficTicket(
@@ -18,5 +19,6 @@ fun TrafficTicketResponse.toTrafficTicket() = Fine.TrafficTicket(
     locationLon = longitude,
     dateTime = java.time.LocalDateTime.parse(dateTime),
     photoUrl = photoUrl,
-    violations = violations.map { it.toViolation() }
+    violations = violations.map { it.toViolation() },
+    valid = valid
 )

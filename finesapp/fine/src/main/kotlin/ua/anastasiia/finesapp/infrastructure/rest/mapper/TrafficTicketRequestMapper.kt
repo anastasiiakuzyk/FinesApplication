@@ -15,7 +15,8 @@ fun TrafficTicketRequest.toTrafficTicket() = Fine.TrafficTicket(
     photoUrl = photoUrl,
     violations = violationIds.map { violationId ->
         violationId.toViolationType().toViolation()
-    }
+    },
+    valid = valid
 )
 
 fun Fine.TrafficTicket.toRequest() = TrafficTicketRequest(
@@ -26,5 +27,6 @@ fun Fine.TrafficTicket.toRequest() = TrafficTicketRequest(
     photoUrl = photoUrl,
     violationIds = violations.map { violation ->
         violation.toId()
-    }
+    },
+    valid = valid
 )
