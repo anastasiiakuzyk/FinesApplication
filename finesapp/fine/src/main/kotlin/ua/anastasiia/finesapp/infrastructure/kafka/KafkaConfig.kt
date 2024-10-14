@@ -16,6 +16,7 @@ import reactor.kafka.receiver.ReceiverOptions
 import reactor.kafka.sender.KafkaSender
 import reactor.kafka.sender.SenderOptions
 import ua.anastasiia.finesapp.KafkaTopic
+import ua.anastasiia.finesapp.output.pubsub.fine.FineCreatedEvent
 import ua.anastasiia.finesapp.output.pubsub.trafficticket.TrafficTicketAddedEvent
 
 @Configuration
@@ -25,7 +26,7 @@ class KafkaConfig(
 ) {
 
     @Bean
-    fun kafkaSender(): KafkaSender<String, TrafficTicketAddedEvent> =
+    fun kafkaTrafficTicketAddedSender(): KafkaSender<String, TrafficTicketAddedEvent> =
         KafkaSender.create(SenderOptions.create(producerProperties()))
 
     private fun producerProperties(): Map<String, Any> = mutableMapOf(
@@ -34,6 +35,10 @@ class KafkaConfig(
         ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG to KafkaProtobufSerializer::class.java,
         SCHEMA_REGISTRY_URL_KEY to schemaRegistryUrl
     )
+
+    @Bean
+    fun kafkaFineCreatedSender(): KafkaSender<String, FineCreatedEvent> =
+        KafkaSender.create(SenderOptions.create(producerProperties()))
 
     @Bean
     fun kafkaReceiverTrafficTicketAddedEvent(): KafkaReceiver<String, TrafficTicketAddedEvent> {

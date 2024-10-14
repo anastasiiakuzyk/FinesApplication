@@ -5,4 +5,5 @@ include(
     "finesapp:fine",
     "finesapp",
     "property-autofill",
+    "fine-generation"
 )

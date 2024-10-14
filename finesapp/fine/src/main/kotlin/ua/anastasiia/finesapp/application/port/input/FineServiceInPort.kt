@@ -47,4 +47,6 @@ interface FineServiceInPort {
     fun getAllFines(): Flux<Fine>
 
     fun saveFine(fine: Fine): Mono<Fine>
+
+    fun saveGeneratedFines(number: Int): Flux<Fine>
 }

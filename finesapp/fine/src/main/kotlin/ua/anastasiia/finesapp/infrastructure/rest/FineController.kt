@@ -50,6 +50,10 @@ class FineController(val fineService: FineServiceInPort) {
     fun saveFines(@Valid @RequestBody mongoFines: List<FineRequest>): Flux<FineResponse> =
         fineService.saveFines(mongoFines.map { it.toFine() }).map { it.toResponse() }
 
+    @PostMapping("random")
+    fun saveFines(@RequestParam number: Int): Flux<FineResponse> =
+        fineService.saveGeneratedFines(number).map { it.toResponse() }
+
     @DeleteMapping("fine/{fineId}")
     fun deleteFineById(@PathVariable fineId: String): Mono<FineResponse> =
         fineService.deleteFineById(fineId).map { it.toResponse() }

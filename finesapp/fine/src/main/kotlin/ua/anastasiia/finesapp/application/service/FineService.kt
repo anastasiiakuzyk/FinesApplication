@@ -18,9 +18,12 @@ import ua.anastasiia.finesapp.application.exception.NoFinesFoundException
 import ua.anastasiia.finesapp.application.exception.TrafficTicketNotFoundException
 import ua.anastasiia.finesapp.application.exception.TrafficTicketWithViolationNotFoundException
 import ua.anastasiia.finesapp.application.port.input.FineServiceInPort
+import ua.anastasiia.finesapp.application.port.output.FineCreatedProducerOutPort
 import ua.anastasiia.finesapp.application.port.output.FineRepositoryOutPort
 import ua.anastasiia.finesapp.application.port.output.TrafficTicketAddedEventProducerOutPort
 import ua.anastasiia.finesapp.domain.Fine
+import ua.anastasiia.finesapp.domain.converter.toFine
+import ua.anastasiia.finesapp.generateFines
 import ua.anastasiia.propertyautofill.annotation.AutofillNullable
 import ua.anastasiia.propertyautofill.annotation.NullableGenerate
 import ua.anastasiia.propertyautofill.bpp.fieldGeneration.RandomModelGenerator
@@ -31,8 +34,10 @@ import java.time.LocalDate
 @Suppress("TooManyFunctions")
 class FineService(
     val fineRepository: FineRepositoryOutPort,
-    val fineKafkaProducer: TrafficTicketAddedEventProducerOutPort
+    val ticketAddedEventProducerOutPort: TrafficTicketAddedEventProducerOutPort,
+    val fineCreatedProducerOutPort: FineCreatedProducerOutPort
 ) : FineServiceInPort {
+
     override fun getAllFines(): Flux<Fine> =
         fineRepository.getAllFines()
             .switchIfEmptyDeferred { NoFinesFoundException.toMono() }
@@ -64,13 +69,27 @@ class FineService(
                 sink.error(CarPlateDuplicateException(fine.car.plate))
             }
             .onErrorMap(DuplicateKeyException::class) { CarPlateDuplicateException(fine.car.plate) }
-            .switchIfEmpty { fineRepository.saveFine(fine) }
+            .switchIfEmpty {
+                fineRepository.saveFine(fine).doOnNext {
+                    fineCreatedProducerOutPort.sendEvent(it)
+                }
+            }
 
     override fun saveFines(mongoFines: List<Fine>): Flux<Fine> =
         fineRepository.saveFines(mongoFines)
+            .doOnNext {
+                fineCreatedProducerOutPort.sendEvent(it)
+            }
             .onErrorMap(DuplicateKeyException::class) {
                 CarPlateDuplicateException(mongoFines.joinToString { it.car.plate })
             }
+
+    override fun saveGeneratedFines(number: Int): Flux<Fine> {
+        return saveFines(generateFines(number).map { it.toFine() })
+            .doOnNext {
+                fineCreatedProducerOutPort.sendEvent(it)
+            }
+    }
 
     override fun deleteFineById(fineId: String): Mono<Fine> =
         fineRepository.deleteFineById(fineId)
@@ -81,7 +100,7 @@ class FineService(
             .flatMap {
                 fineRepository.addTrafficTicketByCarPlate(plate, ticket)
                     .doOnNext {
-                        fineKafkaProducer.sendEvent(it, ticket)
+                        ticketAddedEventProducerOutPort.sendEvent(it, ticket)
                     }
             }
             .switchIfEmpty { CarPlateNotFoundException(plate).toMono() }

@@ -86,6 +86,7 @@ subprojects {
 
         implementation("net.devh:grpc-spring-boot-starter:2.15.0.RELEASE")
         implementation("net.devh:grpc-server-spring-boot-starter:2.15.0.RELEASE")
+        implementation(project(":fine-generation"))
     }
 
     tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
