@@ -39,5 +39,7 @@ subprojects {
         implementation("com.salesforce.servicelibs:reactor-grpc:1.2.4")
         implementation("com.salesforce.servicelibs:reactive-grpc-common:1.2.4")
         implementation("com.salesforce.servicelibs:reactor-grpc-stub:1.2.4")
+        implementation("org.springframework.boot:spring-boot-starter-logging:3.3.0")
+        implementation("net.logstash.logback:logstash-logback-encoder:7.4")
     }
 }
