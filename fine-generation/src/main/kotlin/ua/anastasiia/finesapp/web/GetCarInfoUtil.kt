@@ -97,7 +97,7 @@ fun writeToJson(
 private fun fetchCarData(numberOfPages: Int) {
     val carData: MutableList<CarData?> = mutableListOf()
     repeat(numberOfPages) {
-        val page = it + 160
+        val page = it + 310
         val carIdsBatch: AllIdsResponse? = getCarIdsBatch(page)
         if (carIdsBatch == null) {
             writeToJson("cars_data.json", carData)
