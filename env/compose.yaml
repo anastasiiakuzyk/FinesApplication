@@ -1,21 +1,21 @@
 version: '3'
 
 services:
-#  app:
-#    build:
-#      dockerfile: Dockerfile
-#    container_name: app
-#    depends_on:
-#      mongo:
-#        condition: service_healthy
-#      nats:
-#        condition: service_started
-#      schema-registry:
-#        condition: service_started
-#      redis:
-#        condition: service_healthy
-#    ports:
-#      - "8080:8080"
+  app:
+    build:
+      dockerfile: Dockerfile
+    container_name: app
+    depends_on:
+      mongo:
+        condition: service_healthy
+      nats:
+        condition: service_started
+      schema-registry:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
 
   mongo:
     image: mongo

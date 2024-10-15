@@ -693,5 +693,2309 @@
     "photoData": {
       "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/toyota_camry__571858789f.jpg"
     }
+  },
+  {
+    "plateNumber": "BH 0777 AM",
+    "markName": "Mercedes-Benz",
+    "modelName": "S-Class",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-14 12:38:05",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/mercedes-benz_s-class__571050313f.jpg"
+    }
+  },
+  {
+    "markName": "Audi",
+    "modelName": "Q7",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-15 20:28:39",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/audi_q7__572315371f.jpg"
+    }
+  },
+  {
+    "markName": "Lincoln",
+    "modelName": "Continental",
+    "color": {
+      "eng": "red"
+    },
+    "addDate": "2024-09-18 19:30:10",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/lincoln_continental__523916510f.jpg"
+    }
+  },
+  {
+    "markName": "Volkswagen",
+    "modelName": "Passat",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-14 09:51:58",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/volkswagen_passat__571771442f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BH 4515 EK",
+    "markName": "Mercedes-Benz",
+    "modelName": "GLC-Class",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-07 11:46:03",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/mercedes-benz_glc-class__571185126f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KA 6773 CA",
+    "markName": "Mercedes-Benz",
+    "modelName": "C-Class",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-14 16:52:41",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/mercedes-benz_c-class__572172174f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BH 1170 OX",
+    "markName": "Hyundai",
+    "modelName": "Tucson",
+    "color": {
+      "eng": "green"
+    },
+    "addDate": "2024-10-15 20:22:09",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/hyundai_tucson__572327538f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AC 0078 BH",
+    "markName": "Audi",
+    "modelName": "Q7",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-13 11:22:05",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/audi_q7__565105361f.jpg"
+    }
+  },
+  {
+    "markName": "Audi",
+    "modelName": "A6",
+    "color": {
+      "eng": "darkblue"
+    },
+    "addDate": "2024-09-21 13:05:38",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/audi_a6__569009595f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BH 5996 PK",
+    "markName": "Audi",
+    "modelName": "A6",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-06 00:20:44",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/audi_a6__571401679f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BX 3372 IA",
+    "markName": "Audi",
+    "modelName": "Q7",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-15 11:20:04",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/audi_q7__572249708f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BO 5255 CC",
+    "markName": "Audi",
+    "modelName": "A4",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-14 15:42:06",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/audi_a4__572157695f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AA 6055 OX",
+    "markName": "Toyota",
+    "modelName": "Land Cruiser",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-14 09:58:08",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/toyota_land-cruiser__561671597f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AE 0999 KC",
+    "markName": "Mercedes-Benz",
+    "modelName": "GLE-Class",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-09 16:08:36",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/mercedes-benz_gle-class__571496168f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BC 5634 OE",
+    "markName": "Audi",
+    "modelName": "A4",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-14 12:28:21",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/audi_a4__572128245f.jpg"
+    }
+  },
+  {
+    "markName": "Audi",
+    "modelName": "Q7",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-15 09:12:08",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/audi_q7__571851327f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AE 8825 XE",
+    "markName": "Chevrolet",
+    "modelName": "Aveo",
+    "color": {
+      "eng": "green"
+    },
+    "addDate": "2024-09-22 12:06:59",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/chevrolet_aveo__569143819f.jpg"
+    }
+  },
+  {
+    "markName": "Audi",
+    "modelName": "Q8 e-tron",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-14 10:35:40",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/audi_q8-e-tron__541308874f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KA 8880 AB",
+    "markName": "Volkswagen",
+    "modelName": "Touareg",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-14 14:52:06",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/volkswagen_touareg__572154588f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BH 0481 TX",
+    "markName": "BMW",
+    "modelName": "5 Series",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-12 19:49:12",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/bmw_5-series__571945030f.jpg"
+    }
+  },
+  {
+    "markName": "Volkswagen",
+    "modelName": "Touareg",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-13 18:32:04",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/volkswagen_touareg__572057123f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KA 3526 OO",
+    "markName": "Volkswagen",
+    "modelName": "Touareg",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-12 20:56:03",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/volkswagen_touareg__571958274f.jpg"
+    }
+  },
+  {
+    "plateNumber": "HH 4787 AB",
+    "markName": "BMW",
+    "modelName": "5 Series",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-09 00:08:04",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/bmw_5-series__571432156f.jpg"
+    }
+  },
+  {
+    "markName": "Toyota",
+    "modelName": "Corolla",
+    "color": {
+      "eng": "red"
+    },
+    "addDate": "2014-11-30 12:42:14",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/toyota_corolla__6113354f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BH 8300 TI",
+    "markName": "Audi",
+    "modelName": "A6",
+    "color": {
+      "eng": "darkblue"
+    },
+    "addDate": "2024-10-10 13:10:04",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/audi_a6__571621526f.jpg"
+    }
+  },
+  {
+    "markName": "Zeekr",
+    "modelName": "001",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-11 17:28:44",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/zeekr_001__571809715f.jpg"
+    }
+  },
+  {
+    "markName": "Zeekr",
+    "modelName": "001",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-11 17:19:23",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/zeekr_001__571807933f.jpg"
+    }
+  },
+  {
+    "markName": "Zeekr",
+    "modelName": "001",
+    "color": {
+      "eng": "orange"
+    },
+    "addDate": "2024-10-04 17:04:47",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/zeekr_001__570889732f.jpg"
+    }
+  },
+  {
+    "plateNumber": "CA 9001 IO",
+    "markName": "Volkswagen",
+    "modelName": "Passat",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-13 17:24:05",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/volkswagen_passat__545574331f.jpg"
+    }
+  },
+  {
+    "markName": "Zeekr",
+    "modelName": "001",
+    "color": {
+      "eng": "green"
+    },
+    "addDate": "2024-10-12 19:40:06",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/zeekr_001__571948863f.jpg"
+    }
+  },
+  {
+    "markName": "Volkswagen",
+    "modelName": "Golf",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-14 17:40:20",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/volkswagen_golf__572163239f.jpg"
+    }
+  },
+  {
+    "markName": "ГАЗ",
+    "modelName": "21 Волга",
+    "color": {
+    },
+    "addDate": "2014-11-30 14:54:40",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/gaz_21-volga__6116500f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AB 0777 KO",
+    "markName": "Audi",
+    "modelName": "e-tron",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-14 10:38:11",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/audi_e-tron__551328143f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AX 0057 BX",
+    "markName": "BMW",
+    "modelName": "X5",
+    "color": {
+      "eng": "darkblue"
+    },
+    "addDate": "2024-10-13 14:04:37",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/bmw_x5__553228138f.jpg"
+    }
+  },
+  {
+    "markName": "Lexus",
+    "modelName": "RX",
+    "color": {
+      "eng": "darkblue"
+    },
+    "addDate": "2024-10-02 16:02:10",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/lexus_rx__453103327f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BC 5595 HI",
+    "markName": "Volkswagen",
+    "modelName": "Tiguan",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-09-24 08:46:07",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/volkswagen_tiguan__569647648f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AA 3329 AA",
+    "markName": "Lexus",
+    "modelName": "RX",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-14 18:02:58",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/lexus_rx__563971464f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AE 0553 IM",
+    "markName": "Volkswagen",
+    "modelName": "Passat",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-11 20:40:09",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/volkswagen_passat__511518732f.jpg"
+    }
+  },
+  {
+    "plateNumber": "CA 7927 IT",
+    "markName": "Mercedes-Benz",
+    "modelName": "M-Class",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-07 20:02:09",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/mercedes-benz_m-class__555263436f.jpg"
+    }
+  },
+  {
+    "markName": "Honda",
+    "modelName": "M-NV",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-09-27 12:50:08",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/honda_m-nv__569908269f.jpg"
+    }
+  },
+  {
+    "markName": "MINI",
+    "modelName": "Clubman",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-15 12:14:03",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/mini_clubman__570426191f.jpg"
+    }
+  },
+  {
+    "markName": "Honda",
+    "modelName": "M-NV",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-07 15:25:12",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/honda_m-nv__571220670f.jpg"
+    }
+  },
+  {
+    "plateNumber": "CB 1620 BC",
+    "markName": "Audi",
+    "modelName": "80",
+    "color": {
+      "eng": "red"
+    },
+    "addDate": "2024-10-15 08:49:03",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/audi_80__572231865f.jpg"
+    }
+  },
+  {
+    "markName": "Chrysler",
+    "modelName": "300M",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2014-11-30 17:13:12",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/chrysler_300m__6119428f.jpg"
+    }
+  },
+  {
+    "markName": "BYD",
+    "modelName": "Song Plus",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-14 11:53:31",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/byd_song-plus__567805719f.jpg"
+    }
+  },
+  {
+    "markName": "Volkswagen",
+    "modelName": "Passat",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-12 22:39:33",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/volkswagen_passat__571971064f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BH 5572 OT",
+    "markName": "Jaguar",
+    "modelName": "F-Pace",
+    "color": {
+      "eng": "red"
+    },
+    "addDate": "2024-10-11 11:54:08",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/jaguar_f-pace__572168159f.jpg"
+    }
+  },
+  {
+    "markName": "Honda",
+    "modelName": "Pilot",
+    "color": {
+      "eng": "darkblue"
+    },
+    "addDate": "2024-09-20 17:03:58",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/honda_pilot__564794318f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KA 0620 OO",
+    "markName": "Ford",
+    "modelName": "Focus",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-15 15:38:35",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/ford_focus__572286299f.jpg"
+    }
+  },
+  {
+    "markName": "Skoda",
+    "modelName": "Octavia",
+    "color": {
+    },
+    "addDate": "2024-10-15 15:26:31",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/skoda_octavia__572262900f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BH 7719 EO",
+    "markName": "Skoda",
+    "modelName": "Superb",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-15 12:54:06",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/skoda_superb__572261308f.jpg"
+    }
+  },
+  {
+    "markName": "Kia",
+    "modelName": "Picanto",
+    "color": {
+      "eng": "orange"
+    },
+    "addDate": "2014-11-30 18:10:29",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/kia_picanto__6121697f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AE 8986 OX",
+    "markName": "Mercedes-Benz",
+    "modelName": "Sprinter",
+    "color": {
+      "eng": "green"
+    },
+    "addDate": "2024-10-14 22:24:06",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/mercedes-benz_sprinter__572215098f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KA 0402 CC",
+    "markName": "Skoda",
+    "modelName": "Octavia",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-12 16:34:05",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/skoda_octavia__571913194f.jpg"
+    }
+  },
+  {
+    "markName": "Nissan",
+    "modelName": "X-Trail",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-12 14:34:07",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/nissan_x-trail__571752805f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BC 3591 PI",
+    "markName": "Ford",
+    "modelName": "Focus",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-09 14:49:35",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/ford_focus__571490352f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BH 7579 TC",
+    "markName": "Skoda",
+    "modelName": "Octavia",
+    "color": {
+      "eng": "beige"
+    },
+    "addDate": "2024-10-13 08:46:22",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/skoda_octavia__570045096f.jpg"
+    }
+  },
+  {
+    "markName": "Mercedes-Benz",
+    "modelName": "S-Class",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-11 16:27:20",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/mercedes-benz_s-class__560109386f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BC 4730 YA",
+    "markName": "Tesla",
+    "modelName": "Model 3",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-15 17:28:25",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/tesla_model-3__572304224f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AI 0543 OH",
+    "markName": "Volkswagen",
+    "modelName": "Golf",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-15 09:16:04",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/volkswagen_golf__571456748f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AA 1080 BC",
+    "markName": "Volkswagen",
+    "modelName": "Touareg",
+    "color": {
+      "eng": "brown"
+    },
+    "addDate": "2024-09-24 16:52:06",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/volkswagen_touareg__569497490f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BO 1040 CA",
+    "markName": "Audi",
+    "modelName": "Q7",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-09-23 18:34:09",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/audi_q7__565044347f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AI 2345 PO",
+    "markName": "BMW",
+    "modelName": "3 Series",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-09-18 19:02:10",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/bmw_3-series__551841447f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AA 4586 YB",
+    "markName": "Tesla",
+    "modelName": "Model 3",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-13 13:46:03",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/tesla_model-3__563544961f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AA 7213 EH",
+    "markName": "Hyundai",
+    "modelName": "Sonata",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-12 22:51:38",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/hyundai_sonata__571971166f.jpg"
+    }
+  },
+  {
+    "markName": "Tesla",
+    "modelName": "Model S",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-05 21:42:37",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/tesla_model-s__572335554f.jpg"
+    }
+  },
+  {
+    "markName": "Nissan",
+    "modelName": "Ariya",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-04 17:25:15",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/nissan_ariya__570893268f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KA 0103 KA",
+    "markName": "BMW",
+    "modelName": "3 Series",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-09-21 17:55:27",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/bmw_3-series__569058102f.jpg"
+    }
+  },
+  {
+    "markName": "BMW",
+    "modelName": "3 Series",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-15 14:51:11",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/bmw_3-series__572282047f.jpg"
+    }
+  },
+  {
+    "plateNumber": "CA 7774 CH",
+    "markName": "Mercedes-Benz",
+    "modelName": "E-Class",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-15 14:08:00",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/mercedes-benz_e-class__568182230f.jpg"
+    }
+  },
+  {
+    "plateNumber": "CE 9267 EO",
+    "markName": "Mazda",
+    "modelName": "6",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-15 09:40:06",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/mazda_6__572235366f.jpg"
+    }
+  },
+  {
+    "markName": "Mitsubishi",
+    "modelName": "Outlander",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-14 23:34:06",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/mitsubishi_outlander__568903971f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AA 4964 YB",
+    "markName": "Tesla",
+    "modelName": "Model S",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-14 14:02:36",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/tesla_model-s__567624797f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KA 3896 BH",
+    "markName": "Hyundai",
+    "modelName": "Sonata",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-14 12:52:43",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/hyundai_sonata__572130432f.jpg"
+    }
+  },
+  {
+    "markName": "Volkswagen",
+    "modelName": "Tiguan",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-14 10:50:07",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/volkswagen_tiguan__572112057f.jpg"
+    }
+  },
+  {
+    "markName": "Toyota",
+    "modelName": "Corolla",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-14 09:34:38",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/toyota_corolla__550205915f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AT 8531 HX",
+    "markName": "Mazda",
+    "modelName": "CX-5",
+    "color": {
+      "eng": "darkblue"
+    },
+    "addDate": "2024-10-13 13:19:08",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/mazda_cx-5__571998139f.jpg"
+    }
+  },
+  {
+    "markName": "Tesla",
+    "modelName": "Model 3",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-12 21:56:35",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/tesla_model-3__571966573f.jpg"
+    }
+  },
+  {
+    "markName": "Honda",
+    "modelName": "M-NV",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-07 15:27:28",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/honda_m-nv__571221861f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AX 0220 HT",
+    "markName": "Audi",
+    "modelName": "Q5",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-04 00:04:04",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/audi_q5__570811871f.jpg"
+    }
+  },
+  {
+    "markName": "Причеп",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2014-11-16 22:45:43",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/pricep___7197049f.jpg"
+    }
+  },
+  {
+    "markName": "Mercedes-Benz",
+    "modelName": "S-Class",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-15 16:30:10",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/mercedes-benz_s-class__572044176f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BC 4896 EA",
+    "markName": "Volkswagen",
+    "modelName": "Transporter",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-15 14:28:06",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/volkswagen_transporter__565799713f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KA 0955 EX",
+    "markName": "Skoda",
+    "modelName": "Octavia",
+    "color": {
+      "eng": "darkblue"
+    },
+    "addDate": "2024-10-15 14:00:06",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/skoda_octavia__571528935f.jpg"
+    }
+  },
+  {
+    "markName": "Mercedes-Benz",
+    "modelName": "Sprinter",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-15 11:50:09",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/mercedes-benz_sprinter__572255170f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BO 1416 EM",
+    "markName": "Mazda",
+    "modelName": "CX-9",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-15 11:08:08",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/mazda_cx-9__569583218f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AT 4279 HH",
+    "markName": "BMW",
+    "modelName": "5 Series",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-14 22:28:03",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/bmw_5-series__507545477f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KA 1924 KA",
+    "markName": "Volkswagen",
+    "modelName": "Passat",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-14 21:00:07",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/volkswagen_passat__553446589f.jpg"
+    }
+  },
+  {
+    "plateNumber": "CE 0996 BH",
+    "markName": "BMW",
+    "modelName": "3 Series",
+    "color": {
+      "eng": "red"
+    },
+    "addDate": "2024-10-14 16:36:07",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/bmw_3-series__572168132f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AA 5330 YB",
+    "markName": "Tesla",
+    "modelName": "Model Y",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-14 10:00:21",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/tesla_model-y__561988212f.jpg"
+    }
+  },
+  {
+    "markName": "Audi",
+    "modelName": "Q7",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-14 09:06:06",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/audi_q7__571715879f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BM 1207 EE",
+    "markName": "Subaru",
+    "modelName": "Outback",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-13 20:56:07",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/subaru_outback__572078981f.jpg"
+    }
+  },
+  {
+    "markName": "Volkswagen",
+    "modelName": "Transporter",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-13 18:32:03",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/volkswagen_transporter__572057570f.jpg"
+    }
+  },
+  {
+    "markName": "BMW",
+    "modelName": "8 Series",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-12 22:08:07",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/bmw_8-series__568659567f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AE 0344 OC",
+    "markName": "Volkswagen",
+    "modelName": "Passat",
+    "color": {
+      "eng": "brown"
+    },
+    "addDate": "2024-10-12 20:52:06",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/volkswagen_passat__567815661f.jpg"
+    }
+  },
+  {
+    "markName": "Honda",
+    "modelName": "M-NV",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-11 17:07:15",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/honda_m-nv__559779295f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AA 7936 PC",
+    "markName": "Mercedes-Benz",
+    "modelName": "GLE-Class",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-11 08:06:05",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/mercedes-benz_gle-class__571727706f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AX 3810 MA",
+    "markName": "Hyundai",
+    "modelName": "Sonata",
+    "color": {
+      "eng": "orange"
+    },
+    "addDate": "2024-10-10 14:30:20",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/hyundai_sonata__571636769f.jpg"
+    }
+  },
+  {
+    "markName": "Audi",
+    "modelName": "A6",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-05 22:57:57",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/audi_a6__571041139f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BC 4513 TI",
+    "markName": "BMW",
+    "modelName": "5 Series",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-05 15:02:48",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/bmw_5-series__553985260f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BX 1214 HX",
+    "markName": "Audi",
+    "modelName": "A4",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-05 09:42:47",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/audi_a4__567926061f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BO 5665 BM",
+    "markName": "Mercedes-Benz",
+    "modelName": "E-Class",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-04 20:11:21",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/mercedes-benz_e-class__570913948f.jpg"
+    }
+  },
+  {
+    "markName": "Volkswagen",
+    "modelName": "Tiguan",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-04 15:32:28",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/volkswagen_tiguan__570692866f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AE 1274 PK",
+    "markName": "Volkswagen",
+    "modelName": "Passat",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-03 23:20:31",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/volkswagen_passat__570810710f.jpg"
+    }
+  },
+  {
+    "markName": "Ford",
+    "modelName": "Transit",
+    "color": {
+    },
+    "addDate": "2024-10-03 21:02:06",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/ford_transit__539106538f.jpg"
+    }
+  },
+  {
+    "plateNumber": "CA 4093 YA",
+    "markName": "Volkswagen",
+    "modelName": "ID.4 Crozz",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-03 11:51:23",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/volkswagen_id-4-crozz__570710243f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BC 9506 TC",
+    "markName": "Audi",
+    "modelName": "A4",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-09-28 15:50:07",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/audi_a4__570079139f.jpg"
+    }
+  },
+  {
+    "markName": "BMW",
+    "modelName": "X6",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-09-28 02:01:17",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/bmw_x6__565780308f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BH 8393 PB",
+    "markName": "Audi",
+    "modelName": "A6",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-09-28 00:01:56",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/audi_a6__565774157f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BA 1809 BH",
+    "markName": "Toyota",
+    "modelName": "Camry",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-09-27 17:41:14",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/toyota_camry__569950120f.jpg"
+    }
+  },
+  {
+    "markName": "Nissan",
+    "modelName": "Ariya",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-09-27 15:50:12",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/nissan_ariya__569936613f.jpg"
+    }
+  },
+  {
+    "plateNumber": "CA 6843 KE",
+    "markName": "Audi",
+    "modelName": "Q7",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-09-26 14:14:31",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/audi_q7__563514815f.jpg"
+    }
+  },
+  {
+    "markName": "Tesla",
+    "modelName": "Model Y",
+    "color": {
+      "eng": "darkblue"
+    },
+    "addDate": "2024-09-25 21:28:39",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/tesla_model-y__569703907f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AA 9313 EK",
+    "markName": "Toyota",
+    "modelName": "Camry",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-09-25 20:04:57",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/toyota_camry__565485022f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KE 9984 AH",
+    "markName": "Audi",
+    "modelName": "A5",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-09-25 19:50:07",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/audi_a5__571015710f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AA 0650 PT",
+    "markName": "BMW",
+    "modelName": "5 Series",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-09-25 10:22:04",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/bmw_5-series__569580284f.jpg"
+    }
+  },
+  {
+    "markName": "Skoda",
+    "modelName": "Octavia",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-09-24 23:20:03",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/skoda_octavia__569565493f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KA 6899 MC",
+    "markName": "Lexus",
+    "modelName": "RX",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-09-22 16:36:06",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/lexus_rx__569187955f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BC 9448 TC",
+    "markName": "Kia",
+    "modelName": "Niro",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-09-21 21:16:04",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/kia_niro__569091830f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BC 1199 HA",
+    "markName": "BMW",
+    "modelName": "X5",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-09-20 21:56:03",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/bmw_x5__572269132f.jpg"
+    }
+  },
+  {
+    "plateNumber": "CA 8328 IX",
+    "markName": "Toyota",
+    "modelName": "Corolla",
+    "color": {
+      "eng": "brown"
+    },
+    "addDate": "2024-09-19 15:34:05",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/toyota_corolla__555148773f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AX 4337 YA",
+    "markName": "Tesla",
+    "modelName": "Model Y",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-13 20:44:06",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/tesla_model-y__570765510f.jpg"
+    }
+  },
+  {
+    "markName": "Volkswagen",
+    "modelName": "Passat",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-12 15:12:05",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/volkswagen_passat__571905769f.jpg"
+    }
+  },
+  {
+    "markName": "Volvo",
+    "modelName": "XC90",
+    "color": {
+      "eng": "beige"
+    },
+    "addDate": "2024-10-11 14:08:23",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/volvo_xc90__571776195f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AE 6885 KK",
+    "markName": "Toyota",
+    "modelName": "Land Cruiser Prado",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-06 19:04:04",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/toyota_land-cruiser-prado__571130633f.jpg"
+    }
+  },
+  {
+    "markName": "Nissan",
+    "modelName": "Ariya",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-04 17:00:04",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/nissan_ariya__570889001f.jpg"
+    }
+  },
+  {
+    "plateNumber": "HK 0692 AB",
+    "markName": "Audi",
+    "modelName": "A6",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-09-28 15:56:07",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/audi_a6__570078423f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BC 2205 YB",
+    "markName": "Tesla",
+    "modelName": "Model Y",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-13 08:46:06",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/tesla_model-y__543214707f.jpg"
+    }
+  },
+  {
+    "markName": "Mercedes-Benz",
+    "modelName": "Sprinter",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-11 23:36:58",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/mercedes-benz_sprinter__571848829f.jpg"
+    }
+  },
+  {
+    "markName": "Porsche",
+    "modelName": "Cayenne",
+    "color": {
+      "eng": "darkblue"
+    },
+    "addDate": "2024-09-18 11:34:12",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/porsche_cayenne__567229771f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AA 1513 OE",
+    "markName": "Kia",
+    "modelName": "Sportage",
+    "color": {
+      "eng": "red"
+    },
+    "addDate": "2024-10-14 13:14:47",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/kia_sportage__568161827f.jpg"
+    }
+  },
+  {
+    "markName": "Nissan",
+    "modelName": "Ariya",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-13 08:48:04",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/nissan_ariya__553020772f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AA 4215 YB",
+    "markName": "Tesla",
+    "modelName": "Model 3",
+    "color": {
+      "eng": "darkblue"
+    },
+    "addDate": "2024-10-12 13:32:05",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/tesla_model-3__567503095f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AA 8775 TX",
+    "markName": "Lexus",
+    "modelName": "RX",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-10 20:54:01",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/lexus_rx__571688763f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BE 0106 ET",
+    "markName": "Toyota",
+    "modelName": "Camry",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-09 19:42:03",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/toyota_camry__571540353f.jpg"
+    }
+  },
+  {
+    "markName": "Opel",
+    "modelName": "Astra",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-15 17:38:04",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/opel_astra__572307251f.jpg"
+    }
+  },
+  {
+    "markName": "Iveco",
+    "modelName": "Daily груз.",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-13 18:36:09",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/iveco_daily-gruz__567610380f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AT 4137 HT",
+    "markName": "Opel",
+    "modelName": "Vivaro",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-10 15:03:07",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/opel_vivaro__571639128f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BM 6646 BH",
+    "markName": "Toyota",
+    "modelName": "Land Cruiser Prado",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-09 20:06:07",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/toyota_land-cruiser-prado__571538310f.jpg"
+    }
+  },
+  {
+    "plateNumber": "CB 8324 EA",
+    "markName": "Kia",
+    "modelName": "Sportage",
+    "color": {
+      "eng": "red"
+    },
+    "addDate": "2024-10-08 20:24:20",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/kia_sportage__567126814f.jpg"
+    }
+  },
+  {
+    "markName": "Fiat",
+    "modelName": "2300",
+    "color": {
+      "eng": "beige"
+    },
+    "addDate": "2014-11-29 17:59:10",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/fiat_2300__6099749f.jpg"
+    }
+  },
+  {
+    "markName": "Iveco",
+    "modelName": "Daily груз.",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-15 13:32:32",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/iveco_daily-gruz__557200190f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AC 5213 HB",
+    "markName": "Skoda",
+    "modelName": "Kodiaq",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-12 22:10:13",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/skoda_kodiaq__571968101f.jpg"
+    }
+  },
+  {
+    "markName": "Volkswagen",
+    "modelName": "Tiguan",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-12 09:56:57",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/volkswagen_tiguan__566520462f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AE 5755 AI",
+    "markName": "Audi",
+    "modelName": "A6",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-10 16:00:08",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/audi_a6__571649767f.jpg"
+    }
+  },
+  {
+    "markName": "Skoda",
+    "modelName": "Superb",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-09 21:17:37",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/skoda_superb__571534479f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AE 1263 YA",
+    "markName": "Tesla",
+    "modelName": "Model S",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-09-19 12:38:05",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/tesla_model-s__568715665f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KA 7959 AP",
+    "markName": "BMW",
+    "modelName": "X6",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-09-17 19:00:08",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/bmw_x6__568371620f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KE 2841 AE",
+    "markName": "Audi",
+    "modelName": "A5",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-15 16:38:07",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/audi_a5__572296835f.jpg"
+    }
+  },
+  {
+    "markName": "Ford",
+    "modelName": "Kuga",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-14 18:49:57",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/ford_kuga__572189899f.jpg"
+    }
+  },
+  {
+    "markName": "Honda",
+    "modelName": "CR-V",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-14 09:52:08",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/honda_cr-v__562410254f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KA 2835 KX",
+    "markName": "BMW",
+    "modelName": "7 Series",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-11 17:14:07",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/bmw_7-series__571806974f.jpg"
+    }
+  },
+  {
+    "markName": "Mercedes-Benz",
+    "modelName": "GLS-Class",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-10 13:28:12",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/mercedes-benz_gls-class__569654281f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AX 3532 YA",
+    "markName": "Tesla",
+    "modelName": "Model Y",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-10 09:54:05",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/tesla_model-y__562876811f.jpg"
+    }
+  },
+  {
+    "markName": "Mitsubishi",
+    "modelName": "Outlander XL",
+    "color": {
+      "eng": "brown"
+    },
+    "addDate": "2024-10-07 07:48:05",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/mitsubishi_outlander-xl__551588163f.jpg"
+    }
+  },
+  {
+    "markName": "JCB",
+    "modelName": "535-95",
+    "color": {
+      "eng": "yellow"
+    },
+    "addDate": "2024-10-01 13:14:22",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/jcb_535-95__566213307f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AA 3077 PT",
+    "markName": "BMW",
+    "modelName": "X5",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-09-21 19:03:15",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/bmw_x5__548485886f.jpg"
+    }
+  },
+  {
+    "markName": "Peugeot",
+    "modelName": "3008",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-15 18:36:05",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/peugeot_3008__571083308f.jpg"
+    }
+  },
+  {
+    "markName": "BMW",
+    "modelName": "K 1200LT",
+    "color": {
+    },
+    "addDate": "2024-10-15 16:56:05",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/bmw_k-1200lt__572300782f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AI 0008 IE",
+    "markName": "Mazda",
+    "modelName": "6",
+    "color": {
+      "eng": "darkblue"
+    },
+    "addDate": "2024-10-04 20:32:08",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/mazda_6__570910256f.jpg"
+    }
+  },
+  {
+    "markName": "Manitou",
+    "modelName": "MLT 845-120 LSU",
+    "color": {
+    },
+    "addDate": "2024-09-23 15:24:38",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/manitou_mlt-845-120-lsu__565205157f.jpg"
+    }
+  },
+  {
+    "markName": "Gas Gas",
+    "modelName": "EC",
+    "color": {
+      "eng": "red"
+    },
+    "addDate": "2024-10-15 10:47:33",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/gas-gas_ec__572245283f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BC 9389 TI",
+    "markName": "BMW",
+    "modelName": "3 Series",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-13 14:24:08",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/bmw_3-series__572017530f.jpg"
+    }
+  },
+  {
+    "markName": "Ford",
+    "modelName": "Focus",
+    "color": {
+      "eng": "red"
+    },
+    "addDate": "2024-10-12 19:04:39",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/ford_focus__571938106f.jpg"
+    }
+  },
+  {
+    "markName": "Volkswagen",
+    "modelName": "Passat",
+    "color": {
+      "eng": "beige"
+    },
+    "addDate": "2024-10-14 14:40:07",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/volkswagen_passat__570401614f.jpg"
+    }
+  },
+  {
+    "markName": "Honda",
+    "modelName": "CBR 1000RR",
+    "color": {
+      "eng": "brown"
+    },
+    "addDate": "2024-10-13 17:20:06",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/honda_cbr-1000rr__572045833f.jpg"
+    }
+  },
+  {
+    "markName": "JCB",
+    "modelName": "535-125",
+    "color": {
+      "eng": "yellow"
+    },
+    "addDate": "2024-10-08 08:00:58",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/jcb_535-125__571288584f.jpg"
+    }
+  },
+  {
+    "markName": "JCB",
+    "modelName": "535-125",
+    "color": {
+    },
+    "addDate": "2024-10-02 15:02:12",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/jcb_535-125__549823837f.jpg"
+    }
+  },
+  {
+    "markName": "Volkswagen",
+    "modelName": "Touareg",
+    "color": {
+      "eng": "brown"
+    },
+    "addDate": "2024-10-14 14:14:07",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/volkswagen_touareg__568928074f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AE 8000 OC",
+    "markName": "Mercedes-Benz",
+    "modelName": "S-Class",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-12 12:18:05",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/mercedes-benz_s-class__563873758f.jpg"
+    }
+  },
+  {
+    "markName": "Toyota",
+    "modelName": "Land Cruiser",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-12 01:14:03",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/toyota_land-cruiser__572178574f.jpg"
+    }
+  },
+  {
+    "markName": "Volvo",
+    "modelName": "S40",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-10 18:14:05",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/volvo_s40__571673583f.jpg"
+    }
+  },
+  {
+    "plateNumber": "BX 2918 HK",
+    "markName": "Mercedes-Benz",
+    "modelName": "S-Class",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-09-23 23:01:25",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/mercedes-benz_s-class__541588246f.jpg"
+    }
+  },
+  {
+    "markName": "Volvo",
+    "modelName": "V60",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-15 20:40:37",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/volvo_v60__572328897f.jpg"
+    }
+  },
+  {
+    "markName": "Volkswagen",
+    "modelName": "Touareg",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-15 14:14:11",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/volkswagen_touareg__570737786f.jpg"
+    }
+  },
+  {
+    "markName": "Volkswagen",
+    "modelName": "Touareg",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-15 12:37:43",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/volkswagen_touareg__547405316f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KA 8744 CP",
+    "markName": "Volkswagen",
+    "modelName": "Jetta",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-15 08:34:12",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/volkswagen_jetta__572155914f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KP 6608 AB",
+    "markName": "Audi",
+    "modelName": "A5",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-15 08:32:03",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/audi_a5__571776357f.jpg"
+    }
+  },
+  {
+    "markName": "Volkswagen",
+    "modelName": "Passat",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-15 00:06:04",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/volkswagen_passat__571583835f.jpg"
+    }
+  },
+  {
+    "markName": "ВАЗ / Lada",
+    "modelName": "2102",
+    "color": {
+      "eng": "red"
+    },
+    "addDate": "2014-11-29 19:27:15",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/vaz-lada_2102__6101436f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KA 0440 HE",
+    "markName": "Mercedes-Benz",
+    "modelName": "E-Class",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-14 12:14:06",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/mercedes-benz_e-class__568094675f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AB 3627 YA",
+    "markName": "Tesla",
+    "modelName": "Model 3",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-14 08:54:05",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/tesla_model-3__571040155f.jpg"
+    }
+  },
+  {
+    "markName": "Mitsubishi",
+    "modelName": "Outlander",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-13 19:18:52",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/mitsubishi_outlander__572225330f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KO 0777 CC",
+    "markName": "Mercedes-Benz",
+    "modelName": "E-Class",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-12 21:03:46",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/mercedes-benz_e-class__571960364f.jpg"
+    }
+  },
+  {
+    "markName": "Volkswagen",
+    "modelName": "Touareg",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-12 11:58:07",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/volkswagen_touareg__571976586f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KA 4312 CT",
+    "markName": "Chevrolet",
+    "modelName": "Lacetti",
+    "color": {
+      "eng": "orange"
+    },
+    "addDate": "2024-10-09 12:31:42",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/chevrolet_lacetti__571473105f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AT 0773 ZA",
+    "markName": "Audi",
+    "modelName": "e-tron",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-08 18:38:08",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/audi_e-tron__571379494f.jpg"
+    }
+  },
+  {
+    "markName": "BMW",
+    "modelName": "X7",
+    "color": {
+      "eng": "darkblue"
+    },
+    "addDate": "2024-10-05 22:20:25",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/bmw_x7__571042083f.jpg"
+    }
+  },
+  {
+    "markName": "Zeekr",
+    "modelName": "001",
+    "color": {
+      "eng": "green"
+    },
+    "addDate": "2024-10-02 03:02:06",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/zeekr_001__552206949f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AB 9759 HX",
+    "markName": "Citroen",
+    "modelName": "C4 Cactus",
+    "color": {
+      "eng": "red"
+    },
+    "addDate": "2024-10-01 11:02:06",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/citroen_c4-cactus__570661735f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AE 5631 PE",
+    "markName": "Honda",
+    "modelName": "Legend",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-09-25 11:01:11",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/honda_legend__457201259f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AA 7296 YB",
+    "markName": "Tesla",
+    "modelName": "Model Y",
+    "color": {
+      "eng": "darkblue"
+    },
+    "addDate": "2024-09-17 12:10:11",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/tesla_model-y__568432518f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KA 4705 MH",
+    "markName": "Ford",
+    "modelName": "Fusion",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-14 14:04:06",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/ford_fusion__572137993f.jpg"
+    }
+  },
+  {
+    "markName": "Mercedes-Benz",
+    "modelName": "GLE-Class",
+    "color": {
+      "eng": "white"
+    },
+    "addDate": "2024-10-10 11:34:08",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/mercedes-benz_gle-class__547052998f.jpg"
+    }
+  },
+  {
+    "plateNumber": "AB 1303 YA",
+    "markName": "Nissan",
+    "modelName": "Leaf",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-09 11:10:25",
+    "photoData": {
+      "seoLinkF": "https://cdn1.riastatic.com/photosnew/auto/photo/nissan_leaf__572024296f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KA 2604 IX",
+    "markName": "Lexus",
+    "modelName": "ES",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-15 13:12:07",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/lexus_es__571881232f.jpg"
+    }
+  },
+  {
+    "plateNumber": "KA 0063 BM",
+    "markName": "BMW",
+    "modelName": "M4",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-14 14:02:19",
+    "photoData": {
+      "seoLinkF": "https://cdn4.riastatic.com/photosnew/auto/photo/bmw_m4__568051214f.jpg"
+    }
+  },
+  {
+    "plateNumber": "HX 7777 PP",
+    "markName": "BMW",
+    "modelName": "7 Series",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-13 16:46:36",
+    "photoData": {
+      "seoLinkF": "https://cdn2.riastatic.com/photosnew/auto/photo/bmw_7-series__572039052f.jpg"
+    }
+  },
+  {
+    "markName": "Nissan",
+    "modelName": "Leaf",
+    "color": {
+      "eng": "gray"
+    },
+    "addDate": "2024-10-13 10:18:08",
+    "photoData": {
+      "seoLinkF": "https://cdn3.riastatic.com/photosnew/auto/photo/nissan_leaf__571988748f.jpg"
+    }
+  },
+  {
+    "markName": "Mercedes-Benz",
+    "modelName": "S-Class",
+    "color": {
+      "eng": "black"
+    },
+    "addDate": "2024-10-09 19:18:06",
+    "photoData": {
+      "seoLinkF": "https://cdn0.riastatic.com/photosnew/auto/photo/mercedes-benz_s-class__567907625f.jpg"
+    }
   }
 ]

@@ -13,7 +13,8 @@ data class CarData(
     val modelName: String? = null,
     val color: ColorData,
     val addDate: String,
-    val photoData: PhotoData
+    val photoData: PhotoData,
+    val autoData: AutoData
 ) {
     @Serializable
     data class ColorData(
@@ -23,6 +24,12 @@ data class CarData(
     @Serializable
     data class PhotoData(
         val seoLinkF: String
+    )
+
+    @Serializable
+    data class AutoData(
+        val categoryId: Int? = null,
+        val bodyId: Int? = null
     )
 }
 

@@ -86,9 +86,6 @@ class FineService(
 
     override fun saveGeneratedFines(number: Int): Flux<Fine> {
         return saveFines(generateFines(number).map { it.toFine() })
-            .doOnNext {
-                fineCreatedProducerOutPort.sendEvent(it)
-            }
     }
 
     override fun deleteFineById(fineId: String): Mono<Fine> =
