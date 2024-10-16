@@ -14,5 +14,17 @@ spring:
         registry:
           url: http://localhost:8081
 
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
 nats:
   url: "nats://localhost:4222"
+
+aws:
+  s3:
+    endpointUrl: http://localhost:4566
+    region: us-west-2
+    secretKey: dev
+    accessKey: dev

@@ -26,8 +26,7 @@ services:
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
       - ./logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-      - ../../../logs/fines-app-logs.log:/usr/share/logstash/data/fines-app-logs.log # add your log file path to here
-      - ../../../logs/fines-analytics-logs.log:/usr/share/logstash/data/fines-analytics-logs.log # add your log file path to here
+      - ../../../logs/:/usr/share/logstash/data/
       - ../../../logs:/usr/share/logstash/logs
     ports:
       - "5000:5000"

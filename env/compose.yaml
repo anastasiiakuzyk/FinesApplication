@@ -86,3 +86,20 @@ services:
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+
+  localstack:
+    container_name: localstack
+    image: localstack/localstack:3.0.2
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3,s3api
+      - PERSISTENCE=1
+    volumes:
+      - ./localstack/setup_s3_buckets.sh:/etc/localstack/init/ready.d/setup_s3_buckets.sh
+      - ./localstack/img/:/var/data/img/
+    healthcheck:
+      test: [ "CMD-SHELL", "test -f /var/data/script_complete.flag" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
