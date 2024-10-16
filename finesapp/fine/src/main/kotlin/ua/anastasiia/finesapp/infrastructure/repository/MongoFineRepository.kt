@@ -1,6 +1,7 @@
 package ua.anastasiia.finesapp.infrastructure.repository
 
 import com.mongodb.BasicDBObject
+import org.bson.types.ObjectId
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.aggregate
 import org.springframework.data.mongodb.core.aggregation.Aggregation
@@ -71,16 +72,34 @@ class MongoFineRepository(private val reactiveMongoTemplate: ReactiveMongoTempla
         reactiveMongoTemplate.findAndRemove<MongoFine>(Query(Criteria.where("id").`is`(fineId)))
             .map { it.toDomainFine() }
 
+    override fun getFineByCarPlateAndTicketId(
+        carPlate: String,
+        ticketId: String,
+    ): Mono<Fine> {
+        return reactiveMongoTemplate.findOne<MongoFine>(
+            Query.query(
+                Criteria.where("car.plate").`is`(carPlate)
+                    .and("trafficTickets").elemMatch(Criteria.where("id").`is`(ObjectId(ticketId)))
+            )
+        ).map { it.toDomainFine() }
+    }
+
     override fun addTrafficTicketByCarPlate(plate: String, newTicket: Fine.TrafficTicket): Mono<Fine> =
         reactiveMongoTemplate.findAndModify<MongoFine>(
             Query.query(Criteria.where("car.plate").`is`(plate)),
             Update().push("trafficTickets", newTicket.toMongoTrafficTicket())
         ).map { it.toDomainFine() }
 
+    override fun deleteTrafficTicketByCarPlateAndId(carPlate: String, ticketId: String): Mono<Fine> =
+        reactiveMongoTemplate.findAndModify<MongoFine>(
+            Query.query(Criteria.where("car.plate").`is`(carPlate).and("trafficTickets.id").`is`(ticketId)),
+            Update().pull("trafficTickets", BasicDBObject("id", ticketId))
+        ).map { it.toDomainFine() }
+
     override fun updateTrafficTicketByCarPlateAndId(
         plate: String,
         trafficTicketId: String,
-        updatedTicket: Fine.TrafficTicket
+        updatedTicket: Fine.TrafficTicket,
     ): Mono<Fine> = reactiveMongoTemplate.findAndModify<MongoFine>(
         Query.query(Criteria.where("car.plate").`is`(plate).and("trafficTickets.id").`is`(trafficTicketId)),
         Update().set("trafficTickets.$", updatedTicket.toMongoTrafficTicket())
@@ -89,7 +108,7 @@ class MongoFineRepository(private val reactiveMongoTemplate: ReactiveMongoTempla
     override fun addViolationToTrafficTicket(
         plate: String,
         trafficTicketId: String,
-        violations: List<Fine.TrafficTicket.Violation>
+        violations: List<Fine.TrafficTicket.Violation>,
     ): Mono<Fine> =
         reactiveMongoTemplate.findAndModify<MongoFine>(
             Query.query(
@@ -107,7 +126,7 @@ class MongoFineRepository(private val reactiveMongoTemplate: ReactiveMongoTempla
     override fun removeViolationFromTicket(
         carPlate: String,
         ticketId: String,
-        violationDescription: String
+        violationDescription: String,
     ): Mono<Fine> =
         reactiveMongoTemplate.findAndModify<MongoFine>(
             Query(Criteria.where("trafficTickets.id").`is`(ticketId).and("car.plate").`is`(carPlate)),

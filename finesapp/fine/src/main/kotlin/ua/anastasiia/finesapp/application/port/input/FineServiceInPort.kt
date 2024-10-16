@@ -32,7 +32,11 @@ interface FineServiceInPort {
 
     fun addTrafficTicketByCarPlate(plate: String, ticket: Fine.TrafficTicket): Mono<Fine>
 
+    fun deleteTrafficTicketByCarPlateAndId(carPlate: String, ticketId: String): Mono<Fine>
+
     fun deleteFineById(fineId: String): Mono<Fine>
+
+    fun getFineByCarPlateAndTicketId(carPlate: String, ticketId: String): Mono<Fine>
 
     fun saveFines(mongoFines: List<Fine>): Flux<Fine>
 

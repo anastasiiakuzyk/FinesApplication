@@ -24,7 +24,9 @@ import java.time.LocalDate
 class FineController(val fineService: FineServiceInPort) {
 
     @GetMapping(produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
-    fun getAllFines(): Flux<FineResponse> = fineService.getAllFines().map { it.toResponse() }
+    fun getAllFines(): Flux<FineResponse> = fineService.getAllFines()
+        .takeLast(10)
+        .map { it.toResponse() }
 
     @GetMapping("location")
     fun getAllFinesInLocation(
@@ -41,6 +43,13 @@ class FineController(val fineService: FineServiceInPort) {
     @GetMapping("fine/{fineId}")
     fun getFineById(@PathVariable fineId: String): Mono<FineResponse> =
         fineService.getFineById(fineId).map { it.toResponse() }
+
+    @GetMapping("car/{carPlate}/ticket/{ticketId}")
+    fun getFineByCarPlateAndTicketId(
+        @PathVariable carPlate: String,
+        @PathVariable ticketId: String
+    ): Mono<FineResponse> =
+        fineService.getFineByCarPlateAndTicketId(carPlate, ticketId).map { it.toResponse() }
 
     @PostMapping
     fun saveFine(@Valid @RequestBody fineRequest: FineRequest): Mono<FineResponse> =

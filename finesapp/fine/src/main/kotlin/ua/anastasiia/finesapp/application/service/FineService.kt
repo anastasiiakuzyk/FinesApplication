@@ -35,7 +35,7 @@ import java.time.LocalDate
 class FineService(
     val fineRepository: FineRepositoryOutPort,
     val ticketAddedEventProducerOutPort: TrafficTicketAddedEventProducerOutPort,
-    val fineCreatedProducerOutPort: FineCreatedProducerOutPort
+    val fineCreatedProducerOutPort: FineCreatedProducerOutPort,
 ) : FineServiceInPort {
 
     override fun getAllFines(): Flux<Fine> =
@@ -45,7 +45,7 @@ class FineService(
     override fun getAllFinesInLocation(
         longitude: Double,
         latitude: Double,
-        radiusInMeters: Double
+        radiusInMeters: Double,
     ): Flux<Fine> =
         fineRepository.getAllFinesInLocation(longitude, latitude, radiusInMeters)
             .switchIfEmptyDeferred { FinesInLocationNotFound(longitude, latitude).toMono() }
@@ -65,10 +65,13 @@ class FineService(
 
     override fun saveFine(fine: Fine): Mono<Fine> =
         fineRepository.getFineByCarPlate(fine.car.plate)
-            .handle<Fine> { _, sink ->
-                sink.error(CarPlateDuplicateException(fine.car.plate))
+            .flatMap { existingFine ->
+                Flux.fromIterable(fine.trafficTickets)
+                    .flatMap { ticket ->
+                        addTrafficTicketByCarPlate(fine.car.plate, ticket)
+                    }
+                    .then(Mono.just(existingFine))
             }
-            .onErrorMap(DuplicateKeyException::class) { CarPlateDuplicateException(fine.car.plate) }
             .switchIfEmpty {
                 fineRepository.saveFine(fine).doOnNext {
                     fineCreatedProducerOutPort.sendEvent(it)
@@ -92,6 +95,11 @@ class FineService(
         fineRepository.deleteFineById(fineId)
             .switchIfEmpty { FineIdNotFoundException(fineId).toMono() }
 
+    override fun getFineByCarPlateAndTicketId(carPlate: String, ticketId: String): Mono<Fine> {
+        return fineRepository.getFineByCarPlateAndTicketId(carPlate, ticketId)
+            .switchIfEmpty { TrafficTicketNotFoundException(carPlate, ticketId).toMono() }
+    }
+
     override fun addTrafficTicketByCarPlate(plate: String, ticket: Fine.TrafficTicket): Mono<Fine> =
         fineRepository.getFineByCarPlate(plate)
             .flatMap {
@@ -102,10 +110,14 @@ class FineService(
             }
             .switchIfEmpty { CarPlateNotFoundException(plate).toMono() }
 
+    override fun deleteTrafficTicketByCarPlateAndId(carPlate: String, ticketId: String): Mono<Fine> =
+        fineRepository.deleteTrafficTicketByCarPlateAndId(carPlate, ticketId)
+            .switchIfEmpty { TrafficTicketNotFoundException(carPlate, ticketId).toMono() }
+
     override fun updateTrafficTicketByCarPlateAndId(
         plate: String,
         trafficTicketId: String,
-        updatedTicket: Fine.TrafficTicket
+        updatedTicket: Fine.TrafficTicket,
     ): Mono<Fine> =
         fineRepository.getFineByCarPlate(plate)
             .flatMap {
@@ -121,7 +133,7 @@ class FineService(
     override fun addViolationToTrafficTicket(
         plate: String,
         trafficTicketId: String,
-        violations: List<Fine.TrafficTicket.Violation>
+        violations: List<Fine.TrafficTicket.Violation>,
     ): Mono<Fine> =
         fineRepository.getFineByCarPlate(plate)
             .flatMap {
@@ -133,7 +145,7 @@ class FineService(
     override fun removeViolationFromTicket(
         carPlate: String,
         ticketId: String,
-        violationDescription: String
+        violationDescription: String,
     ): Mono<Fine> = fineRepository.removeViolationFromTicket(
         carPlate,
         ticketId,
@@ -159,7 +171,7 @@ class FineService(
             fieldToGenerate = "model",
             valueProvider = RandomModelGenerator::class
         )
-        car: Fine.Car
+        car: Fine.Car,
     ): Mono<Fine> =
         fineRepository.updateCarById(fineId, car)
             .switchIfEmpty { FineIdNotFoundException(fineId).toMono() }

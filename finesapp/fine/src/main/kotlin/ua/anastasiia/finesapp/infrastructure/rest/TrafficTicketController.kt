@@ -18,10 +18,11 @@ import ua.anastasiia.finesapp.infrastructure.rest.mapper.toTrafficTicket
 @RestController
 @RequestMapping(value = ["/tickets"])
 class TrafficTicketController(val fineService: FineServiceInPort) {
+
     @PutMapping("car/{carPlate}")
     fun addTrafficTicketByCarPlate(
         @PathVariable carPlate: String,
-        @Valid @RequestBody ticketRequest: TrafficTicketRequest
+        @Valid @RequestBody ticketRequest: TrafficTicketRequest,
     ): Mono<FineResponse> =
         fineService.addTrafficTicketByCarPlate(carPlate, ticketRequest.toTrafficTicket()).map { it.toResponse() }
 
@@ -29,14 +30,14 @@ class TrafficTicketController(val fineService: FineServiceInPort) {
     fun updateTrafficTicketByCarPlateAndId(
         @PathVariable carPlate: String,
         @PathVariable ticketId: String,
-        @Valid @RequestBody ticketRequest: TrafficTicketRequest
+        @Valid @RequestBody ticketRequest: TrafficTicketRequest,
     ): Mono<FineResponse> =
         fineService.updateTrafficTicketByCarPlateAndId(carPlate, ticketId, ticketRequest.toTrafficTicket())
             .map { it.toResponse() }
 
     @DeleteMapping("car/{carPlate}/ticket/{ticketId}")
-    fun removeViolationFromTicket(
+    fun deleteTrafficTicketByCarPlateAndId(
         @PathVariable carPlate: String,
-        @PathVariable ticketId: String
-    ): Mono<FineResponse> = fineService.removeTicketByCarPlateAndId(carPlate, ticketId).map { it.toResponse() }
+        @PathVariable ticketId: String,
+    ): Mono<FineResponse> = fineService.deleteTrafficTicketByCarPlateAndId(carPlate, ticketId).map { it.toResponse() }
 }

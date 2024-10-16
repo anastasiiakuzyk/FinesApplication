@@ -24,7 +24,11 @@ interface FineRepositoryOutPort {
 
     fun deleteFineById(fineId: String): Mono<Fine>
 
+    fun getFineByCarPlateAndTicketId(carPlate: String, ticketId: String): Mono<Fine>
+
     fun addTrafficTicketByCarPlate(plate: String, newTicket: Fine.TrafficTicket): Mono<Fine>
+
+    fun deleteTrafficTicketByCarPlateAndId(carPlate: String, ticketId: String): Mono<Fine>
 
     fun updateTrafficTicketByCarPlateAndId(
         plate: String,
