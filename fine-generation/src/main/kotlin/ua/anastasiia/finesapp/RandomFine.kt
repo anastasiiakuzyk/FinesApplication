@@ -15,8 +15,8 @@ fun generateFines(number: Int): List<Fine> {
     val plates = carData.map { it.plateNumber!!.replace(" ", "") }
     val makes = carData.map { it.markName!! }
     val models = carData.map { it.modelName!! }
-    val colors = carData.map { adaptColor(it.color.eng!!) }
-    val images = carData.map { it.photoData.seoLinkF }
+    val colors = carData.map { adaptColor(it.color!!.eng!!) }
+    val images = carData.map { it.photoData!!.seoLinkF!! }
 
     val randomLocations = generateRandomData(RandomLocationGenerator(), number)
     val dates = generateRandomData(RandomDateTimeGenerator(), number)

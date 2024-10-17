@@ -11,10 +11,10 @@ data class CarData(
     val plateNumber: String? = null,
     val markName: String? = null,
     val modelName: String? = null,
-    val color: ColorData,
-    val addDate: String,
-    val photoData: PhotoData,
-    val autoData: AutoData
+    val color: ColorData? = null,
+    val addDate: String? = null,
+    val photoData: PhotoData? = null,
+    val autoData: AutoData? = null
 ) {
     @Serializable
     data class ColorData(
@@ -23,7 +23,7 @@ data class CarData(
 
     @Serializable
     data class PhotoData(
-        val seoLinkF: String
+        val seoLinkF: String?
     )
 
     @Serializable
@@ -35,7 +35,22 @@ data class CarData(
 
 fun readCarDataFromJson(
     inputFileName: String
-): MutableList<CarData> {
+): List<CarData> {
     val inputResource: Resource = DefaultResourceLoader().getResource(inputFileName)
-    return jacksonObjectMapper().readValue(inputResource.url, object : TypeReference<MutableList<CarData>>() {})
+    val carData =
+        jacksonObjectMapper().readValue(inputResource.url, object : TypeReference<MutableList<CarData>>() {})
+
+    return carData.asSequence()
+        .filter { it.plateNumber != null }
+        .filter { it.markName != null }
+        .filter { it.modelName != null }
+        .filter { it.color != null }
+        .filter { it.color!!.eng != null }
+        .filter { it.photoData != null }
+        .filter { it.photoData!!.seoLinkF != null }
+        .filter { it.autoData != null }
+        .filter { it.autoData!!.categoryId != null }
+        .filter { it.autoData!!.bodyId != null }
+        .distinctBy { it.plateNumber }
+        .toList()
 }

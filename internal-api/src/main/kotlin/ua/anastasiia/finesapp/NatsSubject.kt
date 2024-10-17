@@ -30,4 +30,8 @@ object NatsSubject {
         val CREATE = inputReqReply("create")
         fun createdSubject(carPlate: String) = outputPubSub(carPlate, CREATED)
     }
+
+    object MakeModel : Subject("makemodel") {
+        val GET_CATEGORY_BODY = inputReqReply("get_category_body")
+    }
 }
