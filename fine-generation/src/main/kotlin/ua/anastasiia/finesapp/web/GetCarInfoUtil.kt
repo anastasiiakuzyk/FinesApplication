@@ -59,6 +59,7 @@ fun getCarIdsBatch(page: Int): AllIdsResponse? {
     val url = getCarsUrl.toHttpUrlOrNull()?.newBuilder()
         ?.addQueryParameter("api_key", apiKey)
         ?.addQueryParameter("page", page.toString())
+        ?.addQueryParameter("order_by", "7")
         ?.build()
 
     val request = Request.Builder()
@@ -97,7 +98,7 @@ fun writeToJson(
 private fun fetchCarData(numberOfPages: Int) {
     val carData: MutableList<CarData?> = mutableListOf()
     repeat(numberOfPages) {
-        val page = it + 310
+        val page = it
         val carIdsBatch: AllIdsResponse? = getCarIdsBatch(page)
         if (carIdsBatch == null) {
             writeToJson("cars_data.json", carData)

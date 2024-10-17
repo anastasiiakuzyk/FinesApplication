@@ -25,7 +25,6 @@ class FineController(val fineService: FineServiceInPort) {
 
     @GetMapping(produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
     fun getAllFines(): Flux<FineResponse> = fineService.getAllFines()
-        .takeLast(10)
         .map { it.toResponse() }
 
     @GetMapping("location")
